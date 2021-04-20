@@ -1,0 +1,121 @@
+{
+  "id": "com.eufylife.home",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#13dfd0",
+  "name": {
+    "en": "Eufy Home",
+    "nl": "Eufy Home"
+  },
+  "description": {
+    "en": "Live Well. Live Smart.",
+    "nl": "Live Well. Live Smart."
+  },
+  "tags": {
+    "en": [
+      "cleaning",
+      "vacuum",
+      "eufy",
+      "smart",
+      "mopping",
+      "house",
+      "Live Well",
+      "Live Smart",
+      "robot"
+    ],
+    "nl": [
+      "cleaning",
+      "vacuum",
+      "eufy",
+      "smart",
+      "mopping",
+      "house",
+      "Live Well",
+      "Live Smart",
+      "robot"
+    ]
+  },
+  "category": ["appliances"],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "eufy@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "eufy@martijnpoppen.nl"
+      },
+      {
+        "name": "Robbert Vis (Vaccuum icons)",
+        "email": "eufy@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "Martijn Poppen",
+        "email": "eufy@martijnpoppen.nl"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://community.athom.com/t/app-niu/46185"
+  },
+  "source": "https://github.com/martijnpoppen/com.niu.mobility",
+  "homeyCommunityTopicId": 46185,
+  "support": "https://community.athom.com/t/app-niu/46185",
+  "drivers": [
+    {
+      "id": "L_SERIES",
+      "class": "vacuumcleaner",
+      "capabilities": [],
+      "energy": {
+        "batteries": ["INTERNAL"]
+      },
+      "name": {
+        "en": "Eufy Robovac L-Series",
+        "nl": "Eufy Robovac L-Series"
+      },
+      "images": {
+        "large": "drivers/L_SERIES/assets/images/large.jpg",
+        "small": "drivers/L_SERIES/assets/images/small.jpg"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "eufy.svg",
+            "usernameLabel": "Device ID",
+            "usernamePlaceholder": "Device ID",
+            "passwordLabel": "Local Key",
+            "passwordPlaceholder": "Local Key"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    }
+  ]
+}

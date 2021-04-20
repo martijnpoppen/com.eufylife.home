@@ -1,0 +1,12 @@
+{
+  "name": "com.eufylife.home",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martijnpoppen/com.eufylife.home"
+  },
+  "dependencies": {
+    "eufy-robovac": "^1.4.3"
+  }
+}

@@ -1,4 +1,4 @@
-# Eufy Home
+Eufy Home
 
 Adds support for Eufy Robovac
 
