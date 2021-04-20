@@ -12,20 +12,15 @@ module.exports = class mainDriver extends Homey.Driver {
     }
 
     async onPair(session) {
-        let username = "";
-        let password = "";
-
         session.setHandler("login", async (data) => {
-            const config = {
+            this.config = {
                 deviceId: data.username,
-                localKey: data.password,
-                debugLog: true
+                localKey: data.password
             };
 
-            // this.EufyRoboVac = await new RoboVac(config)
+            this.eufyRoboVac = await new RoboVac({...this.config, debugLog: true})
 
-            // return await this.EufyRoboVac.getStatuses();
-            return true;
+            return await this.eufyRoboVac.getStatuses();
         });
 
         session.setHandler("list_devices", async () => {
@@ -38,17 +33,15 @@ module.exports = class mainDriver extends Homey.Driver {
                 pairedDriverDevices.push(data.deviceId);
             });
 
-            this.homey.app.log(`[Driver] ${driverId} - pairedDriverDevices`, pairedDriverDevices);
-            if(!pairedDriverDevices.includes(deviceId)) {
+            this.homey.app.log(`[Driver] ${this.id} - pairedDriverDevices`, pairedDriverDevices);
+            if(!pairedDriverDevices.includes(this.config.deviceId)) {
                 results.push({
-                    name: d.type,
+                    name: this.id,
                     data: {
-                        name: d.type,
-                        index: i,
-                        id: `${config.deviceId}-${config.localKey}`,
+                        id: `${this.config.deviceId}-${this.config.localKey}`,
                     },
                     settings: {
-                        ...config
+                        ...this.config
                     }
                 });
             }

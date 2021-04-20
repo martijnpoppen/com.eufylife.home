@@ -80,7 +80,7 @@
     {
       "id": "L_SERIES",
       "class": "vacuumcleaner",
-      "capabilities": [],
+      "capabilities": ["measure_battery"],
       "energy": {
         "batteries": ["INTERNAL"]
       },
@@ -114,6 +114,26 @@
         {
           "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deviceId",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "text",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
         }
       ]
     }
