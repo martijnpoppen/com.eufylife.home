@@ -22,8 +22,8 @@ module.exports = class mainDevice extends Homey.Device {
 
     async initApi() {
         try {  
-            const {driverId, localKey } = this.getSettings();
-            this.eufyRoboVac = await new RoboVac({driverId, localKey, debugLog: true});
+            const {deviceId, localKey } = this.getSettings();
+            this.eufyRoboVac = await new RoboVac({deviceId, localKey, debugLog: true});
             await this.eufyRoboVac.connect();
         } catch (error) {
             this.setUnavailable(error)
