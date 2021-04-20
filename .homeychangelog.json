@@ -1,5 +1,8 @@
 {
   "1.0.0": {
     "en": "Eufy Home Release"
+  },
+  "1.0.1": {
+    "en": "Add battery level"
   }
 }

@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -36,7 +36,9 @@
       "robot"
     ]
   },
-  "category": ["appliances"],
+  "category": [
+    "appliances"
+  ],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -80,9 +82,13 @@
     {
       "id": "L_SERIES",
       "class": "vacuumcleaner",
-      "capabilities": ["measure_battery"],
+      "capabilities": [
+        "measure_battery"
+      ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac L-Series",
