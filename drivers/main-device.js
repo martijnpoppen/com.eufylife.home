@@ -23,8 +23,8 @@ module.exports = class mainDevice extends Homey.Device {
     async initApi() {
         try {  
             const {deviceId, localKey } = this.getSettings();
-            this.eufyRoboVac = await new RoboVac({deviceId, localKey, debugLog: true});
-            await this.eufyRoboVac.connect();
+            this.eufyRoboVac = await new RoboVac({deviceId, localKey}, true);
+            await this.eufyRoboVac.getStatuses();
         } catch (error) {
             this.setUnavailable(error)
             this.homey.app.log(error);

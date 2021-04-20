@@ -1,5 +1,5 @@
 const Homey = require("homey");
-const { RoboVac } = require('eufy-robovac');
+const { RoboVac } = require('../lib/eufy-robovac');
 
 module.exports = class mainDriver extends Homey.Driver {
     onInit() {
@@ -18,8 +18,7 @@ module.exports = class mainDriver extends Homey.Driver {
                 localKey: data.password
             };
 
-            this.eufyRoboVac = await new RoboVac({...this.config, debugLog: true})
-
+            this.eufyRoboVac = new RoboVac(this.config, true)
             return await this.eufyRoboVac.getStatuses();
         });
 
