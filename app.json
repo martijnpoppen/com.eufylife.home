@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -36,7 +36,9 @@
       "robot"
     ]
   },
-  "category": ["appliances"],
+  "category": [
+    "appliances"
+  ],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -76,179 +78,6 @@
   "source": "https://github.com/martijnpoppen/com.niu.mobility",
   "homeyCommunityTopicId": 46185,
   "support": "https://community.athom.com/t/app-niu/46185",
-  "flow": {
-    "triggers": [
-      {
-        "id": "measure_work_mode_changed",
-        "title": {
-          "en": "Work mode has changed to",
-          "nl": "Werk modus is veranderd naar"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "capabilities=measure_work_mode"
-          },
-          {
-            "name": "mode",
-            "type": "dropdown",
-            "values": [
-              {
-                "id": "auto",
-                "title": {
-                  "en": "Auto",
-                  "nl": "Auto"
-                }
-              },
-              {
-                "id": "Nosweep",
-                "title": {
-                  "en": "No Sweep",
-                  "nl": "No Sweep"
-                }
-              },
-              {
-                "id": "SmallRoom",
-                "title": {
-                  "en": "Small Room",
-                  "nl": "Small Room"
-                }
-              },
-              {
-                "id": "Edge",
-                "title": {
-                  "en": "Edge",
-                  "nl": "Hoek"
-                }
-              },
-              {
-                "id": "Spot",
-                "title": {
-                  "en": "Spot",
-                  "nl": "Vlek"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "conditions": [
-      {
-        "id": "measure_work_mode_is",
-        "title": {
-          "en": "Work mode !{{is|is not}}",
-          "nl": "Werk modus !{{is|is niet}}"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "capabilities=measure_work_mode"
-          },
-          {
-            "name": "mode",
-            "type": "dropdown",
-            "values": [
-              {
-                "id": "auto",
-                "title": {
-                  "en": "Auto",
-                  "nl": "Auto"
-                }
-              },
-              {
-                "id": "Nosweep",
-                "title": {
-                  "en": "No Sweep",
-                  "nl": "No Sweep"
-                }
-              },
-              {
-                "id": "SmallRoom",
-                "title": {
-                  "en": "Small Room",
-                  "nl": "Small Room"
-                }
-              },
-              {
-                "id": "Edge",
-                "title": {
-                  "en": "Edge",
-                  "nl": "Hoek"
-                }
-              },
-              {
-                "id": "Spot",
-                "title": {
-                  "en": "Spot",
-                  "nl": "Vlek"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "actions": [
-      {
-        "id": "measure_work_mode_set",
-        "title": {
-          "en": "Work mode !{{is|is not}}",
-          "nl": "Werk modus !{{is|is niet}}"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "capabilities=measure_work_mode"
-          },
-          {
-            "name": "mode",
-            "type": "dropdown",
-            "values": [
-              {
-                "id": "auto",
-                "title": {
-                  "en": "Auto",
-                  "nl": "Auto"
-                }
-              },
-              {
-                "id": "Nosweep",
-                "title": {
-                  "en": "No Sweep",
-                  "nl": "No Sweep"
-                }
-              },
-              {
-                "id": "SmallRoom",
-                "title": {
-                  "en": "Small Room",
-                  "nl": "Small Room"
-                }
-              },
-              {
-                "id": "Edge",
-                "title": {
-                  "en": "Edge",
-                  "nl": "Hoek"
-                }
-              },
-              {
-                "id": "Spot",
-                "title": {
-                  "en": "Spot",
-                  "nl": "Vlek"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
   "drivers": [
     {
       "id": "L_SERIES",
@@ -256,12 +85,17 @@
       "capabilities": [
         "vacuumcleaner_state",
         "measure_work_mode",
+        "measure_work_status",
         "measure_battery",
         "measure_is_charging",
-        "measure_recharge_needed"
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
       ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac L-Series",
@@ -313,6 +147,15 @@
           "label": {
             "en": "IP Address",
             "nl": "IP Adres"
+          },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "text",
+          "label": {
+            "en": "Port",
+            "nl": "Port"
           },
           "value": ""
         }
@@ -384,6 +227,38 @@
         ]
       }
     },
+    "measure_docked": {
+      "type": "boolean",
+      "title": {
+        "en": "Docked",
+        "nl": "In Dock"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/house-door.svg",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_docked_changed",
+            "title": {
+              "en": "Docked has changed",
+              "nl": "In dock is veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_docked_needed",
+                "title": {
+                  "en": "Docked",
+                  "nl": "In Dock"
+                },
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "measure_work_mode": {
       "type": "enum",
       "title": {
@@ -391,7 +266,7 @@
         "nl": "Werk modus"
       },
       "uiComponent": "sensor",
-      "icon": "assets/icons/droplet-half.svg",
+      "icon": "assets/icons/brush.svg",
       "getable": true,
       "setable": true,
       "values": [
@@ -406,7 +281,7 @@
           "id": "Nosweep",
           "title": {
             "en": "No Sweep",
-            "nl": "Niet dweilen"
+            "nl": "Niet vegen"
           }
         },
         {
@@ -430,7 +305,201 @@
             "nl": "Vlek"
           }
         }
-      ]
+      ],
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_work_mode_changed",
+            "title": {
+              "en": "Work mode changed",
+              "nl": "Werk modus veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_work_mode",
+                "title": {
+                  "en": "Work mode",
+                  "nl": "Werk modus"
+                },
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "measure_work_status": {
+      "type": "enum",
+      "title": {
+        "en": "Work status",
+        "nl": "Werk status"
+      },
+      "uiComponent": "sensor",
+      "icon": "assets/icons/chevron-double-right.svg",
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "Running",
+          "title": {
+            "en": "Running",
+            "nl": "Cleaning"
+          }
+        },
+        {
+          "id": "Charging",
+          "title": {
+            "en": "Charging",
+            "nl": "Opladen"
+          }
+        },
+        {
+          "id": "standby",
+          "title": {
+            "en": "Standby",
+            "nl": "Standby"
+          }
+        },
+        {
+          "id": "Sleeping",
+          "title": {
+            "en": "Standby",
+            "nl": "Standby"
+          }
+        },
+        {
+          "id": "Recharge",
+          "title": {
+            "en": "Going to dock",
+            "nl": "Op weg naar dock"
+          }
+        },
+        {
+          "id": "completed",
+          "title": {
+            "en": "Docked and charged",
+            "nl": "In dock en opgeladen"
+          }
+        }
+      ],
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_work_status_changed",
+            "title": {
+              "en": "Work status changed",
+              "nl": "Werk status veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_work_status",
+                "title": {
+                  "en": "Work status",
+                  "nl": "Werk status"
+                },
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "measure_error": {
+      "type": "enum",
+      "title": {
+        "en": "Errors",
+        "nl": "Errors"
+      },
+      "uiComponent": "sensor",
+      "icon": "assets/icons/exclamation-triangle-fill.svg",
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "no_error",
+          "title": {
+            "en": "No error",
+            "nl": "Geen error"
+          }
+        },
+        {
+          "id": "Wheel_stuck",
+          "title": {
+            "en": "Wheel stuck",
+            "nl": "Wiel zit vast"
+          }
+        },
+        {
+          "id": "R_brush_stuck",
+          "title": {
+            "en": "Brush stuck",
+            "nl": "Borstel zit vast"
+          }
+        },
+        {
+          "id": "Crash_bar_stuck",
+          "title": {
+            "en": "Crash bar stuck",
+            "nl": "Crash balk zit vast"
+          }
+        },
+        {
+          "id": "sensor_dirty",
+          "title": {
+            "en": "Sensor dirty",
+            "nl": "Sensor vies"
+          }
+        },
+        {
+          "id": "N_enough_pow",
+          "title": {
+            "en": "Not enough power",
+            "nl": "Niet genoeg power"
+          }
+        },
+        {
+          "id": "Stuck_5_min",
+          "title": {
+            "en": "Stuck 5 minutes",
+            "nl": "Vast 5 minuten"
+          }
+        },
+        {
+          "id": "Fan_stuck",
+          "title": {
+            "en": "Fan stuck",
+            "nl": "Ventilator zit vast"
+          }
+        },
+        {
+          "id": "S_brush_stuck",
+          "title": {
+            "en": "Brush stuck",
+            "nl": "Borstel zit vast"
+          }
+        }
+      ],
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_error_changed",
+            "title": {
+              "en": "Errors changed",
+              "nl": "Errors veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_error",
+                "title": {
+                  "en": "Errors",
+                  "nl": "Errors"
+                },
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      }
     }
   }
 }
