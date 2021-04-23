@@ -1,11 +1,17 @@
-Device ID: bf80fbdb4943dcea48ngjd
-Local Key: 85d242da34f8b0d5
-188.6.44.109
-
 {
     "id": "G_SERIES",
     "class": "vacuumcleaner",
-    "capabilities": [],
+    "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
     "energy": {
       "batteries": ["INTERNAL"]
     },
@@ -45,7 +51,17 @@ Local Key: 85d242da34f8b0d5
 {
     "id": "S_SERIES",
     "class": "vacuumcleaner",
-    "capabilities": [],
+    "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
     "energy": {
       "batteries": ["INTERNAL"]
     },
@@ -85,7 +101,17 @@ Local Key: 85d242da34f8b0d5
   {
     "id": "C_SERIES",
     "class": "vacuumcleaner",
-    "capabilities": [],
+    "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
     "energy": {
       "batteries": ["INTERNAL"]
     },

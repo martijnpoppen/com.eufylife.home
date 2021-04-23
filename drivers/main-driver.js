@@ -16,7 +16,8 @@ module.exports = class mainDriver extends Homey.Driver {
             this.config = {
                 deviceId: data.deviceId,
                 localKey: data.localKey,
-                ip: data.ipAddress
+                ip: data.ipAddress,
+                port: 6668
             };
 
             this.homey.app.log(`[Driver] - got config`, this.config);
@@ -27,8 +28,8 @@ module.exports = class mainDriver extends Homey.Driver {
         });
 
         session.setHandler("list_devices", async () => {
+            const deviceType = this.deviceType();
             let results = [];
-
             let pairedDriverDevices = [];
 
             this.homey.app.getDevices().forEach((device) => {
@@ -39,7 +40,7 @@ module.exports = class mainDriver extends Homey.Driver {
             this.homey.app.log(`[Driver] ${this.id} - pairedDriverDevices`, pairedDriverDevices);
             if(!pairedDriverDevices.includes(this.config.deviceId)) {
                 results.push({
-                    name: `Eufy Robovac - ${this.id}`,
+                    name: `Eufy Robovac - ${deviceType}`,
                     data: {
                         id: `${this.config.deviceId}-${this.config.localKey}`,
                     },

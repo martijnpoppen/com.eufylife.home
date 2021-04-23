@@ -16,11 +16,15 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async onSettings({ oldSettings, newSettings, changedKeys }) {
+        this.homey.app.log(`[Device] ${this.getName()} - oldSettings`, oldSettings);
+        this.homey.app.log(`[Device] ${this.getName()} - newSettings`, newSettings);
+        this.eufyRoboVac.disconnect();
+
         if( this.onPollInterval ) {
             clearInterval(this.onPollInterval);
         }
 
-        await this.initApi();
+        await this.initApi(newSettings);
         await this.checkCapabilities();
         await this.setCapabilityValuesInterval();
       }
@@ -31,20 +35,16 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
-    async initApi() {
+    async initApi(overrideSettings = null) {
         try {
-            const settings = this.getSettings();  
-            this.homey.app.log("settings", settings)
-            this.config = {
-                deviceId: settings.deviceId,
-                localKey: settings.localKey,
-                ip: settings.ip,
-                port: settings.port
-            };
+            let {deviceId, localKey, ip, port, debug_log} = overrideSettings ? overrideSettings : this.getSettings();  
+            this.homey.app.log(`[Device] ${this.getName()} - getSettings`, this.getSettings(), overrideSettings);
+
+            this.config = { deviceId, localKey, ip, port };
 
             this.homey.app.log(`[Device] ${this.getName()} - initApi`);
 
-            this.eufyRoboVac = new RoboVac(this.config, true)
+            this.eufyRoboVac = new RoboVac(this.config, debug_log)
             await this.eufyRoboVac.getStatuses();
             await this.eufyRoboVac.formatStatus()
         } catch (error) {
@@ -97,6 +97,7 @@ module.exports = class mainDevice extends Homey.Device {
             this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - errors`, errors);
 
             await this.setCapabilityValue('measure_battery', parseInt(batteryLevel));
+            await this.setCapabilityValue('alarm_battery', parseInt(batteryLevel) < 15);
             await this.setCapabilityValue('measure_is_charging', workStatus === WorkStatus.CHARGING);
             await this.setCapabilityValue('measure_recharge_needed', workStatus === WorkStatus.RECHARGE_NEEDED);
             await this.setCapabilityValue('measure_docked', currentState === 'docked');
@@ -133,22 +134,22 @@ module.exports = class mainDevice extends Homey.Device {
         try {
             switch (value) {
               case VACUUMCLEANER_STATE.CLEANING:
-                return this.eufyRoboVac.startCleaning();
+                return await this.eufyRoboVac.startCleaning();
               case VACUUMCLEANER_STATE.SPOT_CLEANING:
-                return this.eufyRoboVac.setWorkMode(WorkMode.SPOT)
+                  await this.eufyRoboVac.play();
+                return await this.eufyRoboVac.setWorkMode(WorkMode.SMALL_ROOM)
               case VACUUMCLEANER_STATE.DOCKED:
-                return this.eufyRoboVac.goHome();
+                return await this.eufyRoboVac.goHome();
               case VACUUMCLEANER_STATE.CHARGING:
-                return this.eufyRoboVac.goHome();
+                return await this.eufyRoboVac.goHome();
               case VACUUMCLEANER_STATE.STOPPED:
-                return this.eufyRoboVac.pause();
+                return await this.eufyRoboVac.pause();
               default:
                 this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => received unknown value:`, value);
             }
           } catch (err) {
             this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => error`, err);
             this.log('_onVacuumCapabilityChanged() -> error', err);
-            return Promise.reject(new Error(Homey.__('error.failed_state_change')));
         }
     }
 }
