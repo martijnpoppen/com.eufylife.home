@@ -14,9 +14,12 @@ module.exports = class mainDriver extends Homey.Driver {
     async onPair(session) {
         session.setHandler("login", async (data) => {
             this.config = {
-                deviceId: data.username,
-                localKey: data.password
+                deviceId: data.deviceId,
+                localKey: data.localKey,
+                ip: data.ipAddress
             };
+
+            this.homey.app.log(`[Driver] - got config`, this.config);
 
             this.eufyRoboVac = new RoboVac(this.config, true)
             return await this.eufyRoboVac.getStatuses();
@@ -35,7 +38,7 @@ module.exports = class mainDriver extends Homey.Driver {
             this.homey.app.log(`[Driver] ${this.id} - pairedDriverDevices`, pairedDriverDevices);
             if(!pairedDriverDevices.includes(this.config.deviceId)) {
                 results.push({
-                    name: this.id,
+                    name: `Eufy Robovac - ${this.id}`,
                     data: {
                         id: `${this.config.deviceId}-${this.config.localKey}`,
                     },
@@ -44,6 +47,8 @@ module.exports = class mainDriver extends Homey.Driver {
                     }
                 });
             }
+
+            await this.eufyRoboVac.disconnect();
 
             this.homey.app.log("Found devices - ", results);
 

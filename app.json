@@ -36,9 +36,7 @@
       "robot"
     ]
   },
-  "category": [
-    "appliances"
-  ],
+  "category": ["appliances"],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -78,17 +76,192 @@
   "source": "https://github.com/martijnpoppen/com.niu.mobility",
   "homeyCommunityTopicId": 46185,
   "support": "https://community.athom.com/t/app-niu/46185",
+  "flow": {
+    "triggers": [
+      {
+        "id": "measure_work_mode_changed",
+        "title": {
+          "en": "Work mode has changed to",
+          "nl": "Werk modus is veranderd naar"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "capabilities=measure_work_mode"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "auto",
+                "title": {
+                  "en": "Auto",
+                  "nl": "Auto"
+                }
+              },
+              {
+                "id": "Nosweep",
+                "title": {
+                  "en": "No Sweep",
+                  "nl": "No Sweep"
+                }
+              },
+              {
+                "id": "SmallRoom",
+                "title": {
+                  "en": "Small Room",
+                  "nl": "Small Room"
+                }
+              },
+              {
+                "id": "Edge",
+                "title": {
+                  "en": "Edge",
+                  "nl": "Hoek"
+                }
+              },
+              {
+                "id": "Spot",
+                "title": {
+                  "en": "Spot",
+                  "nl": "Vlek"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "measure_work_mode_is",
+        "title": {
+          "en": "Work mode !{{is|is not}}",
+          "nl": "Werk modus !{{is|is niet}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "capabilities=measure_work_mode"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "auto",
+                "title": {
+                  "en": "Auto",
+                  "nl": "Auto"
+                }
+              },
+              {
+                "id": "Nosweep",
+                "title": {
+                  "en": "No Sweep",
+                  "nl": "No Sweep"
+                }
+              },
+              {
+                "id": "SmallRoom",
+                "title": {
+                  "en": "Small Room",
+                  "nl": "Small Room"
+                }
+              },
+              {
+                "id": "Edge",
+                "title": {
+                  "en": "Edge",
+                  "nl": "Hoek"
+                }
+              },
+              {
+                "id": "Spot",
+                "title": {
+                  "en": "Spot",
+                  "nl": "Vlek"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "measure_work_mode_set",
+        "title": {
+          "en": "Work mode !{{is|is not}}",
+          "nl": "Werk modus !{{is|is niet}}"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "capabilities=measure_work_mode"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "auto",
+                "title": {
+                  "en": "Auto",
+                  "nl": "Auto"
+                }
+              },
+              {
+                "id": "Nosweep",
+                "title": {
+                  "en": "No Sweep",
+                  "nl": "No Sweep"
+                }
+              },
+              {
+                "id": "SmallRoom",
+                "title": {
+                  "en": "Small Room",
+                  "nl": "Small Room"
+                }
+              },
+              {
+                "id": "Edge",
+                "title": {
+                  "en": "Edge",
+                  "nl": "Hoek"
+                }
+              },
+              {
+                "id": "Spot",
+                "title": {
+                  "en": "Spot",
+                  "nl": "Vlek"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "id": "L_SERIES",
       "class": "vacuumcleaner",
       "capabilities": [
-        "measure_battery"
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_battery",
+        "measure_is_charging",
+        "measure_recharge_needed"
       ],
       "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
+        "batteries": ["INTERNAL"]
       },
       "name": {
         "en": "Eufy Robovac L-Series",
@@ -100,20 +273,13 @@
       },
       "pair": [
         {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "eufy.svg",
-            "usernameLabel": "Device ID",
-            "usernamePlaceholder": "Device ID",
-            "passwordLabel": "Local Key",
-            "passwordPlaceholder": "Local Key"
-          }
+          "id": "login_eufy"
         },
         {
           "id": "list_devices",
           "template": "list_devices",
           "navigation": {
+            "prev": "login_eufy",
             "next": "add_devices"
           }
         },
@@ -140,8 +306,131 @@
             "nl": "Local Key"
           },
           "value": ""
+        },
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "IP Address",
+            "nl": "IP Adres"
+          },
+          "value": ""
         }
       ]
     }
-  ]
+  ],
+  "capabilities": {
+    "measure_is_charging": {
+      "type": "boolean",
+      "title": {
+        "en": "Is Charging",
+        "nl": "Opladen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/battery-charging.svg",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_is_charging_changed",
+            "title": {
+              "en": "Charging has changed",
+              "nl": "Opladen is veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_is_charging",
+                "title": {
+                  "en": "Is Charging",
+                  "nl": "Opladen"
+                },
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "measure_recharge_needed": {
+      "type": "boolean",
+      "title": {
+        "en": "Recharge needed",
+        "nl": "Opladen vereist"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/battery-half.svg",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_recharge_needed_changed",
+            "title": {
+              "en": "Recharge needed has changed",
+              "nl": "Opladen vereist is veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_recharge_needed",
+                "title": {
+                  "en": "Recharge needed",
+                  "nl": "Opladen vereist"
+                },
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "measure_work_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Work mode",
+        "nl": "Werk modus"
+      },
+      "uiComponent": "sensor",
+      "icon": "assets/icons/droplet-half.svg",
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "nl": "Auto"
+          }
+        },
+        {
+          "id": "Nosweep",
+          "title": {
+            "en": "No Sweep",
+            "nl": "Niet dweilen"
+          }
+        },
+        {
+          "id": "SmallRoom",
+          "title": {
+            "en": "Small Room",
+            "nl": "Kleine kamer"
+          }
+        },
+        {
+          "id": "Edge",
+          "title": {
+            "en": "Edge",
+            "nl": "Hoek"
+          }
+        },
+        {
+          "id": "Spot",
+          "title": {
+            "en": "Spot",
+            "nl": "Vlek"
+          }
+        }
+      ]
+    }
+  }
 }
