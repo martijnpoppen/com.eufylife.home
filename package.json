@@ -5,8 +5,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/martijnpoppen/com.eufylife.home"
-  },
-  "dependencies": {
-    "eufy-robovac": "^1.4.3"
   }
 }

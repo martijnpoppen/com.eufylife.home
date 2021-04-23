@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -73,11 +73,11 @@
     }
   },
   "bugs": {
-    "url": "https://community.athom.com/t/app-niu/46185"
+    "url": "https://community.athom.com/t/app-eufy-home/46610/"
   },
-  "source": "https://github.com/martijnpoppen/com.niu.mobility",
-  "homeyCommunityTopicId": 46185,
-  "support": "https://community.athom.com/t/app-niu/46185",
+  "source": "https://github.com/martijnpoppen/com.eufylife.home",
+  "homeyCommunityTopicId": 46610,
+  "support": "https://community.athom.com/t/app-eufy-home/46610/",
   "drivers": [
     {
       "id": "L_SERIES",
