@@ -1,17 +1,17 @@
 exports.GET_STATE = {
   Sleeping: "stopped",
   standby: "stopped",
+  Recharge: "docked",
   Running: "cleaning",
   spot: "spot_cleaning",
   completed: "docked",
   Charging: "charging",
 };
 
-exports.SET_STATE = {
-  stopped: "Sleeping",
-  stopped: "standby",
-  cleaning: "Running",
-  spot_cleaning: "spot",
-  docked: "completed",
-  charging: "Charging",
+exports.VACUUMCLEANER_STATE = {
+  STOPPED: 'stopped',
+  CLEANING: 'cleaning',
+  SPOT_CLEANING: 'spot_cleaning',
+  DOCKED: 'docked',
+  CHARGING: 'charging',
 };

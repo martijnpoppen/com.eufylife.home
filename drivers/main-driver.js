@@ -21,8 +21,9 @@ module.exports = class mainDriver extends Homey.Driver {
 
             this.homey.app.log(`[Driver] - got config`, this.config);
 
-            this.eufyRoboVac = new RoboVac(this.config, true)
-            return await this.eufyRoboVac.getStatuses();
+            this.eufyRoboVac = new RoboVac(this.config, false)
+            await this.eufyRoboVac.getStatuses();
+            return await this.eufyRoboVac.formatStatus();
         });
 
         session.setHandler("list_devices", async () => {
