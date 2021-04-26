@@ -1,5 +1,3 @@
-Eufy Home
-
 Adds support for Eufy Robovac
 
 Retrieve information from you Eufy Robovac. 
