@@ -100,7 +100,7 @@ module.exports = class mainDevice extends Homey.Device {
             await this.setCapabilityValue('alarm_battery', parseInt(batteryLevel) < 15);
             await this.setCapabilityValue('measure_is_charging', workStatus === WorkStatus.CHARGING);
             await this.setCapabilityValue('measure_recharge_needed', workStatus === WorkStatus.RECHARGE_NEEDED);
-            await this.setCapabilityValue('measure_docked', currentState === 'docked');
+            await this.setCapabilityValue('measure_docked', currentState === 'docked' || currentState === 'stopped');
             await this.setCapabilityValue('measure_error', errors === 0 ? 'no_error' : errors);
             await this.setCapabilityValue('vacuumcleaner_state', currentState);
             await this.setCapabilityValue('measure_work_mode', workMode);
