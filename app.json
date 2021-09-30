@@ -80,6 +80,98 @@
   "support": "https://community.athom.com/t/app-eufy-home/46610/",
   "drivers": [
     {
+      "id": "X_SERIES",
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "name": {
+        "en": "Eufy Robovac X-Series",
+        "nl": "Eufy Robovac X-Series"
+      },
+      "images": {
+        "large": "drivers/X_SERIES/assets/images/large.jpg",
+        "small": "drivers/X_SERIES/assets/images/small.jpg"
+      },
+      "pair": [
+        {
+          "id": "login_eufy"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_eufy",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deviceId",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "text",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
+        },
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "IP Address",
+            "nl": "IP Adres"
+          },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port",
+            "nl": "Port"
+          },
+          "value": 6668
+        },
+        {
+          "id": "debug_log",
+          "type": "checkbox",
+          "label": {
+            "en": "Debug Logs",
+            "nl": "Debug Logs"
+          },
+          "value": false
+        }
+      ]
+    },
+    {
       "id": "L_SERIES",
       "class": "vacuumcleaner",
       "capabilities": [
