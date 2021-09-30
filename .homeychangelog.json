@@ -34,5 +34,8 @@
   },
   "1.1.5": {
     "en": "FIX: issue when no data is reported from the Robovac"
+  },
+  "1.2.0": {
+    "en": "NEW: Add Eufy Robovac X-Series"
   }
 }
