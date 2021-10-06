@@ -86,6 +86,7 @@
         "vacuumcleaner_state",
         "measure_work_mode",
         "measure_work_status",
+        "measure_clean_speed",
         "measure_battery",
         "alarm_battery",
         "measure_is_charging",
@@ -625,7 +626,7 @@
             },
             "tokens": [
               {
-                "name": "measure_docked_needed",
+                "name": "measure_docked",
                 "title": {
                   "en": "Docked",
                   "nl": "In Dock"
@@ -871,6 +872,38 @@
                 "title": {
                   "en": "Errors",
                   "nl": "Errors"
+                },
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "measure_clean_speed": {
+      "type": "string",
+      "title": {
+        "en": "Clean speed",
+        "nl": "Zuigkracht"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/speedometer.svg",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_clean_speed_changed",
+            "title": {
+              "en": "Clean speed has changed",
+              "nl": "Zuigkrach is veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_clean_speed",
+                "title": {
+                  "en": "Clean speed",
+                  "nl": "Zuigkracht"
                 },
                 "type": "string"
               }
