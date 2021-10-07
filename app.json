@@ -881,22 +881,52 @@
       }
     },
     "measure_clean_speed": {
-      "type": "string",
+      "type": "enum",
       "title": {
         "en": "Clean speed",
         "nl": "Zuigkracht"
       },
       "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
+      "setable": true,
+      "uiComponent": "picker",
       "icon": "assets/icons/speedometer.svg",
+      "values": [
+        {
+          "id": "Quiet",
+          "title": {
+            "en": "Pure",
+            "nl": "Pure"
+          }
+        },
+        {
+          "id": "Standard",
+          "title": {
+            "en": "Power",
+            "nl": "Krachtig"
+          }
+        },
+        {
+          "id": "Turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo"
+          }
+        },
+        {
+          "id": "Max",
+          "title": {
+            "en": "Max",
+            "nl": "Max"
+          }
+        }
+      ],
       "$flow": {
         "triggers": [
           {
             "id": "measure_clean_speed_changed",
             "title": {
               "en": "Clean speed has changed",
-              "nl": "Zuigkrach is veranderd"
+              "nl": "Zuigkracht is veranderd"
             },
             "tokens": [
               {
@@ -912,5 +942,57 @@
         ]
       }
     }
+  },
+  "flow": {
+      "actions": [
+        {
+            "id": "action_measure_clean_speed",
+            "title": {
+                "en": "Set clean speed",
+                "nl": "Stel zuigkracht in"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "capabilities=measure_clean_speed"
+              },
+              {
+                "name": "action_measure_clean_speed_type",
+                "type": "dropdown",
+                "values": [
+                    {
+                      "id": "Quiet",
+                      "label": {
+                        "en": "Pure",
+                        "nl": "Pure"
+                      }
+                    },
+                    {
+                      "id": "Standard",
+                      "label": {
+                        "en": "Power",
+                        "nl": "Krachtig"
+                      }
+                    },
+                    {
+                      "id": "Turbo",
+                      "label": {
+                        "en": "Turbo",
+                        "nl": "Turbo"
+                      }
+                    },
+                    {
+                      "id": "Max",
+                      "label": {
+                        "en": "Max",
+                        "nl": "Max"
+                      }
+                    }
+                  ]
+              }
+            ]
+          }
+      ]
   }
 }

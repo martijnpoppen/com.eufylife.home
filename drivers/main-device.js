@@ -1,7 +1,7 @@
 const Homey = require('homey');
 const { RoboVac, WorkStatus, WorkMode } = require('../lib/eufy-robovac');
 const { sleep } = require('../lib/helpers');
-const { GET_STATE, SET_STATE, VACUUMCLEANER_STATE } = require('../constants/state.constants');
+const { GET_STATE, VACUUMCLEANER_STATE } = require('../constants/state.constants');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
@@ -13,6 +13,11 @@ module.exports = class mainDevice extends Homey.Device {
         await this.setCapabilityValuesInterval();
 
         this.registerCapabilityListener('vacuumcleaner_state', this._onVacuumCapabilityChanged.bind(this));
+
+        if(this.hasCapability('measure_clean_speed')) {
+            this.registerCapabilityListener('measure_clean_speed', this._onCleanSpeedChanged.bind(this));
+            await this.registerFlowAction('measure_clean_speed', '_onCleanSpeedChanged');
+        }
     }
 
     async onSettings({ oldSettings, newSettings, changedKeys }) {
@@ -167,5 +172,26 @@ module.exports = class mainDevice extends Homey.Device {
             this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => error`, err);
             this.log('_onVacuumCapabilityChanged() -> error', err);
         }
+    }
+
+    async _onCleanSpeedChanged(value) {
+        this.homey.app.log(`[Device] ${this.getName()} - _onCleanSpeedChanged =>`, value);
+        try {
+            return await this.eufyRoboVac.setCleanSpeed(value) 
+          } catch (err) {
+            this.homey.app.log(`[Device] ${this.getName()} - _onCleanSpeedChanged => error`, err);
+            this.log('_onCleanSpeedChanged() -> error', err);
+        }
+    }
+
+    async registerFlowAction(capability, methodName) {
+        const action = `action_${capability}`
+        const action_arg = `action_${capability}_type`
+        const flow_actions = [];
+        flow_actions[action] = this.homey.flow.getActionCard(action);
+        flow_actions[action].registerRunListener(async (args) => {
+           await args.device[methodName]( args[action_arg], null );
+           return await args.device.setCapabilityValue( capability, args[action_arg]);
+        });
     }
 }
