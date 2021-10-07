@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -944,55 +944,55 @@
     }
   },
   "flow": {
-      "actions": [
-        {
-            "id": "action_measure_clean_speed",
-            "title": {
-                "en": "Set clean speed",
-                "nl": "Stel zuigkracht in"
-            },
-            "args": [
+    "actions": [
+      {
+        "id": "action_measure_clean_speed",
+        "title": {
+          "en": "Set clean speed",
+          "nl": "Stel zuigkracht in"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "capabilities=measure_clean_speed"
+          },
+          {
+            "name": "action_measure_clean_speed_type",
+            "type": "dropdown",
+            "values": [
               {
-                "name": "device",
-                "type": "device",
-                "filter": "capabilities=measure_clean_speed"
+                "id": "Quiet",
+                "label": {
+                  "en": "Pure",
+                  "nl": "Pure"
+                }
               },
               {
-                "name": "action_measure_clean_speed_type",
-                "type": "dropdown",
-                "values": [
-                    {
-                      "id": "Quiet",
-                      "label": {
-                        "en": "Pure",
-                        "nl": "Pure"
-                      }
-                    },
-                    {
-                      "id": "Standard",
-                      "label": {
-                        "en": "Power",
-                        "nl": "Krachtig"
-                      }
-                    },
-                    {
-                      "id": "Turbo",
-                      "label": {
-                        "en": "Turbo",
-                        "nl": "Turbo"
-                      }
-                    },
-                    {
-                      "id": "Max",
-                      "label": {
-                        "en": "Max",
-                        "nl": "Max"
-                      }
-                    }
-                  ]
+                "id": "Standard",
+                "label": {
+                  "en": "Power",
+                  "nl": "Krachtig"
+                }
+              },
+              {
+                "id": "Turbo",
+                "label": {
+                  "en": "Turbo",
+                  "nl": "Turbo"
+                }
+              },
+              {
+                "id": "Max",
+                "label": {
+                  "en": "Max",
+                  "nl": "Max"
+                }
               }
             ]
           }
-      ]
+        ]
+      }
+    ]
   }
 }
