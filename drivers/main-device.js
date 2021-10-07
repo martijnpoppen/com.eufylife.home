@@ -116,7 +116,7 @@ module.exports = class mainDevice extends Homey.Device {
                 await this.setCapabilityValue('measure_work_mode', workMode);
             }
 
-            if(cleanSpeed) {
+            if(cleanSpeed && this.hasCapability('measure_clean_speed')) {
                 await this.setCapabilityValue('measure_clean_speed', `${cleanSpeed}`);
             }
             
