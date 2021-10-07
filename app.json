@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
