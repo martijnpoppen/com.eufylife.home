@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -682,6 +682,20 @@
           "title": {
             "en": "Spot",
             "nl": "Vlek"
+          }
+        },
+        {
+          "id": "zone",
+          "title": {
+            "en": "Zone",
+            "nl": "Zone"
+          }
+        },
+        {
+          "id": "room",
+          "title": {
+            "en": "Room",
+            "nl": "Room"
           }
         }
       ],
