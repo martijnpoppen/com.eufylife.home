@@ -151,13 +151,17 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async _onVacuumCapabilityChanged(value) {
+        const driverName = this.driver.manifest.name;
         this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged =>`, value);
         try {
             switch (value) {
               case VACUUMCLEANER_STATE.CLEANING:
                 return await this.eufyRoboVac.startCleaning();
               case VACUUMCLEANER_STATE.SPOT_CLEANING:
-                  await this.eufyRoboVac.play();
+                await this.eufyRoboVac.play();
+                if(driverName === 'X_Series') {
+                    return await this.eufyRoboVac.setWorkMode(WorkMode.ROOM)
+                }
                 return await this.eufyRoboVac.setWorkMode(WorkMode.SMALL_ROOM)
               case VACUUMCLEANER_STATE.DOCKED:
                 return await this.eufyRoboVac.goHome();
