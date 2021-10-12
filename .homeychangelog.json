@@ -58,5 +58,8 @@
   },
   "1.5.0": {
     "en": "NEW: add zone and room to WorkMode for X-Series"
+  },
+  "1.5.1": {
+    "en": "App branding"
   }
 }
