@@ -9,13 +9,6 @@ Current features:
 - Display battery charging state.
 - Find robot
 
-
-Support: 
-- C Series
-- G Series
-- L Series
-- S Series
-
 Is your Robovac not listed?
 Feel free to ask in the community and I'll add it.
 
