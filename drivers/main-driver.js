@@ -23,7 +23,11 @@ module.exports = class mainDriver extends Homey.Driver {
             this.homey.app.log(`[Driver] - got config`, this.config);
 
             this.eufyRoboVac = new RoboVac(this.config, false)
-            await this.eufyRoboVac.getStatuses();
+            this.homey.app.log(`[Driver] - eufyRoboVac`, this.eufyRoboVac);
+
+            this.statuses = await this.eufyRoboVac.getStatuses();
+            this.homey.app.log(`[Driver] - statuses`, this.statuses);
+
             return await this.eufyRoboVac.formatStatus();
         });
 
