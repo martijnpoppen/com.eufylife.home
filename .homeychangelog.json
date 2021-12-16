@@ -61,5 +61,8 @@
   },
   "1.5.1": {
     "en": "App branding"
+  },
+  "1.5.2": {
+    "en": "FIX: add extra logs for debug purposes"
   }
 }
