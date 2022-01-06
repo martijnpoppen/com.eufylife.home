@@ -67,5 +67,8 @@
   },
   "1.5.3": {
     "en": "FIX: pairing for Eufy Robovac without Status"
+  },
+  "1.5.4": {
+    "en": "FIX: pairing for Eufy Robovac without Status"
   }
 }
