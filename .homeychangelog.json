@@ -70,5 +70,8 @@
   },
   "1.5.4": {
     "en": "FIX: pairing for Eufy Robovac without Status"
+  },
+  "1.5.5": {
+    "en": "FIX: paring errors when device not found"
   }
 }
