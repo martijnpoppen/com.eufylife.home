@@ -13,22 +13,27 @@ module.exports = class mainDriver extends Homey.Driver {
 
     async onPair(session) {
         session.setHandler("login", async (data) => {
-            this.config = {
-                deviceId: data.deviceId,
-                localKey: data.localKey,
-                ip: data.ipAddress,
-                port: 6668
-            };
-
-            this.homey.app.log(`[Driver] - got config`, this.config);
-
-            this.eufyRoboVac = new RoboVac(this.config, false)
-            this.homey.app.log(`[Driver] - eufyRoboVac`, this.eufyRoboVac);
-
-            this.statuses = await this.eufyRoboVac.getStatuses();
-            this.homey.app.log(`[Driver] - statuses`, this.statuses);
-
-            return await this.eufyRoboVac.formatStatus();
+            try {
+                this.config = {
+                    deviceId: data.deviceId,
+                    localKey: data.localKey,
+                    ip: data.ipAddress,
+                    port: 6668
+                };
+    
+                this.homey.app.log(`[Driver] - ${this.id} - Login with config`, this.config);
+    
+                this.eufyRoboVac = new RoboVac(this.config, false)
+                this.homey.app.log(`[Driver] - ${this.id} - Login succes: `, this.eufyRoboVac);
+    
+                this.statuses = await this.eufyRoboVac.getStatuses();
+                this.homey.app.log(`[Driver] - ${this.id} - Statuses`, this.statuses);
+    
+                return await this.eufyRoboVac.formatStatus();
+            } catch (error) {
+                this.homey.app.log(error);
+                return Promise.reject(new Error('Something went wrong. Make sure to set a static IP address and check you deviceID and LocalKey'));
+            }
         });
 
         session.setHandler("list_devices", async () => {
@@ -41,7 +46,7 @@ module.exports = class mainDriver extends Homey.Driver {
                 pairedDriverDevices.push(data.deviceId);
             });
 
-            this.homey.app.log(`[Driver] ${this.id} - pairedDriverDevices`, pairedDriverDevices);
+            this.homey.app.log(`[Driver] - ${this.id} - pairedDriverDevices`, pairedDriverDevices);
             if(!pairedDriverDevices.includes(this.config.deviceId)) {
                 results.push({
                     name: `Eufy Robovac - ${deviceType}`,
