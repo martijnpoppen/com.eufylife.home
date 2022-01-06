@@ -64,5 +64,8 @@
   },
   "1.5.2": {
     "en": "FIX: add extra logs for debug purposes"
+  },
+  "1.5.3": {
+    "en": "FIX: pairing for Eufy Robovac without Status"
   }
 }
