@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -969,7 +969,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "capabilities=measure_clean_speed"
+            "filter": "driver_id=X_SERIES&capabilities=measure_clean_speed"
           },
           {
             "name": "action_measure_clean_speed_type",
