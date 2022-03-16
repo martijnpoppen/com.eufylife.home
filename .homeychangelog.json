@@ -76,5 +76,8 @@
   },
   "1.5.6": {
     "en": "FIX: flowcard filters improved. Show correct cards on app page"
+  },
+  "1.5.7": {
+    "en": "FIX: timeout 30000s"
   }
 }
