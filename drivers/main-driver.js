@@ -29,7 +29,9 @@ module.exports = class mainDriver extends Homey.Driver {
                 this.statuses = await this.eufyRoboVac.getStatuses();
                 this.homey.app.log(`[Driver] - ${this.id} - Statuses`, this.statuses);
     
-                return await this.eufyRoboVac.formatStatus();
+                await this.eufyRoboVac.formatStatus();
+
+                return true
             } catch (error) {
                 this.homey.app.log(error);
                 return Promise.reject(new Error('Something went wrong. Make sure to set a static IP address and check you deviceID and LocalKey'));
