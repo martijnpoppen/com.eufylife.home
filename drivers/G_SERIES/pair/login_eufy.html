@@ -1,5 +1,5 @@
 <div class="hy-view visible" data-id="login_eufy" data-template-id="login_eufy">
-    <div class="hy-tmpl-login_eufy" id="16190758442170.4220669681218383">
+    <div class="hy-tmpl-login_eufy">
         <style type="text/css">
             .hy-tmpl-login_eufy {
                 height: 100%;
@@ -50,18 +50,18 @@
     </div>
 </form>
 <script type="text/javascript">!function () {
-    var e = document.getElementById("16190758442170.4220669681218383"),
+    var e = document.getElementById("login_eufy"),
         o = e.querySelector(".hy-tmpl-login_eufy-form"),
         r = e.querySelector(".hy-tmpl-login_eufy-logo"),
         l = e.querySelector('input[name="deviceId"]'),
         n = e.querySelector('input[name="localKey"]'),
         p = e.querySelector('input[name="ipAddress"]'),
         m = !1; 
-        Homey.setTitle(Homey.__("$tmpl.login_credentials.title")),
+        Homey.setTitle(Homey.__("$tmpl.login_eufy.title")),
         o.addEventListener("submit", function (e) { 
             if (e.preventDefault(), !m) { 
                 m = !0, 
-                Homey.showLoadingOverlay(Homey.__("$tmpl.login_credentials.loading")); 
+                Homey.showLoadingOverlay(Homey.__("$tmpl.login_eufy.loading")); 
                 var z = l.value, 
                 r = n.value,
                 q = p.value; 
@@ -72,7 +72,7 @@
                     } else if(z) {
                         Homey.nextView()
                     } else {
-                        Homey.error(Homey.__("$tmpl.login_credentials.invalid_credentials"))
+                        Homey.error(Homey.__("$tmpl.login_eufy.invalid_credentials"))
                     }
 
                     m = !1;
