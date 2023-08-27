@@ -79,5 +79,8 @@
   },
   "1.5.7": {
     "en": "FIX: timeout 30000s"
+  },
+  "1.6.0": {
+    "en": "NEW: force localKey as string"
   }
 }

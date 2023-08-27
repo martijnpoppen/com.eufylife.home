@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.5.7",
+  "version": "1.6.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -67,7 +67,7 @@
   },
   "contributing": {
     "donate": {
-"paypal": {
+      "paypal": {
         "username": "martijnpoppen"
       },
       "bunq": {
