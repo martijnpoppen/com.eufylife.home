@@ -82,5 +82,8 @@
   },
   "1.6.0": {
     "en": "NEW: force localKey as string"
+  },
+  "1.6.1": {
+    "en": "FIX: pairing"
   }
 }
