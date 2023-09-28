@@ -88,5 +88,8 @@
   },
   "1.6.2": {
     "en": "FIX: pairing"
+  },
+  "1.7.0": {
+    "en": "NEW: support X9"
   }
 }
