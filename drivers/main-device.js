@@ -42,10 +42,10 @@ module.exports = class mainDevice extends Homey.Device {
 
     async initApi(overrideSettings = null) {
         try {
-            let {deviceId, localKey, ip, port, debug_log} = overrideSettings ? overrideSettings : this.getSettings();  
+            let {deviceId, localKey, ip, port, debug_log, use_new_api} = overrideSettings ? overrideSettings : this.getSettings();  
             this.homey.app.log(`[Device] ${this.getName()} - getSettings`, this.getSettings(), overrideSettings);
 
-            this.config = { deviceId, localKey, ip, port };
+            this.config = { deviceId, localKey, ip, port, newAPI: use_new_api };
 
             this.homey.app.log(`[Device] ${this.getName()} - initApi`);
 

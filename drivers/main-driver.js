@@ -16,7 +16,7 @@ module.exports = class mainDriver extends Homey.Driver {
             try {
                 this.config = {
                     deviceId: data.deviceId,
-                    localKey: data.localKey,
+                    localKey: `${data.localKey}`,
                     ip: data.ipAddress,
                     port: 6668
                 };
