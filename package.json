@@ -1,13 +1,12 @@
 {
-    "name": "com.eufylife.home",
-    "version": "1.0.0",
-    "main": "app.js",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/martijnpoppen/com.eufylife.home"
-    },
-    "dependencies": {
-		"tuyapi": "^5.3.1"
-	}
+  "name": "com.eufylife.home",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martijnpoppen/com.eufylife.home"
+  },
+  "dependencies": {
+    "tuyapi": "^7.5.2"
   }
-  
+}
