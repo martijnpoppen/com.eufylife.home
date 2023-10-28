@@ -97,5 +97,8 @@
   },
   "1.7.2": {
     "en": "NEW: use Api V4 for Robovac X9"
+  },
+  "1.7.3": {
+    "en": "NEW: use API v4 for robovac x9"
   }
 }
