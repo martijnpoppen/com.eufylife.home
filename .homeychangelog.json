@@ -91,5 +91,8 @@
   },
   "1.7.0": {
     "en": "NEW: support X9"
+  },
+  "1.7.1": {
+    "en": "NEW: use Api V4 for Robovac X9"
   }
 }
