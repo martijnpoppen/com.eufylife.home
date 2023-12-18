@@ -100,5 +100,8 @@
   },
   "1.7.3": {
     "en": "NEW: use API v4 for robovac x9"
+  },
+  "1.7.4": {
+    "en": "NEW: try to support X9"
   }
 }
