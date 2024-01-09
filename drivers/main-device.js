@@ -7,10 +7,7 @@ module.exports = class mainDevice extends Homey.Device {
     async onInit() {
 		this.homey.app.log('[Device] - init =>', this.getName());
         this.homey.app.setDevices(this);
-        
-        await this.initApi();
-        await this.checkCapabilities();
-        await this.setCapabilityValuesInterval();
+        const settings = this.getSettings();
 
         this.registerCapabilityListener('vacuumcleaner_state', this._onVacuumCapabilityChanged.bind(this));
 
@@ -18,6 +15,17 @@ module.exports = class mainDevice extends Homey.Device {
             this.registerCapabilityListener('measure_clean_speed', this._onCleanSpeedChanged.bind(this));
             await this.registerFlowAction('measure_clean_speed', '_onCleanSpeedChanged');
         }
+        
+        
+        await this.checkCapabilities();
+        
+        if(!settings.ip.length) {
+            this.setUnavailable('No IP address set. Please set the local IP in the device settings');
+            return;
+        }
+
+        await this.initApi();
+        await this.setCapabilityValuesInterval();
     }
 
     async onSettings({ oldSettings, newSettings, changedKeys }) {
@@ -32,12 +40,19 @@ module.exports = class mainDevice extends Homey.Device {
         await this.initApi(newSettings);
         await this.checkCapabilities();
         await this.setCapabilityValuesInterval();
-      }
+    }
 
     onDeleted() {
         if( this.onPollInterval ) {
           clearInterval(this.onPollInterval);
         }
+    }
+
+    async onRepair(settings) {
+        this.homey.app.log(`[Device] ${this.getName()} - onRepair`);
+        await this.initApi(settings);
+        await this.checkCapabilities();
+        await this.setCapabilityValues();
     }
 
     async initApi(overrideSettings = null) {

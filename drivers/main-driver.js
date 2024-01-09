@@ -1,69 +1,102 @@
-const Homey = require("homey");
+const Homey = require('homey');
+const axios = require('axios');
 const { RoboVac } = require('../lib/eufy-robovac');
 
 module.exports = class mainDriver extends Homey.Driver {
     onInit() {
-        this.homey.app.log("[Driver] - init", this.id);
+        this.homey.app.log('[Driver] - init', this.id);
         this.homey.app.log(`[Driver] - version`, Homey.manifest.version);
     }
 
     deviceType() {
-        return "other";
+        return 'other';
     }
 
     async onPair(session) {
-        session.setHandler("login", async (data) => {
-            try {
-                this.config = {
-                    deviceId: data.deviceId,
-                    localKey: `${data.localKey}`,
-                    ip: data.ipAddress,
-                    port: 6668
-                };
-    
-                this.homey.app.log(`[Driver] - ${this.id} - Login with config`, this.config);
-    
-                this.eufyRoboVac = new RoboVac(this.config, false)
-                this.homey.app.log(`[Driver] - ${this.id} - Login succes: `, this.eufyRoboVac);
-    
-                this.statuses = await this.eufyRoboVac.getStatuses();
-                this.homey.app.log(`[Driver] - ${this.id} - Statuses`, this.statuses);
-    
-                await this.eufyRoboVac.formatStatus();
+        this.type = 'pair';
+        this.setPairingSession(session);
+    }
 
-                return true
-            } catch (error) {
-                this.homey.app.log(error);
-                return Promise.reject(new Error('Something went wrong. Make sure to set a static IP address and check you deviceID and LocalKey'));
+    async onRepair(session, device) {
+        this.type = 'repair';
+        this.setPairingSession(session, device);
+    }
+
+    async setPairingSession(session, device = null) {
+        session.setHandler('showView', async (view) => {
+            this.homey.app.log(`[Driver] ${this.id} - currentView:`, { view, type: this.type });
+
+            if (view === 'loading') {
+                if (device) {
+                    const settings = device.getSettings();
+                    const matchedDevice = this.devices.find((d) => d.settings.deviceId === settings.deviceId);
+
+                    if (matchedDevice) {
+                        await device.setSettings({
+                            deviceId: matchedDevice.settings.deviceId,
+                            localKey: matchedDevice.settings.localKey
+                        });
+
+                        await device.onRepair({
+                            ...settings,
+                            deviceId: matchedDevice.settings.deviceId,
+                            localKey: matchedDevice.settings.localKey
+                        });
+
+                        session.showView('done');
+                    } else {
+                        this.homey.app.log('Device not found - ', matchedDevice);
+                    }
+                }
             }
         });
 
-        session.setHandler("list_devices", async () => {
-            const deviceType = this.deviceType();
-            let results = [];
-            let pairedDriverDevices = [];
+        session.setHandler('login', async (data) => {
+            try {
+                const response = await axios
+                    .post(`${Homey.env.API_URL}/login`, {
+                        username: data.username,
+                        password: data.password
+                    })
+                    .catch(function (error) {
+                        console.log(JSON.stringify(error));
+                        throw new Error(error);
+                    });
 
-            this.homey.app.getDevices().forEach((device) => {
-                const data = device.getData();
-                pairedDriverDevices.push(data.deviceId);
-            });
+                console.log(response.data);
 
-            this.homey.app.log(`[Driver] - ${this.id} - pairedDriverDevices`, pairedDriverDevices);
-            if(!pairedDriverDevices.includes(this.config.deviceId)) {
-                results.push({
-                    name: `Eufy Robovac - ${deviceType}`,
-                    data: {
-                        id: `${this.config.deviceId}-${this.config.localKey}`,
-                    },
-                    settings: {
-                        ...this.config
-                    }
+                if (typeof response.data === 'string') {
+                    throw new Error(response.data);
+                }
+
+                this.devices = [];
+
+                response.data.forEach((device) => {
+                    this.devices.push({
+                        name: `${device.name}`,
+                        data: {
+                            id: `${device.devId}-${device.localKey}`
+                        },
+                        settings: {
+                            deviceId: device.devId,
+                            localKey: device.localKey,
+                            ip: '',
+                            port: 6668
+                        }
+                    });
                 });
+
+                return true;
+            } catch (error) {
+                console.log(error);
+                throw new Error(error);
             }
+        });
 
-            await this.eufyRoboVac.disconnect();
+        session.setHandler('list_devices', async () => {
+            let results = this.devices;
 
-            this.homey.app.log("Found devices - ", results);
+            this.homey.app.log('Found devices - ', results);
 
             return results;
         });
