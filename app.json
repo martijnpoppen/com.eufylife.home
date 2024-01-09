@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.7.4",
+  "version": "1.8.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -36,7 +36,9 @@
       "robot"
     ]
   },
-  "category": ["appliances"],
+  "category": [
+    "appliances"
+  ],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -96,7 +98,9 @@
         "measure_error"
       ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac X-Series",
@@ -115,10 +119,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -143,10 +155,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -230,7 +250,9 @@
         "measure_error"
       ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac L-Series",
@@ -249,10 +271,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -277,10 +307,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -364,7 +402,9 @@
         "measure_error"
       ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac G-Series",
@@ -383,10 +423,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -411,10 +459,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -498,7 +554,9 @@
         "measure_error"
       ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac S-Series",
@@ -517,10 +575,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -545,10 +611,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -632,7 +706,9 @@
         "measure_error"
       ],
       "energy": {
-        "batteries": ["INTERNAL"]
+        "batteries": [
+          "INTERNAL"
+        ]
       },
       "name": {
         "en": "Eufy Robovac C-Series",
@@ -651,10 +727,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {
@@ -679,10 +763,18 @@
             "title": {
               "en": "Login with your Eufy account"
             },
-            "usernameLabel": { "en": "E-mail address" },
-            "usernamePlaceholder": { "en": "john@doe.com" },
-            "passwordLabel": { "en": "Password" },
-            "passwordPlaceholder": { "en": "Password" }
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
           }
         },
         {

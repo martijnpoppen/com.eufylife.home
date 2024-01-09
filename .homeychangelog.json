@@ -103,5 +103,8 @@
   },
   "1.7.4": {
     "en": "NEW: try to support X9"
+  },
+  "1.8.0": {
+    "en": "NEW: add Login instead of deviceId/Localkey"
   }
 }
