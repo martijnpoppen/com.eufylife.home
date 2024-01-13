@@ -106,5 +106,8 @@
   },
   "1.8.0": {
     "en": "NEW: add Login instead of deviceId/Localkey"
+  },
+  "1.8.1": {
+    "en": "FIX: disconnect error"
   }
 }
