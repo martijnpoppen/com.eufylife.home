@@ -1,6 +1,6 @@
 {
   "id": "com.eufylife.home",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -223,15 +223,6 @@
             "nl": "Debug Logs"
           },
           "value": false
-        },
-        {
-          "id": "use_new_api",
-          "type": "checkbox",
-          "label": {
-            "en": "Use new API",
-            "nl": "Use new API"
-          },
-          "value": false
         }
       ]
     },
@@ -373,15 +364,6 @@
           "label": {
             "en": "Debug Logs",
             "nl": "Debug Logs"
-          },
-          "value": false
-        },
-        {
-          "id": "use_new_api",
-          "type": "checkbox",
-          "label": {
-            "en": "Use new API",
-            "nl": "Use new API"
           },
           "value": false
         }
@@ -527,15 +509,6 @@
             "nl": "Debug Logs"
           },
           "value": false
-        },
-        {
-          "id": "use_new_api",
-          "type": "checkbox",
-          "label": {
-            "en": "Use new API",
-            "nl": "Use new API"
-          },
-          "value": false
         }
       ]
     },
@@ -679,15 +652,6 @@
             "nl": "Debug Logs"
           },
           "value": false
-        },
-        {
-          "id": "use_new_api",
-          "type": "checkbox",
-          "label": {
-            "en": "Use new API",
-            "nl": "Use new API"
-          },
-          "value": false
         }
       ]
     },
@@ -829,15 +793,6 @@
           "label": {
             "en": "Debug Logs",
             "nl": "Debug Logs"
-          },
-          "value": false
-        },
-        {
-          "id": "use_new_api",
-          "type": "checkbox",
-          "label": {
-            "en": "Use new API",
-            "nl": "Use new API"
           },
           "value": false
         }
