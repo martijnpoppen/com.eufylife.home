@@ -118,5 +118,8 @@
   },
   "1.8.4": {
     "en": "FIX: api url"
+  },
+  "1.8.5": {
+    "en": "FIX: settings timeout issue"
   }
 }
