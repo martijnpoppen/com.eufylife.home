@@ -121,5 +121,8 @@
   },
   "1.8.5": {
     "en": "FIX: settings timeout issue"
+  },
+  "1.8.6": {
+    "en": "FIX: minor code improvements"
   }
 }
