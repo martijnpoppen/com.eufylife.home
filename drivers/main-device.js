@@ -29,16 +29,17 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async onSettings({ oldSettings, newSettings, changedKeys }) {
-        this.homey.app.log(`[Device] ${this.getName()} - oldSettings`, oldSettings);
         this.homey.app.log(`[Device] ${this.getName()} - newSettings`, newSettings);
-        this.eufyRoboVac.disconnect();
+
+        if(this.eufyRoboVac) {
+            this.eufyRoboVac.disconnect();
+        }
 
         if( this.onPollInterval ) {
             clearInterval(this.onPollInterval);
         }
 
         await this.initApi(newSettings);
-        await this.checkCapabilities();
         await this.setCapabilityValuesInterval();
     }
 
@@ -57,14 +58,14 @@ module.exports = class mainDevice extends Homey.Device {
 
     async initApi(overrideSettings = null) {
         try {
-            let {deviceId, localKey, ip, port, debug_log, use_new_api} = overrideSettings ? overrideSettings : this.getSettings();  
-            this.homey.app.log(`[Device] ${this.getName()} - getSettings`, this.getSettings(), overrideSettings);
+            let {deviceId, localKey, ip, port} = overrideSettings ? overrideSettings : this.getSettings();  
+            this.homey.app.log(`[Device] ${this.getName()} - initApi settings`, overrideSettings ? overrideSettings : this.getSettings());
 
-            this.config = { deviceId, localKey, ip, port, newAPI: use_new_api };
+            this.config = { deviceId, localKey, ip, port, newApi: false };
 
             this.homey.app.log(`[Device] ${this.getName()} - initApi`);
 
-            this.eufyRoboVac = new RoboVac(this.config, debug_log)
+            this.eufyRoboVac = new RoboVac(this.config, true, 5)
             await this.eufyRoboVac.getStatuses();
             await this.eufyRoboVac.formatStatus()
         } catch (error) {
