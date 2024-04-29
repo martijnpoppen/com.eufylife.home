@@ -39,8 +39,8 @@ module.exports = class mainDevice extends Homey.Device {
             clearInterval(this.onPollInterval);
         }
 
-        await this.initApi(newSettings);
-        await this.setCapabilityValuesInterval();
+        this.initApi(newSettings);
+        this.setCapabilityValuesInterval();
     }
 
     onDeleted() {
@@ -51,9 +51,14 @@ module.exports = class mainDevice extends Homey.Device {
 
     async onRepair(settings) {
         this.homey.app.log(`[Device] ${this.getName()} - onRepair`);
-        await this.initApi(settings);
         await this.checkCapabilities();
-        await this.setCapabilityValues();
+
+        if( this.onPollInterval ) {
+            clearInterval(this.onPollInterval);
+        }
+
+        this.initApi(settings);
+        this.setCapabilityValuesInterval();
     }
 
     async initApi(overrideSettings = null) {
@@ -68,6 +73,7 @@ module.exports = class mainDevice extends Homey.Device {
             this.eufyRoboVac = new RoboVac(this.config, true, 5)
             await this.eufyRoboVac.getStatuses();
             await this.eufyRoboVac.formatStatus()
+            this.setCapabilityValues();
         } catch (error) {
             this.setUnavailable(error);
             this.homey.app.log(error);
