@@ -9,3 +9,4 @@ build/
 
 # Added by Homey CLI
 /.homeybuild/
+lib/eufy-clean/
