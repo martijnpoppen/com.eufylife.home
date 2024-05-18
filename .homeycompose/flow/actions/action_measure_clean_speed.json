@@ -1,0 +1,48 @@
+{
+  "id": "action_measure_clean_speed",
+  "title": {
+    "en": "Set clean speed",
+    "nl": "Stel zuigkracht in"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=X_SERIES&capabilities=measure_clean_speed"
+    },
+    {
+      "name": "action_measure_clean_speed_type",
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "Quiet",
+          "label": {
+            "en": "Pure",
+            "nl": "Pure"
+          }
+        },
+        {
+          "id": "Standard",
+          "label": {
+            "en": "Power",
+            "nl": "Krachtig"
+          }
+        },
+        {
+          "id": "Turbo",
+          "label": {
+            "en": "Turbo",
+            "nl": "Turbo"
+          }
+        },
+        {
+          "id": "Max",
+          "label": {
+            "en": "Max",
+            "nl": "Max"
+          }
+        }
+      ]
+    }
+  ]
+}

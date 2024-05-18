@@ -1,0 +1,32 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Docked",
+    "nl": "In Dock"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "assets/icons/house-door.svg",
+  "$flow": {
+    "triggers": [
+      {
+        "id": "measure_docked_changed",
+        "title": {
+          "en": "Docked has changed",
+          "nl": "In dock is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "measure_docked",
+            "title": {
+              "en": "Docked",
+              "nl": "In Dock"
+            },
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+}

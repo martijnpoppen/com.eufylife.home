@@ -1,4 +1,5 @@
 {
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.eufylife.home",
   "version": "1.8.8",
   "compatibility": ">=5.0.0",
@@ -81,9 +82,65 @@
   "source": "https://github.com/martijnpoppen/com.eufylife.home",
   "homeyCommunityTopicId": 46610,
   "support": "https://community.athom.com/t/app-eufy-home/46610/",
+  "flow": {
+    "actions": [
+      {
+        "id": "action_measure_clean_speed",
+        "title": {
+          "en": "Set clean speed",
+          "nl": "Stel zuigkracht in"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=X_SERIES&capabilities=measure_clean_speed"
+          },
+          {
+            "name": "action_measure_clean_speed_type",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "Quiet",
+                "label": {
+                  "en": "Pure",
+                  "nl": "Pure"
+                }
+              },
+              {
+                "id": "Standard",
+                "label": {
+                  "en": "Power",
+                  "nl": "Krachtig"
+                }
+              },
+              {
+                "id": "Turbo",
+                "label": {
+                  "en": "Turbo",
+                  "nl": "Turbo"
+                }
+              },
+              {
+                "id": "Max",
+                "label": {
+                  "en": "Max",
+                  "nl": "Max"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
-      "id": "X_SERIES",
+      "icon": "/drivers/C_SERIES/assets/icon.svg",
+      "images": {
+        "large": "/drivers/C_SERIES/assets/images/large.png",
+        "small": "/drivers/C_SERIES/assets/images/small.png"
+      },
       "class": "vacuumcleaner",
       "capabilities": [
         "vacuumcleaner_state",
@@ -102,14 +159,12 @@
           "INTERNAL"
         ]
       },
-      "name": {
-        "en": "Eufy Robovac X-Series",
-        "nl": "Eufy Robovac X-Series"
-      },
-      "images": {
-        "large": "drivers/X_SERIES/assets/images/large.jpg",
-        "small": "drivers/X_SERIES/assets/images/small.jpg"
-      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "login_credentials",
@@ -224,464 +279,44 @@
           },
           "value": false
         }
-      ]
-    },
-    {
-      "id": "L_SERIES",
-      "class": "vacuumcleaner",
-      "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_battery",
-        "alarm_battery",
-        "measure_is_charging",
-        "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
       ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "name": {
-        "en": "Eufy Robovac L-Series",
-        "nl": "Eufy Robovac L-Series"
-      },
-      "images": {
-        "large": "drivers/L_SERIES/assets/images/large.jpg",
-        "small": "drivers/L_SERIES/assets/images/small.jpg"
-      },
-      "pair": [
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/eufy.svg",
-            "title": {
-              "en": "Login with your Eufy account"
-            },
-            "usernameLabel": {
-              "en": "E-mail address"
-            },
-            "usernamePlaceholder": {
-              "en": "john@doe.com"
-            },
-            "passwordLabel": {
-              "en": "Password"
-            },
-            "passwordPlaceholder": {
-              "en": "Password"
-            }
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "prev": "login_credentials",
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/eufy.svg",
-            "title": {
-              "en": "Login with your Eufy account"
-            },
-            "usernameLabel": {
-              "en": "E-mail address"
-            },
-            "usernamePlaceholder": {
-              "en": "john@doe.com"
-            },
-            "passwordLabel": {
-              "en": "Password"
-            },
-            "passwordPlaceholder": {
-              "en": "Password"
-            }
-          }
-        },
-        {
-          "id": "loading",
-          "template": "loading"
-        },
-        {
-          "id": "done",
-          "template": "loading"
-        }
-      ],
-      "settings": [
-        {
-          "id": "deviceId",
-          "type": "text",
-          "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
-          },
-          "value": ""
-        },
-        {
-          "id": "localKey",
-          "type": "text",
-          "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
-          },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
-        }
-      ]
-    },
-    {
-      "id": "G_SERIES",
-      "class": "vacuumcleaner",
-      "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_battery",
-        "alarm_battery",
-        "measure_is_charging",
-        "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "name": {
-        "en": "Eufy Robovac G-Series",
-        "nl": "Eufy Robovac G-Series"
-      },
-      "images": {
-        "large": "drivers/G_SERIES/assets/images/large.jpg",
-        "small": "drivers/G_SERIES/assets/images/small.jpg"
-      },
-      "pair": [
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/eufy.svg",
-            "title": {
-              "en": "Login with your Eufy account"
-            },
-            "usernameLabel": {
-              "en": "E-mail address"
-            },
-            "usernamePlaceholder": {
-              "en": "john@doe.com"
-            },
-            "passwordLabel": {
-              "en": "Password"
-            },
-            "passwordPlaceholder": {
-              "en": "Password"
-            }
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "prev": "login_credentials",
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/eufy.svg",
-            "title": {
-              "en": "Login with your Eufy account"
-            },
-            "usernameLabel": {
-              "en": "E-mail address"
-            },
-            "usernamePlaceholder": {
-              "en": "john@doe.com"
-            },
-            "passwordLabel": {
-              "en": "Password"
-            },
-            "passwordPlaceholder": {
-              "en": "Password"
-            }
-          }
-        },
-        {
-          "id": "loading",
-          "template": "loading"
-        },
-        {
-          "id": "done",
-          "template": "loading"
-        }
-      ],
-      "settings": [
-        {
-          "id": "deviceId",
-          "type": "text",
-          "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
-          },
-          "value": ""
-        },
-        {
-          "id": "localKey",
-          "type": "text",
-          "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
-          },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
-        }
-      ]
-    },
-    {
-      "id": "S_SERIES",
-      "class": "vacuumcleaner",
-      "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_battery",
-        "alarm_battery",
-        "measure_is_charging",
-        "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "name": {
-        "en": "Eufy Robovac S-Series",
-        "nl": "Eufy Robovac S-Series"
-      },
-      "images": {
-        "large": "drivers/S_SERIES/assets/images/large.jpg",
-        "small": "drivers/S_SERIES/assets/images/small.jpg"
-      },
-      "pair": [
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/eufy.svg",
-            "title": {
-              "en": "Login with your Eufy account"
-            },
-            "usernameLabel": {
-              "en": "E-mail address"
-            },
-            "usernamePlaceholder": {
-              "en": "john@doe.com"
-            },
-            "passwordLabel": {
-              "en": "Password"
-            },
-            "passwordPlaceholder": {
-              "en": "Password"
-            }
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "prev": "login_credentials",
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/eufy.svg",
-            "title": {
-              "en": "Login with your Eufy account"
-            },
-            "usernameLabel": {
-              "en": "E-mail address"
-            },
-            "usernamePlaceholder": {
-              "en": "john@doe.com"
-            },
-            "passwordLabel": {
-              "en": "Password"
-            },
-            "passwordPlaceholder": {
-              "en": "Password"
-            }
-          }
-        },
-        {
-          "id": "loading",
-          "template": "loading"
-        },
-        {
-          "id": "done",
-          "template": "loading"
-        }
-      ],
-      "settings": [
-        {
-          "id": "deviceId",
-          "type": "text",
-          "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
-          },
-          "value": ""
-        },
-        {
-          "id": "localKey",
-          "type": "text",
-          "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
-          },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
-        }
-      ]
-    },
-    {
-      "id": "C_SERIES",
-      "class": "vacuumcleaner",
-      "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_battery",
-        "alarm_battery",
-        "measure_is_charging",
-        "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
+      "deprecated": true,
       "name": {
         "en": "Eufy Robovac C-Series",
         "nl": "Eufy Robovac C-Series"
       },
+      "id": "C_SERIES"
+    },
+    {
+      "icon": "/drivers/G_SERIES/assets/icon.svg",
       "images": {
-        "large": "drivers/C_SERIES/assets/images/large.jpg",
-        "small": "drivers/C_SERIES/assets/images/small.jpg"
+        "large": "/drivers/G_SERIES/assets/images/large.png",
+        "small": "/drivers/G_SERIES/assets/images/small.png"
       },
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_clean_speed",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "login_credentials",
@@ -796,73 +431,663 @@
           },
           "value": false
         }
-      ]
+      ],
+      "deprecated": true,
+      "name": {
+        "en": "Eufy Robovac G-Series",
+        "nl": "Eufy Robovac G-Series"
+      },
+      "id": "G_SERIES"
+    },
+    {
+      "icon": "/drivers/L_SERIES/assets/icon.svg",
+      "images": {
+        "large": "/drivers/L_SERIES/assets/images/large.png",
+        "small": "/drivers/L_SERIES/assets/images/small.png"
+      },
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_clean_speed",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_credentials",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "loading",
+          "template": "loading"
+        },
+        {
+          "id": "done",
+          "template": "loading"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deviceId",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "text",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
+        },
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "IP Address",
+            "nl": "IP Adres"
+          },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port",
+            "nl": "Port"
+          },
+          "value": 6668
+        },
+        {
+          "id": "debug_log",
+          "type": "checkbox",
+          "label": {
+            "en": "Debug Logs",
+            "nl": "Debug Logs"
+          },
+          "value": false
+        }
+      ],
+      "deprecated": true,
+      "name": {
+        "en": "Eufy Robovac L-Series",
+        "nl": "Eufy Robovac L-Series"
+      },
+      "id": "L_SERIES"
+    },
+    {
+      "icon": "/drivers/Robovac/assets/icon.svg",
+      "images": {
+        "large": "/drivers/Robovac/assets/images/large.png",
+        "small": "/drivers/Robovac/assets/images/small.png"
+      },
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_clean_speed",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_credentials",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "loading",
+          "template": "loading"
+        },
+        {
+          "id": "done",
+          "template": "loading"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deviceId",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "text",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
+        },
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "IP Address",
+            "nl": "IP Adres"
+          },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port",
+            "nl": "Port"
+          },
+          "value": 6668
+        },
+        {
+          "id": "debug_log",
+          "type": "checkbox",
+          "label": {
+            "en": "Debug Logs",
+            "nl": "Debug Logs"
+          },
+          "value": false
+        }
+      ],
+      "name": {
+        "en": "Eufy Robovac",
+        "nl": "Eufy Robovac"
+      },
+      "id": "Robovac"
+    },
+    {
+      "icon": "/drivers/S_SERIES/assets/icon.svg",
+      "images": {
+        "large": "/drivers/S_SERIES/assets/images/large.png",
+        "small": "/drivers/S_SERIES/assets/images/small.png"
+      },
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_clean_speed",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_credentials",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "loading",
+          "template": "loading"
+        },
+        {
+          "id": "done",
+          "template": "loading"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deviceId",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "text",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
+        },
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "IP Address",
+            "nl": "IP Adres"
+          },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port",
+            "nl": "Port"
+          },
+          "value": 6668
+        },
+        {
+          "id": "debug_log",
+          "type": "checkbox",
+          "label": {
+            "en": "Debug Logs",
+            "nl": "Debug Logs"
+          },
+          "value": false
+        }
+      ],
+      "deprecated": true,
+      "name": {
+        "en": "Eufy Robovac S-Series",
+        "nl": "Eufy Robovac S-Series"
+      },
+      "id": "S_SERIES"
+    },
+    {
+      "icon": "/drivers/X_SERIES/assets/icon.svg",
+      "images": {
+        "large": "/drivers/X_SERIES/assets/images/large.png",
+        "small": "/drivers/X_SERIES/assets/images/small.png"
+      },
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "vacuumcleaner_state",
+        "measure_work_mode",
+        "measure_work_status",
+        "measure_clean_speed",
+        "measure_battery",
+        "alarm_battery",
+        "measure_is_charging",
+        "measure_recharge_needed",
+        "measure_docked",
+        "measure_error"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_credentials",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/eufy.svg",
+            "title": {
+              "en": "Login with your Eufy account"
+            },
+            "usernameLabel": {
+              "en": "E-mail address"
+            },
+            "usernamePlaceholder": {
+              "en": "john@doe.com"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        },
+        {
+          "id": "loading",
+          "template": "loading"
+        },
+        {
+          "id": "done",
+          "template": "loading"
+        }
+      ],
+      "settings": [
+        {
+          "id": "deviceId",
+          "type": "text",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "text",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
+        },
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "IP Address",
+            "nl": "IP Adres"
+          },
+          "value": ""
+        },
+        {
+          "id": "port",
+          "type": "number",
+          "label": {
+            "en": "Port",
+            "nl": "Port"
+          },
+          "value": 6668
+        },
+        {
+          "id": "debug_log",
+          "type": "checkbox",
+          "label": {
+            "en": "Debug Logs",
+            "nl": "Debug Logs"
+          },
+          "value": false
+        }
+      ],
+      "deprecated": true,
+      "name": {
+        "en": "Eufy Robovac X-Series",
+        "nl": "Eufy Robovac X-Series"
+      },
+      "id": "X_SERIES"
     }
   ],
   "capabilities": {
-    "measure_is_charging": {
-      "type": "boolean",
+    "measure_clean_speed": {
+      "type": "enum",
       "title": {
-        "en": "Is Charging",
-        "nl": "Opladen"
+        "en": "Clean speed",
+        "nl": "Zuigkracht"
       },
       "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "icon": "assets/icons/battery-charging.svg",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_is_charging_changed",
-            "title": {
-              "en": "Charging has changed",
-              "nl": "Opladen is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_is_charging",
-                "title": {
-                  "en": "Is Charging",
-                  "nl": "Opladen"
-                },
-                "type": "boolean"
-              }
-            ]
+      "setable": true,
+      "uiComponent": "picker",
+      "icon": "assets/icons/speedometer.svg",
+      "values": [
+        {
+          "id": "Quiet",
+          "title": {
+            "en": "Pure",
+            "nl": "Pure"
           }
-        ]
-      }
-    },
-    "measure_recharge_needed": {
-      "type": "boolean",
-      "title": {
-        "en": "Recharge needed",
-        "nl": "Opladen vereist"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "icon": "assets/icons/battery-half.svg",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_recharge_needed_changed",
-            "title": {
-              "en": "Recharge needed has changed",
-              "nl": "Opladen vereist is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_recharge_needed",
-                "title": {
-                  "en": "Recharge needed",
-                  "nl": "Opladen vereist"
-                },
-                "type": "boolean"
-              }
-            ]
+        },
+        {
+          "id": "Standard",
+          "title": {
+            "en": "Power",
+            "nl": "Krachtig"
           }
-        ]
-      }
+        },
+        {
+          "id": "Turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo"
+          }
+        },
+        {
+          "id": "Max",
+          "title": {
+            "en": "Max",
+            "nl": "Max"
+          }
+        }
+      ]
     },
     "measure_docked": {
       "type": "boolean",
@@ -873,187 +1098,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
-      "icon": "assets/icons/house-door.svg",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_docked_changed",
-            "title": {
-              "en": "Docked has changed",
-              "nl": "In dock is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_docked",
-                "title": {
-                  "en": "Docked",
-                  "nl": "In Dock"
-                },
-                "type": "boolean"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "measure_work_mode": {
-      "type": "enum",
-      "title": {
-        "en": "Work mode",
-        "nl": "Werk modus"
-      },
-      "uiComponent": "sensor",
-      "icon": "assets/icons/brush.svg",
-      "getable": true,
-      "setable": true,
-      "values": [
-        {
-          "id": "auto",
-          "title": {
-            "en": "Auto",
-            "nl": "Auto"
-          }
-        },
-        {
-          "id": "Nosweep",
-          "title": {
-            "en": "No Sweep",
-            "nl": "Niet vegen"
-          }
-        },
-        {
-          "id": "SmallRoom",
-          "title": {
-            "en": "Small Room",
-            "nl": "Kleine kamer"
-          }
-        },
-        {
-          "id": "Edge",
-          "title": {
-            "en": "Edge",
-            "nl": "Hoek"
-          }
-        },
-        {
-          "id": "Spot",
-          "title": {
-            "en": "Spot",
-            "nl": "Vlek"
-          }
-        },
-        {
-          "id": "zone",
-          "title": {
-            "en": "Zone",
-            "nl": "Zone"
-          }
-        },
-        {
-          "id": "room",
-          "title": {
-            "en": "Room",
-            "nl": "Room"
-          }
-        }
-      ],
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_work_mode_changed",
-            "title": {
-              "en": "Work mode changed",
-              "nl": "Werk modus veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_work_mode",
-                "title": {
-                  "en": "Work mode",
-                  "nl": "Werk modus"
-                },
-                "type": "string"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "measure_work_status": {
-      "type": "enum",
-      "title": {
-        "en": "Work status",
-        "nl": "Werk status"
-      },
-      "uiComponent": "sensor",
-      "icon": "assets/icons/chevron-double-right.svg",
-      "getable": true,
-      "setable": true,
-      "values": [
-        {
-          "id": "Running",
-          "title": {
-            "en": "Running",
-            "nl": "Cleaning"
-          }
-        },
-        {
-          "id": "Charging",
-          "title": {
-            "en": "Charging",
-            "nl": "Opladen"
-          }
-        },
-        {
-          "id": "standby",
-          "title": {
-            "en": "Standby",
-            "nl": "Standby"
-          }
-        },
-        {
-          "id": "Sleeping",
-          "title": {
-            "en": "Standby",
-            "nl": "Standby"
-          }
-        },
-        {
-          "id": "Recharge",
-          "title": {
-            "en": "Going to dock",
-            "nl": "Op weg naar dock"
-          }
-        },
-        {
-          "id": "completed",
-          "title": {
-            "en": "Docked and charged",
-            "nl": "In dock en opgeladen"
-          }
-        }
-      ],
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_work_status_changed",
-            "title": {
-              "en": "Work status changed",
-              "nl": "Werk status veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_work_status",
-                "title": {
-                  "en": "Work status",
-                  "nl": "Werk status"
-                },
-                "type": "string"
-              }
-            ]
-          }
-        ]
-      }
+      "icon": "assets/icons/house-door.svg"
     },
     "measure_error": {
       "type": "enum",
@@ -1129,142 +1174,146 @@
             "nl": "Borstel zit vast"
           }
         }
-      ],
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_error_changed",
-            "title": {
-              "en": "Errors changed",
-              "nl": "Errors veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_error",
-                "title": {
-                  "en": "Errors",
-                  "nl": "Errors"
-                },
-                "type": "string"
-              }
-            ]
-          }
-        ]
-      }
+      ]
     },
-    "measure_clean_speed": {
-      "type": "enum",
+    "measure_is_charging": {
+      "type": "boolean",
       "title": {
-        "en": "Clean speed",
-        "nl": "Zuigkracht"
+        "en": "Is Charging",
+        "nl": "Opladen"
       },
       "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/battery-charging.svg"
+    },
+    "measure_recharge_needed": {
+      "type": "boolean",
+      "title": {
+        "en": "Recharge needed",
+        "nl": "Opladen vereist"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/battery-half.svg"
+    },
+    "measure_work_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Work mode",
+        "nl": "Werk modus"
+      },
+      "uiComponent": "sensor",
+      "icon": "assets/icons/brush.svg",
+      "getable": true,
       "setable": true,
-      "uiComponent": "picker",
-      "icon": "assets/icons/speedometer.svg",
       "values": [
         {
-          "id": "Quiet",
+          "id": "auto",
           "title": {
-            "en": "Pure",
-            "nl": "Pure"
+            "en": "Auto",
+            "nl": "Auto"
           }
         },
         {
-          "id": "Standard",
+          "id": "Nosweep",
           "title": {
-            "en": "Power",
-            "nl": "Krachtig"
+            "en": "No Sweep",
+            "nl": "Niet vegen"
           }
         },
         {
-          "id": "Turbo",
+          "id": "SmallRoom",
           "title": {
-            "en": "Turbo",
-            "nl": "Turbo"
+            "en": "Small Room",
+            "nl": "Kleine kamer"
           }
         },
         {
-          "id": "Max",
+          "id": "Edge",
           "title": {
-            "en": "Max",
-            "nl": "Max"
+            "en": "Edge",
+            "nl": "Hoek"
+          }
+        },
+        {
+          "id": "Spot",
+          "title": {
+            "en": "Spot",
+            "nl": "Vlek"
+          }
+        },
+        {
+          "id": "zone",
+          "title": {
+            "en": "Zone",
+            "nl": "Zone"
+          }
+        },
+        {
+          "id": "room",
+          "title": {
+            "en": "Room",
+            "nl": "Room"
           }
         }
-      ],
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_clean_speed_changed",
-            "title": {
-              "en": "Clean speed has changed",
-              "nl": "Zuigkracht is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_clean_speed",
-                "title": {
-                  "en": "Clean speed",
-                  "nl": "Zuigkracht"
-                },
-                "type": "string"
-              }
-            ]
+      ]
+    },
+    "measure_work_status": {
+      "type": "enum",
+      "title": {
+        "en": "Work status",
+        "nl": "Werk status"
+      },
+      "uiComponent": "sensor",
+      "icon": "assets/icons/chevron-double-right.svg",
+      "getable": true,
+      "setable": true,
+      "values": [
+        {
+          "id": "Running",
+          "title": {
+            "en": "Running",
+            "nl": "Cleaning"
           }
-        ]
-      }
-    }
-  },
-  "flow": {
-    "actions": [
-      {
-        "id": "action_measure_clean_speed",
-        "title": {
-          "en": "Set clean speed",
-          "nl": "Stel zuigkracht in"
         },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=X_SERIES&capabilities=measure_clean_speed"
-          },
-          {
-            "name": "action_measure_clean_speed_type",
-            "type": "dropdown",
-            "values": [
-              {
-                "id": "Quiet",
-                "label": {
-                  "en": "Pure",
-                  "nl": "Pure"
-                }
-              },
-              {
-                "id": "Standard",
-                "label": {
-                  "en": "Power",
-                  "nl": "Krachtig"
-                }
-              },
-              {
-                "id": "Turbo",
-                "label": {
-                  "en": "Turbo",
-                  "nl": "Turbo"
-                }
-              },
-              {
-                "id": "Max",
-                "label": {
-                  "en": "Max",
-                  "nl": "Max"
-                }
-              }
-            ]
+        {
+          "id": "Charging",
+          "title": {
+            "en": "Charging",
+            "nl": "Opladen"
           }
-        ]
-      }
-    ]
+        },
+        {
+          "id": "standby",
+          "title": {
+            "en": "Standby",
+            "nl": "Standby"
+          }
+        },
+        {
+          "id": "Sleeping",
+          "title": {
+            "en": "Standby",
+            "nl": "Standby"
+          }
+        },
+        {
+          "id": "Recharge",
+          "title": {
+            "en": "Going to dock",
+            "nl": "Op weg naar dock"
+          }
+        },
+        {
+          "id": "completed",
+          "title": {
+            "en": "Docked and charged",
+            "nl": "In dock en opgeladen"
+          }
+        }
+      ]
+    }
   }
 }

@@ -1,0 +1,9 @@
+{
+    "deprecated": true,
+    "name": {
+      "en": "Eufy Robovac C-Series",
+      "nl": "Eufy Robovac C-Series"
+    },
+    "$extends": ["device", "pair", "repair", "settings"]
+  }
+  

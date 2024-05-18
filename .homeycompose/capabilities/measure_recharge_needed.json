@@ -1,0 +1,32 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Recharge needed",
+    "nl": "Opladen vereist"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "assets/icons/battery-half.svg",
+  "$flow": {
+    "triggers": [
+      {
+        "id": "measure_recharge_needed_changed",
+        "title": {
+          "en": "Recharge needed has changed",
+          "nl": "Opladen vereist is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "measure_recharge_needed",
+            "title": {
+              "en": "Recharge needed",
+              "nl": "Opladen vereist"
+            },
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+}

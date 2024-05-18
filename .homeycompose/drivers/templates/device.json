@@ -1,0 +1,25 @@
+{
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "class": "vacuumcleaner",
+  "capabilities": [
+    "vacuumcleaner_state",
+    "measure_work_mode",
+    "measure_work_status",
+    "measure_clean_speed",
+    "measure_battery",
+    "alarm_battery",
+    "measure_is_charging",
+    "measure_recharge_needed",
+    "measure_docked",
+    "measure_error"
+  ],
+  "energy": {
+    "batteries": ["INTERNAL"]
+  },
+  "connectivity": ["cloud"],
+  "platforms": ["local"]
+}

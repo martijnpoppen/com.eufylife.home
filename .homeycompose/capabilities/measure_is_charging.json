@@ -1,0 +1,32 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Is Charging",
+    "nl": "Opladen"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "assets/icons/battery-charging.svg",
+  "$flow": {
+    "triggers": [
+      {
+        "id": "measure_is_charging_changed",
+        "title": {
+          "en": "Charging has changed",
+          "nl": "Opladen is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "measure_is_charging",
+            "title": {
+              "en": "Is Charging",
+              "nl": "Opladen"
+            },
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+}

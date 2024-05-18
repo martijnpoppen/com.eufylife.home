@@ -1,0 +1,83 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Work mode",
+    "nl": "Werk modus"
+  },
+  "uiComponent": "sensor",
+  "icon": "assets/icons/brush.svg",
+  "getable": true,
+  "setable": true,
+  "values": [
+    {
+      "id": "auto",
+      "title": {
+        "en": "Auto",
+        "nl": "Auto"
+      }
+    },
+    {
+      "id": "Nosweep",
+      "title": {
+        "en": "No Sweep",
+        "nl": "Niet vegen"
+      }
+    },
+    {
+      "id": "SmallRoom",
+      "title": {
+        "en": "Small Room",
+        "nl": "Kleine kamer"
+      }
+    },
+    {
+      "id": "Edge",
+      "title": {
+        "en": "Edge",
+        "nl": "Hoek"
+      }
+    },
+    {
+      "id": "Spot",
+      "title": {
+        "en": "Spot",
+        "nl": "Vlek"
+      }
+    },
+    {
+      "id": "zone",
+      "title": {
+        "en": "Zone",
+        "nl": "Zone"
+      }
+    },
+    {
+      "id": "room",
+      "title": {
+        "en": "Room",
+        "nl": "Room"
+      }
+    }
+  ],
+  "$flow": {
+    "triggers": [
+      {
+        "id": "measure_work_mode_changed",
+        "title": {
+          "en": "Work mode changed",
+          "nl": "Werk modus veranderd"
+        },
+        "tokens": [
+          {
+            "name": "measure_work_mode",
+            "title": {
+              "en": "Work mode",
+              "nl": "Werk modus"
+            },
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

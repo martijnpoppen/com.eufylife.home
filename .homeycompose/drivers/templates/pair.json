@@ -1,0 +1,38 @@
+{
+  "pair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "logo": "../../../assets/eufy.svg",
+        "title": {
+          "en": "Login with your Eufy account"
+        },
+        "usernameLabel": {
+          "en": "E-mail address"
+        },
+        "usernamePlaceholder": {
+          "en": "john@doe.com"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "prev": "login_credentials",
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "id": "com.eufylife.home",
+  "version": "1.8.8",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#13dfd0",
+  "name": {
+    "en": "Eufy Home",
+    "nl": "Eufy Home"
+  },
+  "description": {
+    "en": "Live Well. Live Smart.",
+    "nl": "Live Well. Live Smart."
+  },
+  "tags": {
+    "en": [
+      "cleaning",
+      "vacuum",
+      "eufy",
+      "smart",
+      "mopping",
+      "house",
+      "Live Well",
+      "Live Smart",
+      "robot"
+    ],
+    "nl": [
+      "cleaning",
+      "vacuum",
+      "eufy",
+      "smart",
+      "mopping",
+      "house",
+      "Live Well",
+      "Live Smart",
+      "robot"
+    ]
+  },
+  "category": [
+    "appliances"
+  ],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "eufy@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "eufy@martijnpoppen.nl"
+      },
+      {
+        "name": "Robbert Vis (Vacuum icons)",
+        "email": "eufy@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "Martijn Poppen",
+        "email": "eufy@martijnpoppen.nl"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      },
+      "bunq": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://community.athom.com/t/app-eufy-home/46610/"
+  },
+  "source": "https://github.com/martijnpoppen/com.eufylife.home",
+  "homeyCommunityTopicId": 46610,
+  "support": "https://community.athom.com/t/app-eufy-home/46610/"
+}

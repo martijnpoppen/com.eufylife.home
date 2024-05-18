@@ -1,0 +1,9 @@
+{
+    "deprecated": true,
+    "name": {
+      "en": "Eufy Robovac G-Series",
+      "nl": "Eufy Robovac G-Series"
+    },
+    "$extends": ["device", "pair", "repair", "settings"]
+  }
+  

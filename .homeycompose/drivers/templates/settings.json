@@ -1,0 +1,49 @@
+{
+  "settings": [
+    {
+      "id": "deviceId",
+      "type": "text",
+      "label": {
+        "en": "Device ID",
+        "nl": "Device ID"
+      },
+      "value": ""
+    },
+    {
+      "id": "localKey",
+      "type": "text",
+      "label": {
+        "en": "Local Key",
+        "nl": "Local Key"
+      },
+      "value": ""
+    },
+    {
+      "id": "ip",
+      "type": "text",
+      "label": {
+        "en": "IP Address",
+        "nl": "IP Adres"
+      },
+      "value": ""
+    },
+    {
+      "id": "port",
+      "type": "number",
+      "label": {
+        "en": "Port",
+        "nl": "Port"
+      },
+      "value": 6668
+    },
+    {
+      "id": "debug_log",
+      "type": "checkbox",
+      "label": {
+        "en": "Debug Logs",
+        "nl": "Debug Logs"
+      },
+      "value": false
+    }
+  ]
+}

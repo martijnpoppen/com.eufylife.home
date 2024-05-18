@@ -1,0 +1,7 @@
+{
+  "name": {
+    "en": "Eufy Robovac",
+    "nl": "Eufy Robovac"
+  },
+  "$extends": ["device", "pair", "repair", "settings"]
+}

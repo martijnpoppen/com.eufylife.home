@@ -1,0 +1,76 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Work status",
+    "nl": "Werk status"
+  },
+  "uiComponent": "sensor",
+  "icon": "assets/icons/chevron-double-right.svg",
+  "getable": true,
+  "setable": true,
+  "values": [
+    {
+      "id": "Running",
+      "title": {
+        "en": "Running",
+        "nl": "Cleaning"
+      }
+    },
+    {
+      "id": "Charging",
+      "title": {
+        "en": "Charging",
+        "nl": "Opladen"
+      }
+    },
+    {
+      "id": "standby",
+      "title": {
+        "en": "Standby",
+        "nl": "Standby"
+      }
+    },
+    {
+      "id": "Sleeping",
+      "title": {
+        "en": "Standby",
+        "nl": "Standby"
+      }
+    },
+    {
+      "id": "Recharge",
+      "title": {
+        "en": "Going to dock",
+        "nl": "Op weg naar dock"
+      }
+    },
+    {
+      "id": "completed",
+      "title": {
+        "en": "Docked and charged",
+        "nl": "In dock en opgeladen"
+      }
+    }
+  ],
+  "$flow": {
+    "triggers": [
+      {
+        "id": "measure_work_status_changed",
+        "title": {
+          "en": "Work status changed",
+          "nl": "Werk status veranderd"
+        },
+        "tokens": [
+          {
+            "name": "measure_work_status",
+            "title": {
+              "en": "Work status",
+              "nl": "Werk status"
+            },
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

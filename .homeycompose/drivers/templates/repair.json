@@ -1,0 +1,34 @@
+{
+  "repair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "logo": "../../../assets/eufy.svg",
+        "title": {
+          "en": "Login with your Eufy account"
+        },
+        "usernameLabel": {
+          "en": "E-mail address"
+        },
+        "usernamePlaceholder": {
+          "en": "john@doe.com"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      }
+    },
+    {
+      "id": "loading",
+      "template": "loading"
+    },
+    {
+      "id": "done",
+      "template": "loading"
+    }
+  ]
+}
