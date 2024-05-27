@@ -4,39 +4,43 @@
     "en": "Set clean speed",
     "nl": "Stel zuigkracht in"
   },
+  "titleFormatted": {
+    "en": "Set clean speed to [[action_measure_clean_speed_type]]",
+    "nl": "Stel zuigkracht in op [[action_measure_clean_speed_type]]"
+  },
   "args": [
     {
       "name": "device",
       "type": "device",
-      "filter": "driver_id=X_SERIES&capabilities=measure_clean_speed"
+      "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_clean_speed"
     },
     {
       "name": "action_measure_clean_speed_type",
       "type": "dropdown",
       "values": [
         {
-          "id": "Quiet",
+          "id": "quiet",
           "label": {
-            "en": "Pure",
-            "nl": "Pure"
+            "en": "Quiet",
+            "nl": "Stil"
           }
         },
         {
-          "id": "Standard",
+          "id": "standard",
           "label": {
-            "en": "Power",
-            "nl": "Krachtig"
+            "en": "Standard",
+            "nl": "Standaard"
           }
         },
         {
-          "id": "Turbo",
+          "id": "turbo",
           "label": {
             "en": "Turbo",
             "nl": "Turbo"
           }
         },
         {
-          "id": "Max",
+          "id": "max",
           "label": {
             "en": "Max",
             "nl": "Max"

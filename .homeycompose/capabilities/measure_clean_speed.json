@@ -1,41 +1,11 @@
 {
-  "type": "enum",
+  "type": "string",
   "title": {
     "en": "Clean speed",
     "nl": "Zuigkracht"
   },
   "getable": true,
   "setable": true,
-  "uiComponent": "picker",
-  "icon": "assets/icons/speedometer.svg",
-  "values": [
-    {
-      "id": "Quiet",
-      "title": {
-        "en": "Pure",
-        "nl": "Pure"
-      }
-    },
-    {
-      "id": "Standard",
-      "title": {
-        "en": "Power",
-        "nl": "Krachtig"
-      }
-    },
-    {
-      "id": "Turbo",
-      "title": {
-        "en": "Turbo",
-        "nl": "Turbo"
-      }
-    },
-    {
-      "id": "Max",
-      "title": {
-        "en": "Max",
-        "nl": "Max"
-      }
-    }
-  ]
+  "uiComponent": "sensor",
+  "icon": "assets/icons/speedometer.svg"
 }

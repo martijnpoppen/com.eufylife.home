@@ -1,31 +1,34 @@
-"use strict";
+'use strict';
 
-const Homey = require("homey");
-let _devices = [];
+const Homey = require('homey');
+const flowActions = require('./lib/flow/actions.js');
 
 class App extends Homey.App {
-  log() {
-    console.log.bind(this, "[log]").apply(this, arguments);
-  }
+    log() {
+        console.log.bind(this, '[log]').apply(this, arguments);
+    }
 
-  error() {
-    console.error.bind(this, "[error]").apply(this, arguments);
-  }
+    error() {
+        console.error.bind(this, '[error]').apply(this, arguments);
+    }
 
-  // -------------------- INIT ----------------------
+    // -------------------- INIT ----------------------
 
-  async onInit() {
-    this.log(`${this.homey.manifest.id} - ${this.homey.manifest.version} started...`);
-  }
+    async onInit() {
+        this.log(`${this.homey.manifest.id} - ${this.homey.manifest.version} started...`);
+        this.deviceList = [];
 
-  // ---------------------------- GETTERS/SETTERS ----------------------------------
-  setDevices(device) {
-    _devices.push(device);
-  }
+        flowActions.init(this.homey);
+    }
 
-  getDevices() {
-      return _devices;
-  }
+    // ---------------------------- GETTERS/SETTERS ----------------------------------
+    async setDevice(device) {
+        this.deviceList = [...this.deviceList, device];
+    }
+
+    async setDevices(devices) {
+        this.deviceList = [...this.deviceList, ...devices];
+    }
 }
 
 module.exports = App;

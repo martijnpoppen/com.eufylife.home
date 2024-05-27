@@ -27,6 +27,11 @@
       "template": "loading"
     },
     {
+        "id": "loading2",
+        "template": "loading",
+        "message": "Loading, this can take a while..."
+      },
+    {
       "id": "done",
       "template": "loading"
     }

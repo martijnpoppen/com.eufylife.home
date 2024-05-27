@@ -1,0 +1,73 @@
+{
+  "id": "action_control_mode",
+  "title": {
+    "en": "Set clean speed",
+    "nl": "Stel zuigkracht in"
+  },
+  "titleFormatted": {
+    "en": "Set mode to [[action_control_mode_type]]",
+    "nl": "Stel modus in op [[action_control_mode_type]]"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac"
+    },
+    {
+      "name": "action_control_mode_type",
+      "type": "dropdown",
+      "values": [
+        {
+          "id": "AUTO_CLEAN",
+          "label": {
+            "en": "Start Auto clean",
+            "nl": "Start Auto reinigen"
+          }
+        },
+        {
+          "id": "SPOT_CLEAN",
+          "label": {
+            "en": "Start Spot clean",
+            "nl": "Start Plek reinigen"
+          }
+        },
+        {
+          "id": "ROOM_CLEAN",
+          "label": {
+            "en": "Start Room clean",
+            "nl": "Start Kamer reinigen"
+          }
+        },
+        {
+          "id": "GO_HOME",
+          "label": {
+            "en": "Go Home / Dock",
+            "nl": "Ga naar huis / Dock"
+          }
+        },
+        {
+          "id": "STOP",
+          "label": {
+            "en": "Stop",
+            "nl": "Stop"
+          }
+        },
+        {
+          "id": "PAUSE",
+          "label": {
+            "en": "Pause",
+            "nl": "Pauze"
+          }
+        },
+        {
+          "id": "PLAY",
+          "label": {
+            "en": "Resume",
+            "nl": "Hervatten"
+          }
+        }
+      ]
+    }
+  ]
+}

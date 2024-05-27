@@ -90,42 +90,119 @@
           "en": "Set clean speed",
           "nl": "Stel zuigkracht in"
         },
+        "titleFormatted": {
+          "en": "Set clean speed to [[action_measure_clean_speed_type]]",
+          "nl": "Stel zuigkracht in op [[action_measure_clean_speed_type]]"
+        },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=X_SERIES&capabilities=measure_clean_speed"
+            "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_clean_speed"
           },
           {
             "name": "action_measure_clean_speed_type",
             "type": "dropdown",
             "values": [
               {
-                "id": "Quiet",
+                "id": "quiet",
                 "label": {
-                  "en": "Pure",
-                  "nl": "Pure"
+                  "en": "Quiet",
+                  "nl": "Stil"
                 }
               },
               {
-                "id": "Standard",
+                "id": "standard",
                 "label": {
-                  "en": "Power",
-                  "nl": "Krachtig"
+                  "en": "Standard",
+                  "nl": "Standaard"
                 }
               },
               {
-                "id": "Turbo",
+                "id": "turbo",
                 "label": {
                   "en": "Turbo",
                   "nl": "Turbo"
                 }
               },
               {
-                "id": "Max",
+                "id": "max",
                 "label": {
                   "en": "Max",
                   "nl": "Max"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "action_control_mode",
+        "title": {
+          "en": "Set clean speed",
+          "nl": "Stel zuigkracht in"
+        },
+        "titleFormatted": {
+          "en": "Set mode to [[action_control_mode_type]]",
+          "nl": "Stel modus in op [[action_control_mode_type]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac"
+          },
+          {
+            "name": "action_control_mode_type",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "AUTO_CLEAN",
+                "label": {
+                  "en": "Start Auto clean",
+                  "nl": "Start Auto reinigen"
+                }
+              },
+              {
+                "id": "SPOT_CLEAN",
+                "label": {
+                  "en": "Start Spot clean",
+                  "nl": "Start Plek reinigen"
+                }
+              },
+              {
+                "id": "ROOM_CLEAN",
+                "label": {
+                  "en": "Start Room clean",
+                  "nl": "Start Kamer reinigen"
+                }
+              },
+              {
+                "id": "GO_HOME",
+                "label": {
+                  "en": "Go Home",
+                  "nl": "Ga naar huis"
+                }
+              },
+              {
+                "id": "STOP",
+                "label": {
+                  "en": "Stop",
+                  "nl": "Stop"
+                }
+              },
+              {
+                "id": "PAUSE",
+                "label": {
+                  "en": "Pause",
+                  "nl": "Pauze"
+                }
+              },
+              {
+                "id": "PLAY",
+                "label": {
+                  "en": "Resume",
+                  "nl": "Hervatten"
                 }
               }
             ]
@@ -143,16 +220,17 @@
       },
       "class": "vacuumcleaner",
       "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_clean_speed",
-        "measure_battery",
+        "action_clean_speed",
         "alarm_battery",
+        "measure_battery",
+        "measure_clean_speed",
+        "measure_docked",
+        "measure_error",
         "measure_is_charging",
         "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
+        "measure_work_mode",
+        "measure_work_status",
+        "vacuumcleaner_state"
       ],
       "energy": {
         "batteries": [
@@ -187,6 +265,16 @@
               "en": "Password"
             }
           }
+        },
+        {
+          "id": "loading",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
         },
         {
           "id": "list_devices",
@@ -229,55 +317,96 @@
           "template": "loading"
         },
         {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
           "id": "done",
           "template": "loading"
         }
       ],
       "settings": [
         {
-          "id": "deviceId",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
+            "en": "General settings",
+            "nl": "Algemene instellingen"
           },
-          "value": ""
+          "children": [
+            {
+              "id": "deviceId",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "localKey",
+              "type": "label",
+              "label": {
+                "en": "Local Key",
+                "nl": "Local Key"
+              },
+              "value": ""
+            },
+            {
+              "id": "deviceModel",
+              "type": "label",
+              "label": {
+                "en": "model type",
+                "nl": "model type"
+              },
+              "value": "Unknwn"
+            },
+            {
+              "id": "deviceModelName",
+              "type": "label",
+              "label": {
+                "en": "model name",
+                "nl": "model name"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "debug_log",
+              "type": "checkbox",
+              "label": {
+                "en": "Debug Logs",
+                "nl": "Debug Logs"
+              },
+              "value": false
+            }
+          ]
         },
         {
-          "id": "localKey",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
+            "en": "Login settings",
+            "nl": "Login instellingen"
           },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Email",
+                "nl": "Email"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Password"
+              },
+              "value": ""
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -295,16 +424,17 @@
       },
       "class": "vacuumcleaner",
       "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_clean_speed",
-        "measure_battery",
+        "action_clean_speed",
         "alarm_battery",
+        "measure_battery",
+        "measure_clean_speed",
+        "measure_docked",
+        "measure_error",
         "measure_is_charging",
         "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
+        "measure_work_mode",
+        "measure_work_status",
+        "vacuumcleaner_state"
       ],
       "energy": {
         "batteries": [
@@ -339,6 +469,16 @@
               "en": "Password"
             }
           }
+        },
+        {
+          "id": "loading",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
         },
         {
           "id": "list_devices",
@@ -381,55 +521,96 @@
           "template": "loading"
         },
         {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
           "id": "done",
           "template": "loading"
         }
       ],
       "settings": [
         {
-          "id": "deviceId",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
+            "en": "General settings",
+            "nl": "Algemene instellingen"
           },
-          "value": ""
+          "children": [
+            {
+              "id": "deviceId",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "localKey",
+              "type": "label",
+              "label": {
+                "en": "Local Key",
+                "nl": "Local Key"
+              },
+              "value": ""
+            },
+            {
+              "id": "deviceModel",
+              "type": "label",
+              "label": {
+                "en": "model type",
+                "nl": "model type"
+              },
+              "value": "Unknwn"
+            },
+            {
+              "id": "deviceModelName",
+              "type": "label",
+              "label": {
+                "en": "model name",
+                "nl": "model name"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "debug_log",
+              "type": "checkbox",
+              "label": {
+                "en": "Debug Logs",
+                "nl": "Debug Logs"
+              },
+              "value": false
+            }
+          ]
         },
         {
-          "id": "localKey",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
+            "en": "Login settings",
+            "nl": "Login instellingen"
           },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Email",
+                "nl": "Email"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Password"
+              },
+              "value": ""
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -447,16 +628,17 @@
       },
       "class": "vacuumcleaner",
       "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_clean_speed",
-        "measure_battery",
+        "action_clean_speed",
         "alarm_battery",
+        "measure_battery",
+        "measure_clean_speed",
+        "measure_docked",
+        "measure_error",
         "measure_is_charging",
         "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
+        "measure_work_mode",
+        "measure_work_status",
+        "vacuumcleaner_state"
       ],
       "energy": {
         "batteries": [
@@ -491,6 +673,16 @@
               "en": "Password"
             }
           }
+        },
+        {
+          "id": "loading",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
         },
         {
           "id": "list_devices",
@@ -533,55 +725,96 @@
           "template": "loading"
         },
         {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
           "id": "done",
           "template": "loading"
         }
       ],
       "settings": [
         {
-          "id": "deviceId",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
+            "en": "General settings",
+            "nl": "Algemene instellingen"
           },
-          "value": ""
+          "children": [
+            {
+              "id": "deviceId",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "localKey",
+              "type": "label",
+              "label": {
+                "en": "Local Key",
+                "nl": "Local Key"
+              },
+              "value": ""
+            },
+            {
+              "id": "deviceModel",
+              "type": "label",
+              "label": {
+                "en": "model type",
+                "nl": "model type"
+              },
+              "value": "Unknwn"
+            },
+            {
+              "id": "deviceModelName",
+              "type": "label",
+              "label": {
+                "en": "model name",
+                "nl": "model name"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "debug_log",
+              "type": "checkbox",
+              "label": {
+                "en": "Debug Logs",
+                "nl": "Debug Logs"
+              },
+              "value": false
+            }
+          ]
         },
         {
-          "id": "localKey",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
+            "en": "Login settings",
+            "nl": "Login instellingen"
           },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Email",
+                "nl": "Email"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Password"
+              },
+              "value": ""
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -599,16 +832,17 @@
       },
       "class": "vacuumcleaner",
       "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_clean_speed",
-        "measure_battery",
+        "action_clean_speed",
         "alarm_battery",
+        "measure_battery",
+        "measure_clean_speed",
+        "measure_docked",
+        "measure_error",
         "measure_is_charging",
         "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
+        "measure_work_mode",
+        "measure_work_status",
+        "vacuumcleaner_state"
       ],
       "energy": {
         "batteries": [
@@ -643,6 +877,16 @@
               "en": "Password"
             }
           }
+        },
+        {
+          "id": "loading",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
         },
         {
           "id": "list_devices",
@@ -685,55 +929,96 @@
           "template": "loading"
         },
         {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
           "id": "done",
           "template": "loading"
         }
       ],
       "settings": [
         {
-          "id": "deviceId",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
+            "en": "General settings",
+            "nl": "Algemene instellingen"
           },
-          "value": ""
+          "children": [
+            {
+              "id": "deviceId",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "localKey",
+              "type": "label",
+              "label": {
+                "en": "Local Key",
+                "nl": "Local Key"
+              },
+              "value": ""
+            },
+            {
+              "id": "deviceModel",
+              "type": "label",
+              "label": {
+                "en": "model type",
+                "nl": "model type"
+              },
+              "value": "Unknwn"
+            },
+            {
+              "id": "deviceModelName",
+              "type": "label",
+              "label": {
+                "en": "model name",
+                "nl": "model name"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "debug_log",
+              "type": "checkbox",
+              "label": {
+                "en": "Debug Logs",
+                "nl": "Debug Logs"
+              },
+              "value": false
+            }
+          ]
         },
         {
-          "id": "localKey",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
+            "en": "Login settings",
+            "nl": "Login instellingen"
           },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Email",
+                "nl": "Email"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Password"
+              },
+              "value": ""
+            }
+          ]
         }
       ],
       "name": {
@@ -750,16 +1035,17 @@
       },
       "class": "vacuumcleaner",
       "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_clean_speed",
-        "measure_battery",
+        "action_clean_speed",
         "alarm_battery",
+        "measure_battery",
+        "measure_clean_speed",
+        "measure_docked",
+        "measure_error",
         "measure_is_charging",
         "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
+        "measure_work_mode",
+        "measure_work_status",
+        "vacuumcleaner_state"
       ],
       "energy": {
         "batteries": [
@@ -794,6 +1080,16 @@
               "en": "Password"
             }
           }
+        },
+        {
+          "id": "loading",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
         },
         {
           "id": "list_devices",
@@ -836,55 +1132,96 @@
           "template": "loading"
         },
         {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
           "id": "done",
           "template": "loading"
         }
       ],
       "settings": [
         {
-          "id": "deviceId",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
+            "en": "General settings",
+            "nl": "Algemene instellingen"
           },
-          "value": ""
+          "children": [
+            {
+              "id": "deviceId",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "localKey",
+              "type": "label",
+              "label": {
+                "en": "Local Key",
+                "nl": "Local Key"
+              },
+              "value": ""
+            },
+            {
+              "id": "deviceModel",
+              "type": "label",
+              "label": {
+                "en": "model type",
+                "nl": "model type"
+              },
+              "value": "Unknwn"
+            },
+            {
+              "id": "deviceModelName",
+              "type": "label",
+              "label": {
+                "en": "model name",
+                "nl": "model name"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "debug_log",
+              "type": "checkbox",
+              "label": {
+                "en": "Debug Logs",
+                "nl": "Debug Logs"
+              },
+              "value": false
+            }
+          ]
         },
         {
-          "id": "localKey",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
+            "en": "Login settings",
+            "nl": "Login instellingen"
           },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Email",
+                "nl": "Email"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Password"
+              },
+              "value": ""
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -902,16 +1239,17 @@
       },
       "class": "vacuumcleaner",
       "capabilities": [
-        "vacuumcleaner_state",
-        "measure_work_mode",
-        "measure_work_status",
-        "measure_clean_speed",
-        "measure_battery",
+        "action_clean_speed",
         "alarm_battery",
+        "measure_battery",
+        "measure_clean_speed",
+        "measure_docked",
+        "measure_error",
         "measure_is_charging",
         "measure_recharge_needed",
-        "measure_docked",
-        "measure_error"
+        "measure_work_mode",
+        "measure_work_status",
+        "vacuumcleaner_state"
       ],
       "energy": {
         "batteries": [
@@ -946,6 +1284,16 @@
               "en": "Password"
             }
           }
+        },
+        {
+          "id": "loading",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
         },
         {
           "id": "list_devices",
@@ -988,55 +1336,96 @@
           "template": "loading"
         },
         {
+          "id": "loading2",
+          "template": "loading",
+          "message": "Loading, this can take a while..."
+        },
+        {
           "id": "done",
           "template": "loading"
         }
       ],
       "settings": [
         {
-          "id": "deviceId",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Device ID",
-            "nl": "Device ID"
+            "en": "General settings",
+            "nl": "Algemene instellingen"
           },
-          "value": ""
+          "children": [
+            {
+              "id": "deviceId",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "localKey",
+              "type": "label",
+              "label": {
+                "en": "Local Key",
+                "nl": "Local Key"
+              },
+              "value": ""
+            },
+            {
+              "id": "deviceModel",
+              "type": "label",
+              "label": {
+                "en": "model type",
+                "nl": "model type"
+              },
+              "value": "Unknwn"
+            },
+            {
+              "id": "deviceModelName",
+              "type": "label",
+              "label": {
+                "en": "model name",
+                "nl": "model name"
+              },
+              "value": "Unknown"
+            },
+            {
+              "id": "debug_log",
+              "type": "checkbox",
+              "label": {
+                "en": "Debug Logs",
+                "nl": "Debug Logs"
+              },
+              "value": false
+            }
+          ]
         },
         {
-          "id": "localKey",
-          "type": "text",
+          "type": "group",
           "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
+            "en": "Login settings",
+            "nl": "Login instellingen"
           },
-          "value": ""
-        },
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "IP Address",
-            "nl": "IP Adres"
-          },
-          "value": ""
-        },
-        {
-          "id": "port",
-          "type": "number",
-          "label": {
-            "en": "Port",
-            "nl": "Port"
-          },
-          "value": 6668
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Email",
+                "nl": "Email"
+              },
+              "value": ""
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Password"
+              },
+              "value": ""
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -1048,7 +1437,7 @@
     }
   ],
   "capabilities": {
-    "measure_clean_speed": {
+    "action_clean_speed": {
       "type": "enum",
       "title": {
         "en": "Clean speed",
@@ -1089,6 +1478,17 @@
         }
       ]
     },
+    "measure_clean_speed": {
+      "type": "string",
+      "title": {
+        "en": "Clean speed",
+        "nl": "Zuigkracht"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/speedometer.svg"
+    },
     "measure_docked": {
       "type": "boolean",
       "title": {
@@ -1101,7 +1501,7 @@
       "icon": "assets/icons/house-door.svg"
     },
     "measure_error": {
-      "type": "enum",
+      "type": "string",
       "title": {
         "en": "Errors",
         "nl": "Errors"
@@ -1109,72 +1509,7 @@
       "uiComponent": "sensor",
       "icon": "assets/icons/exclamation-triangle-fill.svg",
       "getable": true,
-      "setable": true,
-      "values": [
-        {
-          "id": "no_error",
-          "title": {
-            "en": "No error",
-            "nl": "Geen error"
-          }
-        },
-        {
-          "id": "Wheel_stuck",
-          "title": {
-            "en": "Wheel stuck",
-            "nl": "Wiel zit vast"
-          }
-        },
-        {
-          "id": "R_brush_stuck",
-          "title": {
-            "en": "Brush stuck",
-            "nl": "Borstel zit vast"
-          }
-        },
-        {
-          "id": "Crash_bar_stuck",
-          "title": {
-            "en": "Crash bar stuck",
-            "nl": "Crash balk zit vast"
-          }
-        },
-        {
-          "id": "sensor_dirty",
-          "title": {
-            "en": "Sensor dirty",
-            "nl": "Sensor vies"
-          }
-        },
-        {
-          "id": "N_enough_pow",
-          "title": {
-            "en": "Not enough power",
-            "nl": "Niet genoeg power"
-          }
-        },
-        {
-          "id": "Stuck_5_min",
-          "title": {
-            "en": "Stuck 5 minutes",
-            "nl": "Vast 5 minuten"
-          }
-        },
-        {
-          "id": "Fan_stuck",
-          "title": {
-            "en": "Fan stuck",
-            "nl": "Ventilator zit vast"
-          }
-        },
-        {
-          "id": "S_brush_stuck",
-          "title": {
-            "en": "Brush stuck",
-            "nl": "Borstel zit vast"
-          }
-        }
-      ]
+      "setable": true
     },
     "measure_is_charging": {
       "type": "boolean",
@@ -1217,28 +1552,28 @@
           }
         },
         {
-          "id": "Nosweep",
+          "id": "nosweep",
           "title": {
             "en": "No Sweep",
             "nl": "Niet vegen"
           }
         },
         {
-          "id": "SmallRoom",
+          "id": "smallroom",
           "title": {
             "en": "Small Room",
             "nl": "Kleine kamer"
           }
         },
         {
-          "id": "Edge",
+          "id": "edge",
           "title": {
             "en": "Edge",
             "nl": "Hoek"
           }
         },
         {
-          "id": "Spot",
+          "id": "spot",
           "title": {
             "en": "Spot",
             "nl": "Vlek"
@@ -1261,7 +1596,7 @@
       ]
     },
     "measure_work_status": {
-      "type": "enum",
+      "type": "string",
       "title": {
         "en": "Work status",
         "nl": "Werk status"
@@ -1269,51 +1604,7 @@
       "uiComponent": "sensor",
       "icon": "assets/icons/chevron-double-right.svg",
       "getable": true,
-      "setable": true,
-      "values": [
-        {
-          "id": "Running",
-          "title": {
-            "en": "Running",
-            "nl": "Cleaning"
-          }
-        },
-        {
-          "id": "Charging",
-          "title": {
-            "en": "Charging",
-            "nl": "Opladen"
-          }
-        },
-        {
-          "id": "standby",
-          "title": {
-            "en": "Standby",
-            "nl": "Standby"
-          }
-        },
-        {
-          "id": "Sleeping",
-          "title": {
-            "en": "Standby",
-            "nl": "Standby"
-          }
-        },
-        {
-          "id": "Recharge",
-          "title": {
-            "en": "Going to dock",
-            "nl": "Op weg naar dock"
-          }
-        },
-        {
-          "id": "completed",
-          "title": {
-            "en": "Docked and charged",
-            "nl": "In dock en opgeladen"
-          }
-        }
-      ]
+      "setable": true
     }
   }
 }

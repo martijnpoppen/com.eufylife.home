@@ -7,7 +7,8 @@
     "url": "https://github.com/martijnpoppen/com.eufylife.home"
   },
   "dependencies": {
-    "axios": "^1.6.5",
+    "eufy-clean": "file:../lib/eufy-clean",
+    "homey": "^3.3.0",
     "tuyapi": "^7.5.2"
   }
 }

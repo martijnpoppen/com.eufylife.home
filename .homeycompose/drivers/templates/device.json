@@ -6,16 +6,17 @@
   },
   "class": "vacuumcleaner",
   "capabilities": [
-    "vacuumcleaner_state",
-    "measure_work_mode",
-    "measure_work_status",
-    "measure_clean_speed",
-    "measure_battery",
+    "action_clean_speed",
     "alarm_battery",
+    "measure_battery",
+    "measure_clean_speed",
+    "measure_docked",
+    "measure_error",
     "measure_is_charging",
     "measure_recharge_needed",
-    "measure_docked",
-    "measure_error"
+    "measure_work_mode",
+    "measure_work_status",
+    "vacuumcleaner_state"
   ],
   "energy": {
     "batteries": ["INTERNAL"]

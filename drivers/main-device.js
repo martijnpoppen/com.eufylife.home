@@ -1,28 +1,32 @@
 const Homey = require('homey');
-const { RoboVac, WorkStatus, WorkMode } = require('../lib/eufy-robovac');
+const { EufyCleanDevice, EUFY_CLEAN_GET_STATE, EUFY_CLEAN_VACUUMCLEANER_STATE, EUFY_CLEAN_LEGACY_CLEAN_SPEED, EUFY_CLEAN_WORK_STATUS, EUFY_CLEAN_ERROR_CODES } = require('../lib/eufy-clean');
 const { sleep } = require('../lib/helpers');
-const { GET_STATE, VACUUMCLEANER_STATE } = require('../constants/state.constants');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
-		this.homey.app.log('[Device] - init =>', this.getName());
-        this.homey.app.setDevices(this);
         const settings = this.getSettings();
+        const deviceObject = this.getData();
+
+        this.homey.app.log('[Device] - init =>', this.getName());
+        this.setUnavailable(`${this.getName()} is initializing...`);
+
+        if ('localKey' in settings && settings.localKey !== 'deprecated') {
+            this.setUnavailable('Legacy API detected. Please repair the device to use the new API.');
+        }
+
+        const sleepIndex = this.homey.app.deviceList.findIndex((device) => {
+            const driverDeviceObject = device.getData();
+            return driverDeviceObject.id === deviceObject.id;
+        });
+
+        const sleepTime = (sleepIndex + 1) * 6000;
+        this.homey.app.log('[Device] - sleep =>', this.getName(), sleepTime);
+        await sleep(sleepTime);
 
         this.registerCapabilityListener('vacuumcleaner_state', this._onVacuumCapabilityChanged.bind(this));
+        this.registerCapabilityListener('action_clean_speed', this._onCleanSpeedChanged.bind(this));
 
-        if(this.hasCapability('measure_clean_speed')) {
-            this.registerCapabilityListener('measure_clean_speed', this._onCleanSpeedChanged.bind(this));
-            await this.registerFlowAction('measure_clean_speed', '_onCleanSpeedChanged');
-        }
-        
-        
         await this.checkCapabilities();
-        
-        if(!settings.ip.length) {
-            this.setUnavailable('No IP address set. Please set the local IP in the device settings');
-            return;
-        }
 
         await this.initApi();
         await this.setCapabilityValuesInterval();
@@ -31,11 +35,7 @@ module.exports = class mainDevice extends Homey.Device {
     async onSettings({ oldSettings, newSettings, changedKeys }) {
         this.homey.app.log(`[Device] ${this.getName()} - newSettings`, newSettings);
 
-        if(this.eufyRoboVac) {
-            this.eufyRoboVac.disconnect();
-        }
-
-        if( this.onPollInterval ) {
+        if (this.onPollInterval) {
             clearInterval(this.onPollInterval);
         }
 
@@ -44,8 +44,8 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     onDeleted() {
-        if( this.onPollInterval ) {
-          clearInterval(this.onPollInterval);
+        if (this.onPollInterval) {
+            clearInterval(this.onPollInterval);
         }
     }
 
@@ -53,7 +53,7 @@ module.exports = class mainDevice extends Homey.Device {
         this.homey.app.log(`[Device] ${this.getName()} - onRepair`);
         await this.checkCapabilities();
 
-        if( this.onPollInterval ) {
+        if (this.onPollInterval) {
             clearInterval(this.onPollInterval);
         }
 
@@ -63,16 +63,21 @@ module.exports = class mainDevice extends Homey.Device {
 
     async initApi(overrideSettings = null) {
         try {
-            let {deviceId, localKey, ip, port} = overrideSettings ? overrideSettings : this.getSettings();  
-            this.homey.app.log(`[Device] ${this.getName()} - initApi settings`, overrideSettings ? overrideSettings : this.getSettings());
+            const settings = overrideSettings ? overrideSettings : this.getSettings()
+            let { deviceId, username, password, deviceModel, mqtt } = settings;
+            this.homey.app.log(`[Device] ${this.getName()} - initApi settings`, {...settings, username: 'LOG', password: '***'});
 
-            this.config = { deviceId, localKey, ip, port, newApi: false };
+            this.config = { username, password, deviceId, deviceModel, mqtt, debug: false };
 
             this.homey.app.log(`[Device] ${this.getName()} - initApi`);
 
-            this.eufyRoboVac = new RoboVac(this.config, true, 5)
-            await this.eufyRoboVac.getStatuses();
-            await this.eufyRoboVac.formatStatus()
+            const eufyCleanDevice = new EufyCleanDevice(this.config);
+            this.eufyRoboVac = eufyCleanDevice.getInstance();
+
+            await this.eufyRoboVac.connect();
+            await this.eufyRoboVac.formatStatus();
+
+            this.setAvailable();
             this.setCapabilityValues();
         } catch (error) {
             this.setUnavailable(error);
@@ -83,12 +88,12 @@ module.exports = class mainDevice extends Homey.Device {
     async checkCapabilities() {
         const driverManifest = this.driver.manifest;
         const driverCapabilities = driverManifest.capabilities;
-        
+
         const deviceCapabilities = this.getCapabilities();
 
         this.homey.app.log(`[Device] ${this.getName()} - Found capabilities =>`, deviceCapabilities);
-        
-        if(driverCapabilities.length > deviceCapabilities.length) {      
+
+        if (driverCapabilities.length > deviceCapabilities.length) {
             await this.updateCapabilities(driverCapabilities);
         }
 
@@ -98,58 +103,67 @@ module.exports = class mainDevice extends Homey.Device {
     async updateCapabilities(driverCapabilities) {
         this.homey.app.log(`[Device] ${this.getName()} - Add new capabilities =>`, driverCapabilities);
         try {
-            driverCapabilities.forEach(c => {
+            driverCapabilities.forEach((c) => {
                 this.addCapability(c);
             });
             await sleep(2000);
         } catch (error) {
-            this.homey.app.log(error)
+            this.homey.app.log(error);
         }
     }
 
     async setCapabilityValues() {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
 
-        try {    
-            const batteryLevel = await this.eufyRoboVac.getBatteyLevel() || 1;
+        try {
+            await this.eufyRoboVac.updateDevice();
+
+            const batteryLevel = (await this.eufyRoboVac.getBatteryLevel()) || 1;
             const workStatus = await this.eufyRoboVac.getWorkStatus();
             const workMode = await this.eufyRoboVac.getWorkMode();
             const cleanSpeed = await this.eufyRoboVac.getCleanSpeed();
-            const errors = await this.eufyRoboVac.getErrorCode();
-            const cleanState = await this.eufyRoboVac.getPlayPause();
-            const currentState = GET_STATE[workStatus] || GET_STATE[workMode];
+            const errorCode = await this.eufyRoboVac.getErrorCode();
+            const currentState = EUFY_CLEAN_GET_STATE[workStatus] || EUFY_CLEAN_GET_STATE[workMode];
 
             this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - workStatus`, workStatus);
             this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - workMode`, workMode);
             this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - currentState`, currentState);
             this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - cleanSpeed`, cleanSpeed);
-            this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - errors`, errors);
+            this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - errorCode`, errorCode);
+            this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - batteryLevel`, batteryLevel);
 
             await this.setCapabilityValue('measure_battery', parseInt(batteryLevel));
             await this.setCapabilityValue('alarm_battery', parseInt(batteryLevel) < 15);
 
-            if(workStatus) {
-                await this.setCapabilityValue('measure_is_charging', workStatus === WorkStatus.CHARGING);
-                await this.setCapabilityValue('measure_recharge_needed', workStatus === WorkStatus.RECHARGE_NEEDED);
-                await this.setCapabilityValue('measure_work_status', workStatus);
+            if (workStatus) {
+                await this.setCapabilityValue('measure_is_charging', workStatus === 'charging');
+                await this.setCapabilityValue('measure_recharge_needed', workStatus === 'recharge' || workStatus === 'charging');
+                await this.setCapabilityValue('measure_work_status', EUFY_CLEAN_WORK_STATUS[workStatus.toUpperCase()]);
             }
 
-            if(currentState) {
-                await this.setCapabilityValue('measure_docked', currentState === 'docked' || currentState === 'stopped');
+            if (currentState) {
+                await this.setCapabilityValue('measure_docked', currentState === 'docked' || currentState === 'stopped' || currentState === 'charging' || currentState === 'standby');
                 await this.setCapabilityValue('vacuumcleaner_state', currentState);
             }
 
-            if(workMode) {
+            if (workMode) {
                 await this.setCapabilityValue('measure_work_mode', workMode);
             }
 
-            if(cleanSpeed && this.hasCapability('measure_clean_speed')) {
+            if (EUFY_CLEAN_LEGACY_CLEAN_SPEED.some((l) => l.toLowerCase() === cleanSpeed) && this.hasCapability('action_clean_speed')) {
+                this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - cleanSpeed - removing action_clean_speed`);
+                await this.removeCapability('action_clean_speed');
+            }
+
+            if (cleanSpeed) {
                 await this.setCapabilityValue('measure_clean_speed', `${cleanSpeed}`);
             }
-            
-            await this.setCapabilityValue('measure_error', !errors ? 'no_error' : errors);
-        
-            this.homey.app.log(`[Device] ${this.getName()} - cleanState`, cleanState);
+
+            if (typeof errorCode === 'number') {
+                await this.setCapabilityValue('measure_error', EUFY_CLEAN_ERROR_CODES[errorCode]);
+            } else {
+                await this.setCapabilityValue('measure_error', !errorCode ? 'no_error' : errorCode);
+            }
 
             await this.setAvailable();
         } catch (error) {
@@ -159,42 +173,90 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async setCapabilityValuesInterval() {
-        try {  
-            const REFRESH_INTERVAL = 1000 * (1 * 60);
+        try {
+            const REFRESH_INTERVAL = 6000;
 
             this.homey.app.log(`[Device] ${this.getName()} - onPollInterval =>`, REFRESH_INTERVAL);
             this.onPollInterval = setInterval(this.setCapabilityValues.bind(this), REFRESH_INTERVAL);
 
             await this.setCapabilityValues();
         } catch (error) {
-            this.setUnavailable(error)
+            this.setUnavailable(error);
             this.homey.app.log(error);
         }
     }
 
     async _onVacuumCapabilityChanged(value) {
-        const driverName = this.driver.manifest.name;
         this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged =>`, value);
         try {
             switch (value) {
-              case VACUUMCLEANER_STATE.CLEANING:
-                return await this.eufyRoboVac.startCleaning();
-              case VACUUMCLEANER_STATE.SPOT_CLEANING:
-                await this.eufyRoboVac.play();
-                if(driverName === 'X_Series') {
-                    return await this.eufyRoboVac.setWorkMode(WorkMode.ROOM)
-                }
-                return await this.eufyRoboVac.setWorkMode(WorkMode.SMALL_ROOM)
-              case VACUUMCLEANER_STATE.DOCKED:
-                return await this.eufyRoboVac.goHome();
-              case VACUUMCLEANER_STATE.CHARGING:
-                return await this.eufyRoboVac.goHome();
-              case VACUUMCLEANER_STATE.STOPPED:
-                return await this.eufyRoboVac.pause();
-              default:
-                this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => received unknown value:`, value);
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.CLEANING:
+                    return await this.eufyRoboVac.play();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.SPOT_CLEANING:
+                    return await this.eufyRoboVac.roomClean();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.DOCKED:
+                    return await this.eufyRoboVac.goHome();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.CHARGING:
+                    return await this.eufyRoboVac.goHome();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.STOPPED:
+                    return await this.eufyRoboVac.stop();
+                default:
+                    this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => received unknown value:`, value);
             }
-          } catch (err) {
+        } catch (err) {
+            this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => error`, err);
+            this.log('_onVacuumCapabilityChanged() -> error', err);
+        }
+    }
+
+    async _onControlModeChanged(value) {
+        this.homey.app.log(`[Device] ${this.getName()} - _onControlModeChanged =>`, value);
+        try {
+            switch (value) {
+                case 'AUTO_CLEAN':
+                    return await this.eufyRoboVac.autoClean();
+                case 'ROOM_CLEAN':
+                    throw new Error('Room clean is not supported yet')
+                    return await this.eufyRoboVac.roomClean();
+                case 'SPOT_CLEAN':
+                    throw new Error('Spot clean is not supported yet')
+                    return await this.eufyRoboVac.spotClean();
+                case 'GO_HOME':
+                    return await this.eufyRoboVac.goHome();
+                case 'PAUSE':
+                    return await this.eufyRoboVac.pause();
+                case 'STOP':
+                    return await this.eufyRoboVac.stop();
+                case 'PLAY':
+                    return await this.eufyRoboVac.play();
+                default:
+                    this.homey.app.log(`[Device] ${this.getName()} - _onControlModeChanged => received unknown value:`, value);
+            }
+        } catch (err) {
+            this.homey.app.log(`[Device] ${this.getName()} - _onControlModeChanged => error`, err);
+            this.log('_onControlModeChanged() -> error', err);
+        }
+    }
+
+    async _onVacuumCapabilityChanged(value, ...opts) {
+        this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged =>`, value);
+        console.log('opts', opts);
+        try {
+            switch (value) {
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.CLEANING:
+                    return await this.eufyRoboVac.play();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.SPOT_CLEANING:
+                    return await this.eufyRoboVac.roomClean();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.DOCKED:
+                    return await this.eufyRoboVac.goHome();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.CHARGING:
+                    return await this.eufyRoboVac.goHome();
+                case EUFY_CLEAN_VACUUMCLEANER_STATE.STOPPED:
+                    return await this.eufyRoboVac.stop();
+                default:
+                    this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => received unknown value:`, value);
+            }
+        } catch (err) {
             this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => error`, err);
             this.log('_onVacuumCapabilityChanged() -> error', err);
         }
@@ -203,21 +265,10 @@ module.exports = class mainDevice extends Homey.Device {
     async _onCleanSpeedChanged(value) {
         this.homey.app.log(`[Device] ${this.getName()} - _onCleanSpeedChanged =>`, value);
         try {
-            return await this.eufyRoboVac.setCleanSpeed(value) 
-          } catch (err) {
+            return await this.eufyRoboVac.setCleanSpeed(value);
+        } catch (err) {
             this.homey.app.log(`[Device] ${this.getName()} - _onCleanSpeedChanged => error`, err);
             this.log('_onCleanSpeedChanged() -> error', err);
         }
     }
-
-    async registerFlowAction(capability, methodName) {
-        const action = `action_${capability}`
-        const action_arg = `action_${capability}_type`
-        const flow_actions = [];
-        flow_actions[action] = this.homey.flow.getActionCard(action);
-        flow_actions[action].registerRunListener(async (args) => {
-           await args.device[methodName]( args[action_arg], null );
-           return await args.device.setCapabilityValue( capability, args[action_arg]);
-        });
-    }
-}
+};

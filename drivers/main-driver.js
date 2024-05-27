@@ -1,11 +1,12 @@
 const Homey = require('homey');
-const axios = require('axios');
-const { RoboVac } = require('../lib/eufy-robovac');
+const { EufyCleanLogin, EUFY_CLEAN_DEVICES } = require('../lib/eufy-clean');
 
 module.exports = class mainDriver extends Homey.Driver {
     onInit() {
         this.homey.app.log('[Driver] - init', this.id);
         this.homey.app.log(`[Driver] - version`, Homey.manifest.version);
+
+        this.homey.app.setDevices(this.getDevices());
     }
 
     deviceType() {
@@ -27,64 +28,58 @@ module.exports = class mainDriver extends Homey.Driver {
             this.homey.app.log(`[Driver] ${this.id} - currentView:`, { view, type: this.type });
 
             if (view === 'loading') {
-                if (device) {
-                    const settings = device.getSettings();
-                    const matchedDevice = this.devices.find((d) => d.settings.deviceId === settings.deviceId);
+                try {
+                    const response = await this.eufyLogin.login();
+                    this.cloudDevices = response.cloudDevices;
+                    this.mqttDevices = response.mqttDevices;
 
-                    if (matchedDevice) {
-                        await device.setSettings({
-                            deviceId: matchedDevice.settings.deviceId,
-                            localKey: matchedDevice.settings.localKey
-                        });
+                    session.showView('loading2');
+                } catch (error) {
+                    console.error(error);
+                }
+            }
 
-                        await device.onRepair({
-                            ...settings,
-                            deviceId: matchedDevice.settings.deviceId,
-                            localKey: matchedDevice.settings.localKey
-                        });
+            if (view === 'loading2') {
+                try {
+                    if (device) {
+                        const settings = device.getSettings();
+                        const matchedDevice = this.devices.find((d) => d.settings.deviceId === settings.deviceId);
 
-                        session.showView('done');
+                        if (matchedDevice) {
+                            const newSettings = {
+                                deviceId: matchedDevice.settings.deviceId,
+                                localKey: 'deprecated',
+                                apiType: matchedDevice.settings.apiType,
+                                ...this.loginData
+                            };
+
+                            await device.setSettings(newSettings);
+                            await device.onRepair({
+                                ...settings,
+                                ...newSettings
+                            });
+
+                            session.showView('done');
+                        } else {
+                            this.homey.app.log('Device not found - ', matchedDevice);
+                        }
                     } else {
-                        this.homey.app.log('Device not found - ', matchedDevice);
+                        session.showView('list_devices');
                     }
+                } catch (error) {
+                    console.error(error);
                 }
             }
         });
 
         session.setHandler('login', async (data) => {
             try {
-                const response = await axios
-                    .post(`${Homey.env.API_URL}/login`, {
-                        username: data.username,
-                        password: data.password
-                    })
-                    .catch(function (error) {
-                        console.log(JSON.stringify(error));
-                        throw new Error(error);
-                    });
+                this.eufyLogin = new EufyCleanLogin(data.username, data.password);
 
-                console.log(response.data);
-
-                if (typeof response.data === 'string') {
-                    throw new Error(response.data);
-                }
-
-                this.devices = [];
-
-                response.data.forEach((device) => {
-                    this.devices.push({
-                        name: `${device.name}`,
-                        data: {
-                            id: `${device.devId}-${device.localKey}`
-                        },
-                        settings: {
-                            deviceId: device.devId,
-                            localKey: device.localKey,
-                            ip: '',
-                            port: 6668
-                        }
-                    });
-                });
+                this.loginData = {
+                    username: data.username,
+                    password: data.password
+                };
 
                 return true;
             } catch (error) {
@@ -94,11 +89,40 @@ module.exports = class mainDriver extends Homey.Driver {
         });
 
         session.setHandler('list_devices', async () => {
-            let results = this.devices;
+            const cloudDevices = this.cloudDevices.map((device) => ({
+                name: `${device.name}`,
+                data: {
+                    id: `${device.devId}`
+                },
+                settings: {
+                    apiType: device.apiType,
+                    deviceId: device.devId,
+                    deviceModel: device.device_model,
+                    localKey: 'deprecated',
+                    mqtt: device.mqtt,
+                    ...this.loginData
+                }
+            }));
 
-            this.homey.app.log('Found devices - ', results);
+            const mqttDevices = this.mqttDevices.map((device) => ({
+                name: `${device.device_name}`,
+                data: {
+                    id: `${device.device_sn}`
+                },
+                settings: {
+                    apiType: device.apiType,
+                    deviceId: device.device_sn,
+                    deviceModel: device.device_model,
+                    deviceModelName: EUFY_CLEAN_DEVICES[device.device_model] || device.device_model,
+                    localKey: 'deprecated',
+                    mqtt: device.mqtt,
+                    ...this.loginData
+                }
+            }));
 
-            return results;
+            this.homey.app.log('Found devices - ', [...cloudDevices, ...mqttDevices]);
+
+            return [...cloudDevices, ...mqttDevices];
         });
     }
 };

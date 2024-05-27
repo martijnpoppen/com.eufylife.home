@@ -1,5 +1,5 @@
 {
-  "type": "enum",
+  "type": "string",
   "title": {
     "en": "Errors",
     "nl": "Errors"
@@ -7,91 +7,5 @@
   "uiComponent": "sensor",
   "icon": "assets/icons/exclamation-triangle-fill.svg",
   "getable": true,
-  "setable": true,
-  "values": [
-    {
-      "id": "no_error",
-      "title": {
-        "en": "No error",
-        "nl": "Geen error"
-      }
-    },
-    {
-      "id": "Wheel_stuck",
-      "title": {
-        "en": "Wheel stuck",
-        "nl": "Wiel zit vast"
-      }
-    },
-    {
-      "id": "R_brush_stuck",
-      "title": {
-        "en": "Brush stuck",
-        "nl": "Borstel zit vast"
-      }
-    },
-    {
-      "id": "Crash_bar_stuck",
-      "title": {
-        "en": "Crash bar stuck",
-        "nl": "Crash balk zit vast"
-      }
-    },
-    {
-      "id": "sensor_dirty",
-      "title": {
-        "en": "Sensor dirty",
-        "nl": "Sensor vies"
-      }
-    },
-    {
-      "id": "N_enough_pow",
-      "title": {
-        "en": "Not enough power",
-        "nl": "Niet genoeg power"
-      }
-    },
-    {
-      "id": "Stuck_5_min",
-      "title": {
-        "en": "Stuck 5 minutes",
-        "nl": "Vast 5 minuten"
-      }
-    },
-    {
-      "id": "Fan_stuck",
-      "title": {
-        "en": "Fan stuck",
-        "nl": "Ventilator zit vast"
-      }
-    },
-    {
-      "id": "S_brush_stuck",
-      "title": {
-        "en": "Brush stuck",
-        "nl": "Borstel zit vast"
-      }
-    }
-  ],
-  "$flow": {
-    "triggers": [
-      {
-        "id": "measure_error_changed",
-        "title": {
-          "en": "Errors changed",
-          "nl": "Errors veranderd"
-        },
-        "tokens": [
-          {
-            "name": "measure_error",
-            "title": {
-              "en": "Errors",
-              "nl": "Errors"
-            },
-            "type": "string"
-          }
-        ]
-      }
-    ]
-  }
+  "setable": true
 }

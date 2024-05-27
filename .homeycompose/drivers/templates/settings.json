@@ -1,49 +1,85 @@
 {
   "settings": [
     {
-      "id": "deviceId",
-      "type": "text",
+      "type": "group",
       "label": {
-        "en": "Device ID",
-        "nl": "Device ID"
+        "en": "General settings",
+        "nl": "Algemene instellingen"
       },
-      "value": ""
+      "children": [
+        {
+          "id": "deviceId",
+          "type": "label",
+          "label": {
+            "en": "Device ID",
+            "nl": "Device ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "localKey",
+          "type": "label",
+          "label": {
+            "en": "Local Key",
+            "nl": "Local Key"
+          },
+          "value": ""
+        },
+        {
+          "id": "deviceModel",
+          "type": "label",
+          "label": {
+            "en": "model type",
+            "nl": "model type"
+          },
+          "value": "Unknwn"
+        },
+        {
+          "id": "deviceModelName",
+          "type": "label",
+          "label": {
+            "en": "model name",
+            "nl": "model name"
+          },
+          "value": "Unknown"
+        },
+        {
+          "id": "debug_log",
+          "type": "checkbox",
+          "label": {
+            "en": "Debug Logs",
+            "nl": "Debug Logs"
+          },
+          "value": false
+        }
+      ]
     },
     {
-      "id": "localKey",
-      "type": "text",
+      "type": "group",
       "label": {
-        "en": "Local Key",
-        "nl": "Local Key"
+        "en": "Login settings",
+        "nl": "Login instellingen"
       },
-      "value": ""
-    },
-    {
-      "id": "ip",
-      "type": "text",
-      "label": {
-        "en": "IP Address",
-        "nl": "IP Adres"
-      },
-      "value": ""
-    },
-    {
-      "id": "port",
-      "type": "number",
-      "label": {
-        "en": "Port",
-        "nl": "Port"
-      },
-      "value": 6668
-    },
-    {
-      "id": "debug_log",
-      "type": "checkbox",
-      "label": {
-        "en": "Debug Logs",
-        "nl": "Debug Logs"
-      },
-      "value": false
+      "children": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Email",
+            "nl": "Email"
+          },
+          "value": ""
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Password",
+            "nl": "Password"
+          },
+          "value": ""
+        }
+      ]
     }
   ]
 }

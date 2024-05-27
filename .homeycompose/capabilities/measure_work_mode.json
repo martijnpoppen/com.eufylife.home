@@ -17,28 +17,28 @@
       }
     },
     {
-      "id": "Nosweep",
+      "id": "nosweep",
       "title": {
         "en": "No Sweep",
         "nl": "Niet vegen"
       }
     },
     {
-      "id": "SmallRoom",
+      "id": "smallroom",
       "title": {
         "en": "Small Room",
         "nl": "Kleine kamer"
       }
     },
     {
-      "id": "Edge",
+      "id": "edge",
       "title": {
         "en": "Edge",
         "nl": "Hoek"
       }
     },
     {
-      "id": "Spot",
+      "id": "spot",
       "title": {
         "en": "Spot",
         "nl": "Vlek"
@@ -58,26 +58,5 @@
         "nl": "Room"
       }
     }
-  ],
-  "$flow": {
-    "triggers": [
-      {
-        "id": "measure_work_mode_changed",
-        "title": {
-          "en": "Work mode changed",
-          "nl": "Werk modus veranderd"
-        },
-        "tokens": [
-          {
-            "name": "measure_work_mode",
-            "title": {
-              "en": "Work mode",
-              "nl": "Werk modus"
-            },
-            "type": "string"
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

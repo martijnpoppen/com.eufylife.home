@@ -23,6 +23,16 @@
       }
     },
     {
+      "id": "loading",
+      "template": "loading",
+      "message": "Loading, this can take a while..."
+    },
+    {
+        "id": "loading2",
+        "template": "loading",
+        "message": "Loading, this can take a while..."
+      },
+    {
       "id": "list_devices",
       "template": "list_devices",
       "navigation": {
