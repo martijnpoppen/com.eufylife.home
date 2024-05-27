@@ -1,6 +1,13 @@
 const Homey = require('homey');
-const { EufyCleanDevice, EUFY_CLEAN_GET_STATE, EUFY_CLEAN_VACUUMCLEANER_STATE, EUFY_CLEAN_LEGACY_CLEAN_SPEED, EUFY_CLEAN_WORK_STATUS, EUFY_CLEAN_ERROR_CODES } = require('../lib/eufy-clean');
-const { sleep } = require('../lib/helpers');
+const { EufyCleanDevice, 
+    EUFY_CLEAN_GET_STATE, 
+    EUFY_CLEAN_VACUUMCLEANER_STATE, 
+    EUFY_CLEAN_LEGACY_CLEAN_SPEED, 
+    EUFY_CLEAN_WORK_STATUS, 
+    EUFY_CLEAN_ERROR_CODES, 
+    EUFY_CLEAN_GET_CLEAN_SPEED 
+} = require('../lib/eufy-clean');
+const { sleep, decrypt } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
@@ -67,7 +74,7 @@ module.exports = class mainDevice extends Homey.Device {
             let { deviceId, username, password, deviceModel, mqtt } = settings;
             this.homey.app.log(`[Device] ${this.getName()} - initApi settings`, {...settings, username: 'LOG', password: '***'});
 
-            this.config = { username, password, deviceId, deviceModel, mqtt, debug: false };
+            this.config = { username: decrypt(username), password: decrypt(password), deviceId, deviceModel, mqtt, debug: false };
 
             this.homey.app.log(`[Device] ${this.getName()} - initApi`);
 
@@ -151,12 +158,17 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             if (EUFY_CLEAN_LEGACY_CLEAN_SPEED.some((l) => l.toLowerCase() === cleanSpeed) && this.hasCapability('action_clean_speed')) {
-                this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - cleanSpeed - removing action_clean_speed`);
-                await this.removeCapability('action_clean_speed');
+                
+                if(this.hasCapability('action_clean_speed')) {
+                    await this.removeCapability('action_clean_speed');
+                    this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - cleanSpeed - removing action_clean_speed`);
+                }
+            } else {
+                await this.setCapabilityValue('action_clean_speed', `${cleanSpeed}`);
             }
 
             if (cleanSpeed) {
-                await this.setCapabilityValue('measure_clean_speed', `${cleanSpeed}`);
+                await this.setCapabilityValue('measure_clean_speed', `${EUFY_CLEAN_GET_CLEAN_SPEED[cleanSpeed]}`);
             }
 
             if (typeof errorCode === 'number') {

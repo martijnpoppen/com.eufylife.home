@@ -10,28 +10,28 @@
   "icon": "assets/icons/speedometer.svg",
   "values": [
     {
-      "id": "Quiet",
+      "id": "quiet",
       "title": {
         "en": "Pure",
         "nl": "Pure"
       }
     },
     {
-      "id": "Standard",
+      "id": "standard",
       "title": {
         "en": "Power",
         "nl": "Krachtig"
       }
     },
     {
-      "id": "Turbo",
+      "id": "turbo",
       "title": {
         "en": "Turbo",
         "nl": "Turbo"
       }
     },
     {
-      "id": "Max",
+      "id": "max",
       "title": {
         "en": "Max",
         "nl": "Max"

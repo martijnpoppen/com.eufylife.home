@@ -180,8 +180,8 @@
               {
                 "id": "GO_HOME",
                 "label": {
-                  "en": "Go Home",
-                  "nl": "Ga naar huis"
+                  "en": "Go Home / Dock",
+                  "nl": "Ga naar huis / Dock"
                 }
               },
               {
@@ -359,7 +359,7 @@
                 "en": "model type",
                 "nl": "model type"
               },
-              "value": "Unknwn"
+              "value": "Unknown"
             },
             {
               "id": "deviceModelName",
@@ -378,33 +378,6 @@
                 "nl": "Debug Logs"
               },
               "value": false
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Login settings",
-            "nl": "Login instellingen"
-          },
-          "children": [
-            {
-              "id": "username",
-              "type": "text",
-              "label": {
-                "en": "Email",
-                "nl": "Email"
-              },
-              "value": ""
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Password"
-              },
-              "value": ""
             }
           ]
         }
@@ -563,7 +536,7 @@
                 "en": "model type",
                 "nl": "model type"
               },
-              "value": "Unknwn"
+              "value": "Unknown"
             },
             {
               "id": "deviceModelName",
@@ -582,33 +555,6 @@
                 "nl": "Debug Logs"
               },
               "value": false
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Login settings",
-            "nl": "Login instellingen"
-          },
-          "children": [
-            {
-              "id": "username",
-              "type": "text",
-              "label": {
-                "en": "Email",
-                "nl": "Email"
-              },
-              "value": ""
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Password"
-              },
-              "value": ""
             }
           ]
         }
@@ -767,7 +713,7 @@
                 "en": "model type",
                 "nl": "model type"
               },
-              "value": "Unknwn"
+              "value": "Unknown"
             },
             {
               "id": "deviceModelName",
@@ -786,33 +732,6 @@
                 "nl": "Debug Logs"
               },
               "value": false
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Login settings",
-            "nl": "Login instellingen"
-          },
-          "children": [
-            {
-              "id": "username",
-              "type": "text",
-              "label": {
-                "en": "Email",
-                "nl": "Email"
-              },
-              "value": ""
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Password"
-              },
-              "value": ""
             }
           ]
         }
@@ -971,7 +890,7 @@
                 "en": "model type",
                 "nl": "model type"
               },
-              "value": "Unknwn"
+              "value": "Unknown"
             },
             {
               "id": "deviceModelName",
@@ -990,33 +909,6 @@
                 "nl": "Debug Logs"
               },
               "value": false
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Login settings",
-            "nl": "Login instellingen"
-          },
-          "children": [
-            {
-              "id": "username",
-              "type": "text",
-              "label": {
-                "en": "Email",
-                "nl": "Email"
-              },
-              "value": ""
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Password"
-              },
-              "value": ""
             }
           ]
         }
@@ -1174,7 +1066,7 @@
                 "en": "model type",
                 "nl": "model type"
               },
-              "value": "Unknwn"
+              "value": "Unknown"
             },
             {
               "id": "deviceModelName",
@@ -1193,33 +1085,6 @@
                 "nl": "Debug Logs"
               },
               "value": false
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Login settings",
-            "nl": "Login instellingen"
-          },
-          "children": [
-            {
-              "id": "username",
-              "type": "text",
-              "label": {
-                "en": "Email",
-                "nl": "Email"
-              },
-              "value": ""
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Password"
-              },
-              "value": ""
             }
           ]
         }
@@ -1378,7 +1243,7 @@
                 "en": "model type",
                 "nl": "model type"
               },
-              "value": "Unknwn"
+              "value": "Unknown"
             },
             {
               "id": "deviceModelName",
@@ -1397,33 +1262,6 @@
                 "nl": "Debug Logs"
               },
               "value": false
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Login settings",
-            "nl": "Login instellingen"
-          },
-          "children": [
-            {
-              "id": "username",
-              "type": "text",
-              "label": {
-                "en": "Email",
-                "nl": "Email"
-              },
-              "value": ""
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "nl": "Password"
-              },
-              "value": ""
             }
           ]
         }
@@ -1449,28 +1287,28 @@
       "icon": "assets/icons/speedometer.svg",
       "values": [
         {
-          "id": "Quiet",
+          "id": "quiet",
           "title": {
             "en": "Pure",
             "nl": "Pure"
           }
         },
         {
-          "id": "Standard",
+          "id": "standard",
           "title": {
             "en": "Power",
             "nl": "Krachtig"
           }
         },
         {
-          "id": "Turbo",
+          "id": "turbo",
           "title": {
             "en": "Turbo",
             "nl": "Turbo"
           }
         },
         {
-          "id": "Max",
+          "id": "max",
           "title": {
             "en": "Max",
             "nl": "Max"

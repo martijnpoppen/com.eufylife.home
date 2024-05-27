@@ -32,7 +32,7 @@
             "en": "model type",
             "nl": "model type"
           },
-          "value": "Unknwn"
+          "value": "Unknown"
         },
         {
           "id": "deviceModelName",
@@ -51,33 +51,6 @@
             "nl": "Debug Logs"
           },
           "value": false
-        }
-      ]
-    },
-    {
-      "type": "group",
-      "label": {
-        "en": "Login settings",
-        "nl": "Login instellingen"
-      },
-      "children": [
-        {
-          "id": "username",
-          "type": "text",
-          "label": {
-            "en": "Email",
-            "nl": "Email"
-          },
-          "value": ""
-        },
-        {
-          "id": "password",
-          "type": "password",
-          "label": {
-            "en": "Password",
-            "nl": "Password"
-          },
-          "value": ""
         }
       ]
     }

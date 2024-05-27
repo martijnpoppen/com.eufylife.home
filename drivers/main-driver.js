@@ -1,5 +1,6 @@
 const Homey = require('homey');
 const { EufyCleanLogin, EUFY_CLEAN_DEVICES } = require('../lib/eufy-clean');
+const { encrypt } = require('../lib/helpers');
 
 module.exports = class mainDriver extends Homey.Driver {
     onInit() {
@@ -77,8 +78,8 @@ module.exports = class mainDriver extends Homey.Driver {
                 this.eufyLogin = new EufyCleanLogin(data.username, data.password);
 
                 this.loginData = {
-                    username: data.username,
-                    password: data.password
+                    username: encrypt(data.username),
+                    password: encrypt(data.password)
                 };
 
                 return true;
@@ -89,40 +90,25 @@ module.exports = class mainDriver extends Homey.Driver {
         });
 
         session.setHandler('list_devices', async () => {
-            const cloudDevices = this.cloudDevices.map((device) => ({
-                name: `${device.name}`,
+            const results = [...this.cloudDevices, ...this.mqttDevices].map((device) => ({
+                name: `${device.deviceName}`,
                 data: {
-                    id: `${device.devId}`
+                    id: `${device.deviceId}`
                 },
                 settings: {
                     apiType: device.apiType,
-                    deviceId: device.devId,
-                    deviceModel: device.device_model,
+                    deviceId: device.deviceId,
+                    deviceModel: device.deviceModel,
+                    deviceModelName: EUFY_CLEAN_DEVICES[device.deviceModel] || device.deviceModelName,
                     localKey: 'deprecated',
                     mqtt: device.mqtt,
                     ...this.loginData
                 }
             }));
 
-            const mqttDevices = this.mqttDevices.map((device) => ({
-                name: `${device.device_name}`,
-                data: {
-                    id: `${device.device_sn}`
-                },
-                settings: {
-                    apiType: device.apiType,
-                    deviceId: device.device_sn,
-                    deviceModel: device.device_model,
-                    deviceModelName: EUFY_CLEAN_DEVICES[device.device_model] || device.device_model,
-                    localKey: 'deprecated',
-                    mqtt: device.mqtt,
-                    ...this.loginData
-                }
-            }));
+            this.homey.app.log('Found devices - ', results);
 
-            this.homey.app.log('Found devices - ', [...cloudDevices, ...mqttDevices]);
-
-            return [...cloudDevices, ...mqttDevices];
+            return results;
         });
     }
 };
