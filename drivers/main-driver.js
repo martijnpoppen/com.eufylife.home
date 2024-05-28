@@ -28,11 +28,35 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('showView', async (view) => {
             this.homey.app.log(`[Driver] ${this.id} - currentView:`, { view, type: this.type });
 
+
+            if(view === 'login_credentials' && !this.homey.app.appInitialized) {
+                await session.done();
+            }
+
+            if (view === 'login_credentials' && !!this.homey.app.eufyClean && this.type === 'pair') {
+                this.homey.app.log(`[Driver] ${this.id} - Found existing EufClean instance, skipping login`);
+
+                const device = this.homey.app.deviceList[0];
+                const settings = device.getSettings();
+                const { username, password } = settings;
+                
+                this.loginData = { username, password };
+                
+                session.showView('loading');
+            }
+
             if (view === 'loading') {
                 try {
-                    const response = await this.eufyLogin.login();
-                    this.cloudDevices = response.cloudDevices;
-                    this.mqttDevices = response.mqttDevices;
+                    if (!this.homey.app.eufyClean || this.type === 'repair') {
+                        await this.homey.app.initEufyClean(this.loginData.username, this.loginData.password);
+
+                        this.loginData = {
+                            username: encrypt(this.loginData.username),
+                            password: encrypt(this.loginData.password)
+                        };
+                    }
+
+                    this.devices = await this.homey.app.eufyClean.getAllDevices();
 
                     session.showView('loading2');
                 } catch (error) {
@@ -44,21 +68,20 @@ module.exports = class mainDriver extends Homey.Driver {
                 try {
                     if (device) {
                         const settings = device.getSettings();
-                        const matchedDevice = this.devices.find((d) => d.settings.deviceId === settings.deviceId);
+                        const matchedDevice = this.devices.find((d) => d.deviceId === settings.deviceId);
 
                         if (matchedDevice) {
                             const newSettings = {
-                                deviceId: matchedDevice.settings.deviceId,
-                                localKey: 'deprecated',
-                                apiType: matchedDevice.settings.apiType,
-                                ...this.loginData
+                                apiType: matchedDevice.apiType,
+                                deviceId: matchedDevice.deviceId,
+                                deviceModel: matchedDevice.deviceModel,
+                                deviceModelName: EUFY_CLEAN_DEVICES[matchedDevice.deviceModel] || matchedDevice.deviceModelName,
+                                localKey: 'deprecated'
                             };
 
                             await device.setSettings(newSettings);
-                            await device.onRepair({
-                                ...settings,
-                                ...newSettings
-                            });
+
+                            this.homey.app.enableDevices(this.loginData)
 
                             session.showView('done');
                         } else {
@@ -75,12 +98,12 @@ module.exports = class mainDriver extends Homey.Driver {
 
         session.setHandler('login', async (data) => {
             try {
-                this.eufyLogin = new EufyCleanLogin(data.username, data.password);
-
                 this.loginData = {
-                    username: encrypt(data.username),
-                    password: encrypt(data.password)
+                    username: data.username,
+                    password: data.password
                 };
+
+                this.homey.app.disableDevices();
 
                 return true;
             } catch (error) {
@@ -90,7 +113,7 @@ module.exports = class mainDriver extends Homey.Driver {
         });
 
         session.setHandler('list_devices', async () => {
-            const results = [...this.cloudDevices, ...this.mqttDevices].map((device) => ({
+            const results = this.devices.map((device) => ({
                 name: `${device.deviceName}`,
                 data: {
                     id: `${device.deviceId}`
@@ -101,7 +124,6 @@ module.exports = class mainDriver extends Homey.Driver {
                     deviceModel: device.deviceModel,
                     deviceModelName: EUFY_CLEAN_DEVICES[device.deviceModel] || device.deviceModelName,
                     localKey: 'deprecated',
-                    mqtt: device.mqtt,
                     ...this.loginData
                 }
             }));

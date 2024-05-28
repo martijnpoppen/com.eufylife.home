@@ -6,8 +6,8 @@
   "sdk": 3,
   "brandColor": "#13dfd0",
   "name": {
-    "en": "Eufy Home",
-    "nl": "Eufy Home"
+    "en": "Eufy Clean",
+    "nl": "Eufy Clean"
   },
   "description": {
     "en": "Live Well. Live Smart.",
@@ -269,12 +269,18 @@
         {
           "id": "loading",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "list_devices",
@@ -314,16 +320,23 @@
         },
         {
           "id": "loading",
-          "template": "loading"
+          "template": "loading",
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "done",
-          "template": "loading"
+          "template": "done"
         }
       ],
       "settings": [
@@ -446,12 +459,18 @@
         {
           "id": "loading",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "list_devices",
@@ -491,16 +510,23 @@
         },
         {
           "id": "loading",
-          "template": "loading"
+          "template": "loading",
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "done",
-          "template": "loading"
+          "template": "done"
         }
       ],
       "settings": [
@@ -623,12 +649,18 @@
         {
           "id": "loading",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "list_devices",
@@ -668,16 +700,23 @@
         },
         {
           "id": "loading",
-          "template": "loading"
+          "template": "loading",
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "done",
-          "template": "loading"
+          "template": "done"
         }
       ],
       "settings": [
@@ -800,12 +839,18 @@
         {
           "id": "loading",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "list_devices",
@@ -845,16 +890,23 @@
         },
         {
           "id": "loading",
-          "template": "loading"
+          "template": "loading",
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "done",
-          "template": "loading"
+          "template": "done"
         }
       ],
       "settings": [
@@ -976,12 +1028,18 @@
         {
           "id": "loading",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "list_devices",
@@ -1021,16 +1079,23 @@
         },
         {
           "id": "loading",
-          "template": "loading"
+          "template": "loading",
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "done",
-          "template": "loading"
+          "template": "done"
         }
       ],
       "settings": [
@@ -1153,12 +1218,18 @@
         {
           "id": "loading",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "list_devices",
@@ -1198,16 +1269,23 @@
         },
         {
           "id": "loading",
-          "template": "loading"
+          "template": "loading",
+          "options": {
+            "text": {
+              "en": "Searching for devices... (This can take up to a few minutes)"
+            }
+          }
         },
         {
           "id": "loading2",
           "template": "loading",
-          "message": "Loading, this can take a while..."
+          "text": {
+            "en": "Found devices. Setting up device list"
+          }
         },
         {
           "id": "done",
-          "template": "loading"
+          "template": "done"
         }
       ],
       "settings": [

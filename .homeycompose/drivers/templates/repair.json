@@ -24,16 +24,23 @@
     },
     {
       "id": "loading",
-      "template": "loading"
+      "template": "loading",
+      "options": {
+        "text": {
+          "en": "Searching for devices... (This can take up to a few minutes)"
+        }
+      }
     },
     {
-        "id": "loading2",
-        "template": "loading",
-        "message": "Loading, this can take a while..."
-      },
+      "id": "loading2",
+      "template": "loading",
+      "text": {
+        "en": "Found devices. Setting up device list"
+      }
+    },
     {
       "id": "done",
-      "template": "loading"
+      "template": "done"
     }
   ]
 }

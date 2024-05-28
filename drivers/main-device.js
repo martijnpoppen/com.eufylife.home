@@ -1,5 +1,5 @@
 const Homey = require('homey');
-const { EufyCleanDevice, 
+const { 
     EUFY_CLEAN_GET_STATE, 
     EUFY_CLEAN_VACUUMCLEANER_STATE, 
     EUFY_CLEAN_LEGACY_CLEAN_SPEED, 
@@ -7,36 +7,48 @@ const { EufyCleanDevice,
     EUFY_CLEAN_ERROR_CODES, 
     EUFY_CLEAN_GET_CLEAN_SPEED 
 } = require('../lib/eufy-clean');
-const { sleep, decrypt } = require('../lib/helpers');
+const { sleep } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
         const settings = this.getSettings();
-        const deviceObject = this.getData();
 
         this.homey.app.log('[Device] - init =>', this.getName());
-        this.setUnavailable(`${this.getName()} is initializing...`);
+        this.setUnavailable(`${this.getName()} is initializing.... This may take a while`);
 
         if ('localKey' in settings && settings.localKey !== 'deprecated') {
             this.setUnavailable('Legacy API detected. Please repair the device to use the new API.');
         }
+    }
 
-        const sleepIndex = this.homey.app.deviceList.findIndex((device) => {
-            const driverDeviceObject = device.getData();
-            return driverDeviceObject.id === deviceObject.id;
-        });
+    onAdded() {
+        this.onStartup(1)
+    }
 
-        const sleepTime = (sleepIndex + 1) * 6000;
+
+    async onStartup(index) {
+        const sleepTime = (index + 1) * 1000;
         this.homey.app.log('[Device] - sleep =>', this.getName(), sleepTime);
         await sleep(sleepTime);
-
-        this.registerCapabilityListener('vacuumcleaner_state', this._onVacuumCapabilityChanged.bind(this));
-        this.registerCapabilityListener('action_clean_speed', this._onCleanSpeedChanged.bind(this));
-
+        
         await this.checkCapabilities();
+        await this.enableDevice();
+        await this.registerListeners();
+    }
 
+    async enableDevice() {
         await this.initApi();
         await this.setCapabilityValuesInterval();
+    }
+
+    async disableDevice() {
+        if (this.onPollInterval) {
+            clearInterval(this.onPollInterval);
+        }
+
+        this.eufyRoboVac = null;
+
+        this.setUnavailable('Repair mode active')
     }
 
     async onSettings({ oldSettings, newSettings, changedKeys }) {
@@ -56,30 +68,29 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
-    async onRepair(settings) {
-        this.homey.app.log(`[Device] ${this.getName()} - onRepair`);
-        await this.checkCapabilities();
-
+    async disableDevice() {
         if (this.onPollInterval) {
             clearInterval(this.onPollInterval);
         }
 
-        this.initApi(settings);
-        this.setCapabilityValuesInterval();
+        this.eufyRoboVac = null;
+
+        this.setUnavailable('Repair mode active')
+    }
+
+    async enableDevice() {
+        await this.initApi();
+        await this.setCapabilityValuesInterval();
     }
 
     async initApi(overrideSettings = null) {
         try {
             const settings = overrideSettings ? overrideSettings : this.getSettings()
-            let { deviceId, username, password, deviceModel, mqtt } = settings;
+            let { deviceId } = settings;
             this.homey.app.log(`[Device] ${this.getName()} - initApi settings`, {...settings, username: 'LOG', password: '***'});
 
-            this.config = { username: decrypt(username), password: decrypt(password), deviceId, deviceModel, mqtt, debug: false };
-
-            this.homey.app.log(`[Device] ${this.getName()} - initApi`);
-
-            const eufyCleanDevice = new EufyCleanDevice(this.config);
-            this.eufyRoboVac = eufyCleanDevice.getInstance();
+            this.config = { deviceId, debug: false };
+            this.eufyRoboVac = await this.homey.app.eufyClean.initDevice(this.config);
 
             await this.eufyRoboVac.connect();
             await this.eufyRoboVac.formatStatus();
@@ -157,8 +168,7 @@ module.exports = class mainDevice extends Homey.Device {
                 await this.setCapabilityValue('measure_work_mode', workMode);
             }
 
-            if (EUFY_CLEAN_LEGACY_CLEAN_SPEED.some((l) => l.toLowerCase() === cleanSpeed) && this.hasCapability('action_clean_speed')) {
-                
+            if (EUFY_CLEAN_LEGACY_CLEAN_SPEED.some((l) => l.toLowerCase() === cleanSpeed)) {
                 if(this.hasCapability('action_clean_speed')) {
                     await this.removeCapability('action_clean_speed');
                     this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - cleanSpeed - removing action_clean_speed`);
@@ -186,10 +196,10 @@ module.exports = class mainDevice extends Homey.Device {
 
     async setCapabilityValuesInterval() {
         try {
-            const REFRESH_INTERVAL = 6000;
+            const REFRESH_INTERVAL = 10000;
 
             this.homey.app.log(`[Device] ${this.getName()} - onPollInterval =>`, REFRESH_INTERVAL);
-            this.onPollInterval = setInterval(this.setCapabilityValues.bind(this), REFRESH_INTERVAL);
+            this.onPollInterval = this.homey.setInterval(this.setCapabilityValues.bind(this), REFRESH_INTERVAL);
 
             await this.setCapabilityValues();
         } catch (error) {
@@ -282,5 +292,10 @@ module.exports = class mainDevice extends Homey.Device {
             this.homey.app.log(`[Device] ${this.getName()} - _onCleanSpeedChanged => error`, err);
             this.log('_onCleanSpeedChanged() -> error', err);
         }
+    }
+
+    async registerListeners() {
+        this.registerCapabilityListener('vacuumcleaner_state', this._onVacuumCapabilityChanged.bind(this));
+        this.registerCapabilityListener('action_clean_speed', this._onCleanSpeedChanged.bind(this));
     }
 };
