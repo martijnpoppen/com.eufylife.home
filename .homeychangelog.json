@@ -133,5 +133,8 @@
   },
   "2.0.0": {
     "en": "BREAK: App rewrite | NEW: support cloud devices | NEW: support new X and L series"
+  },
+  "2.0.1": {
+    "en": "FIX: legacy api for EU users"
   }
 }
