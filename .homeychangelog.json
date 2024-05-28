@@ -130,5 +130,8 @@
   },
   "1.8.8": {
     "en": "FIX: dont show unsupported devices during pairing"
+  },
+  "2.0.0": {
+    "en": "BREAK: App rewrite | NEW: support cloud devices | NEW: support new X and L series"
   }
 }

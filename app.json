@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.eufylife.home",
-  "version": "1.8.8",
+  "version": "2.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -215,8 +215,8 @@
     {
       "icon": "/drivers/C_SERIES/assets/icon.svg",
       "images": {
-        "large": "/drivers/C_SERIES/assets/images/large.png",
-        "small": "/drivers/C_SERIES/assets/images/small.png"
+        "large": "/drivers/C_SERIES/assets/images/large.jpg",
+        "small": "/drivers/C_SERIES/assets/images/small.jpg"
       },
       "class": "vacuumcleaner",
       "capabilities": [
@@ -405,8 +405,8 @@
     {
       "icon": "/drivers/G_SERIES/assets/icon.svg",
       "images": {
-        "large": "/drivers/G_SERIES/assets/images/large.png",
-        "small": "/drivers/G_SERIES/assets/images/small.png"
+        "large": "/drivers/G_SERIES/assets/images/large.jpg",
+        "small": "/drivers/G_SERIES/assets/images/small.jpg"
       },
       "class": "vacuumcleaner",
       "capabilities": [
@@ -595,8 +595,8 @@
     {
       "icon": "/drivers/L_SERIES/assets/icon.svg",
       "images": {
-        "large": "/drivers/L_SERIES/assets/images/large.png",
-        "small": "/drivers/L_SERIES/assets/images/small.png"
+        "large": "/drivers/L_SERIES/assets/images/large.jpg",
+        "small": "/drivers/L_SERIES/assets/images/small.jpg"
       },
       "class": "vacuumcleaner",
       "capabilities": [
@@ -785,8 +785,8 @@
     {
       "icon": "/drivers/Robovac/assets/icon.svg",
       "images": {
-        "large": "/drivers/Robovac/assets/images/large.png",
-        "small": "/drivers/Robovac/assets/images/small.png"
+        "large": "/drivers/Robovac/assets/images/large.jpg",
+        "small": "/drivers/Robovac/assets/images/small.jpg"
       },
       "class": "vacuumcleaner",
       "capabilities": [
@@ -974,8 +974,8 @@
     {
       "icon": "/drivers/S_SERIES/assets/icon.svg",
       "images": {
-        "large": "/drivers/S_SERIES/assets/images/large.png",
-        "small": "/drivers/S_SERIES/assets/images/small.png"
+        "large": "/drivers/S_SERIES/assets/images/large.jpg",
+        "small": "/drivers/S_SERIES/assets/images/small.jpg"
       },
       "class": "vacuumcleaner",
       "capabilities": [
@@ -1164,8 +1164,8 @@
     {
       "icon": "/drivers/X_SERIES/assets/icon.svg",
       "images": {
-        "large": "/drivers/X_SERIES/assets/images/large.png",
-        "small": "/drivers/X_SERIES/assets/images/small.png"
+        "large": "/drivers/X_SERIES/assets/images/large.jpg",
+        "small": "/drivers/X_SERIES/assets/images/small.jpg"
       },
       "class": "vacuumcleaner",
       "capabilities": [
