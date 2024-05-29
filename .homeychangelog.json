@@ -142,5 +142,11 @@
   },
   "2.0.3": {
     "en": "FIX: typo"
+  },
+  "2.0.4": {
+    "en": "FIX: issue with status | FIX: double tag"
+  },
+  "2.0.5": {
+    "en": "FIX: cleaning command for new devices"
   }
 }
