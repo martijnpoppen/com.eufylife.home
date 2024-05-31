@@ -1,8 +1,8 @@
 {
   "icon": "{{driverAssetsPath}}/icon.svg",
   "images": {
-    "large": "{{driverAssetsPath}}/images/large.png",
-    "small": "{{driverAssetsPath}}/images/small.png"
+    "large": "{{driverAssetsPath}}/images/large.jpg",
+    "small": "{{driverAssetsPath}}/images/small.jpg"
   },
   "class": "vacuumcleaner",
   "capabilities": [
@@ -18,6 +18,9 @@
     "measure_work_status",
     "vacuumcleaner_state"
   ],
+  "capabilitiesOptions": {
+    "action_clean_speed": { "preventTag": true }
+  },
   "energy": {
     "batteries": ["INTERNAL"]
   },

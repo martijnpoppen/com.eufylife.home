@@ -66,6 +66,76 @@
             "en": "Resume",
             "nl": "Hervatten"
           }
+        },
+        {
+          "id": "START_SCENE_CLEAN_1",
+          "label": {
+            "en": "Start Scene 1",
+            "nl": "Start Scene 1"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_2",
+          "label": {
+            "en": "Start Scene 2",
+            "nl": "Start Scene 2"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_3",
+          "label": {
+            "en": "Start Scene 3",
+            "nl": "Start Scene 3"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_4",
+          "label": {
+            "en": "Start Scene 4",
+            "nl": "Start Scene 4"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_5",
+          "label": {
+            "en": "Start Scene 5",
+            "nl": "Start Scene 5"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_6",
+          "label": {
+            "en": "Start Scene 6",
+            "nl": "Start Scene 6"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_7",
+          "label": {
+            "en": "Start Scene 7",
+            "nl": "Start Scene 7"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_8",
+          "label": {
+            "en": "Start Scene 8",
+            "nl": "Start Scene 8"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_9",
+          "label": {
+            "en": "Start Scene 9",
+            "nl": "Start Scene 9"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_10",
+          "label": {
+            "en": "Start Scene 10",
+            "nl": "Start Scene 10"
+          }
         }
       ]
     }

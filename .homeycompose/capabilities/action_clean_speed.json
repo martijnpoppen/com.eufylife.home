@@ -12,15 +12,15 @@
     {
       "id": "quiet",
       "title": {
-        "en": "Pure",
-        "nl": "Pure"
+        "en": "Quiet",
+        "nl": "Stil"
       }
     },
     {
       "id": "standard",
       "title": {
-        "en": "Power",
-        "nl": "Krachtig"
+        "en": "Standard",
+        "nl": "Standaard"
       }
     },
     {

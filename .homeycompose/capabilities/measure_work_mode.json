@@ -1,5 +1,5 @@
 {
-  "type": "enum",
+  "type": "string",
   "title": {
     "en": "Work mode",
     "nl": "Werk modus"
@@ -7,56 +7,5 @@
   "uiComponent": "sensor",
   "icon": "assets/icons/brush.svg",
   "getable": true,
-  "setable": true,
-  "values": [
-    {
-      "id": "auto",
-      "title": {
-        "en": "Auto",
-        "nl": "Auto"
-      }
-    },
-    {
-      "id": "nosweep",
-      "title": {
-        "en": "No Sweep",
-        "nl": "Niet vegen"
-      }
-    },
-    {
-      "id": "smallroom",
-      "title": {
-        "en": "Small Room",
-        "nl": "Kleine kamer"
-      }
-    },
-    {
-      "id": "edge",
-      "title": {
-        "en": "Edge",
-        "nl": "Hoek"
-      }
-    },
-    {
-      "id": "spot",
-      "title": {
-        "en": "Spot",
-        "nl": "Vlek"
-      }
-    },
-    {
-      "id": "zone",
-      "title": {
-        "en": "Zone",
-        "nl": "Zone"
-      }
-    },
-    {
-      "id": "room",
-      "title": {
-        "en": "Room",
-        "nl": "Room"
-      }
-    }
-  ]
+  "setable": true
 }

@@ -156,7 +156,7 @@ module.exports = class mainDevice extends Homey.Device {
             if (workStatus) {
                 await this.setCapabilityValue('measure_is_charging', workStatus === 'charging');
                 await this.setCapabilityValue('measure_recharge_needed', workStatus === 'recharge' || workStatus === 'charging');
-                await this.setCapabilityValue('measure_work_status', EUFY_CLEAN_WORK_STATUS[workStatus.toUpperCase()]);
+                await this.setCapabilityValue('measure_work_status', EUFY_CLEAN_WORK_STATUS[workStatus.toUpperCase()] || workStatus);
             }
 
             if (currentState) {
@@ -173,16 +173,18 @@ module.exports = class mainDevice extends Homey.Device {
                     await this.removeCapability('action_clean_speed');
                     this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues - cleanSpeed - removing action_clean_speed`);
                 }
-            } else {
-                await this.setCapabilityValue('action_clean_speed', `${cleanSpeed}`);
             }
-
+            
             if (cleanSpeed) {
                 await this.setCapabilityValue('measure_clean_speed', `${EUFY_CLEAN_GET_CLEAN_SPEED[cleanSpeed]}`);
+                
+                if(this.hasCapability('action_clean_speed')) {
+                    await this.setCapabilityValue('action_clean_speed', `${cleanSpeed}`);
+                }
             }
 
             if (typeof errorCode === 'number') {
-                await this.setCapabilityValue('measure_error', EUFY_CLEAN_ERROR_CODES[errorCode]);
+                await this.setCapabilityValue('measure_error', EUFY_CLEAN_ERROR_CODES[errorCode] || 'unknown_error');
             } else {
                 await this.setCapabilityValue('measure_error', !errorCode ? 'no_error' : errorCode);
             }
@@ -213,7 +215,7 @@ module.exports = class mainDevice extends Homey.Device {
         try {
             switch (value) {
                 case EUFY_CLEAN_VACUUMCLEANER_STATE.CLEANING:
-                    return await this.eufyRoboVac.play();
+                    return await this.eufyRoboVac.autoClean();
                 case EUFY_CLEAN_VACUUMCLEANER_STATE.SPOT_CLEANING:
                     return await this.eufyRoboVac.roomClean();
                 case EUFY_CLEAN_VACUUMCLEANER_STATE.DOCKED:
@@ -238,10 +240,8 @@ module.exports = class mainDevice extends Homey.Device {
                 case 'AUTO_CLEAN':
                     return await this.eufyRoboVac.autoClean();
                 case 'ROOM_CLEAN':
-                    throw new Error('Room clean is not supported yet')
                     return await this.eufyRoboVac.roomClean();
                 case 'SPOT_CLEAN':
-                    throw new Error('Spot clean is not supported yet')
                     return await this.eufyRoboVac.spotClean();
                 case 'GO_HOME':
                     return await this.eufyRoboVac.goHome();
@@ -257,30 +257,6 @@ module.exports = class mainDevice extends Homey.Device {
         } catch (err) {
             this.homey.app.log(`[Device] ${this.getName()} - _onControlModeChanged => error`, err);
             this.log('_onControlModeChanged() -> error', err);
-        }
-    }
-
-    async _onVacuumCapabilityChanged(value, ...opts) {
-        this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged =>`, value);
-        console.log('opts', opts);
-        try {
-            switch (value) {
-                case EUFY_CLEAN_VACUUMCLEANER_STATE.CLEANING:
-                    return await this.eufyRoboVac.play();
-                case EUFY_CLEAN_VACUUMCLEANER_STATE.SPOT_CLEANING:
-                    return await this.eufyRoboVac.roomClean();
-                case EUFY_CLEAN_VACUUMCLEANER_STATE.DOCKED:
-                    return await this.eufyRoboVac.goHome();
-                case EUFY_CLEAN_VACUUMCLEANER_STATE.CHARGING:
-                    return await this.eufyRoboVac.goHome();
-                case EUFY_CLEAN_VACUUMCLEANER_STATE.STOPPED:
-                    return await this.eufyRoboVac.stop();
-                default:
-                    this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => received unknown value:`, value);
-            }
-        } catch (err) {
-            this.homey.app.log(`[Device] ${this.getName()} - _onVacuumCapabilityChanged => error`, err);
-            this.log('_onVacuumCapabilityChanged() -> error', err);
         }
     }
 
