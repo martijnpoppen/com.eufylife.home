@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.eufylife.home",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -432,15 +432,6 @@
               "value": ""
             },
             {
-              "id": "localKey",
-              "type": "label",
-              "label": {
-                "en": "Local Key",
-                "nl": "Local Key"
-              },
-              "value": ""
-            },
-            {
               "id": "deviceModel",
               "type": "label",
               "label": {
@@ -457,15 +448,6 @@
                 "nl": "model name"
               },
               "value": "Unknown"
-            },
-            {
-              "id": "debug_log",
-              "type": "checkbox",
-              "label": {
-                "en": "Debug Logs",
-                "nl": "Debug Logs"
-              },
-              "value": false
             }
           ]
         }
@@ -627,15 +609,6 @@
               "value": ""
             },
             {
-              "id": "localKey",
-              "type": "label",
-              "label": {
-                "en": "Local Key",
-                "nl": "Local Key"
-              },
-              "value": ""
-            },
-            {
               "id": "deviceModel",
               "type": "label",
               "label": {
@@ -652,15 +625,6 @@
                 "nl": "model name"
               },
               "value": "Unknown"
-            },
-            {
-              "id": "debug_log",
-              "type": "checkbox",
-              "label": {
-                "en": "Debug Logs",
-                "nl": "Debug Logs"
-              },
-              "value": false
             }
           ]
         }
@@ -822,15 +786,6 @@
               "value": ""
             },
             {
-              "id": "localKey",
-              "type": "label",
-              "label": {
-                "en": "Local Key",
-                "nl": "Local Key"
-              },
-              "value": ""
-            },
-            {
               "id": "deviceModel",
               "type": "label",
               "label": {
@@ -847,15 +802,6 @@
                 "nl": "model name"
               },
               "value": "Unknown"
-            },
-            {
-              "id": "debug_log",
-              "type": "checkbox",
-              "label": {
-                "en": "Debug Logs",
-                "nl": "Debug Logs"
-              },
-              "value": false
             }
           ]
         }
@@ -1017,15 +963,6 @@
               "value": ""
             },
             {
-              "id": "localKey",
-              "type": "label",
-              "label": {
-                "en": "Local Key",
-                "nl": "Local Key"
-              },
-              "value": ""
-            },
-            {
               "id": "deviceModel",
               "type": "label",
               "label": {
@@ -1042,15 +979,6 @@
                 "nl": "model name"
               },
               "value": "Unknown"
-            },
-            {
-              "id": "debug_log",
-              "type": "checkbox",
-              "label": {
-                "en": "Debug Logs",
-                "nl": "Debug Logs"
-              },
-              "value": false
             }
           ]
         }
@@ -1211,15 +1139,6 @@
               "value": ""
             },
             {
-              "id": "localKey",
-              "type": "label",
-              "label": {
-                "en": "Local Key",
-                "nl": "Local Key"
-              },
-              "value": ""
-            },
-            {
               "id": "deviceModel",
               "type": "label",
               "label": {
@@ -1236,15 +1155,6 @@
                 "nl": "model name"
               },
               "value": "Unknown"
-            },
-            {
-              "id": "debug_log",
-              "type": "checkbox",
-              "label": {
-                "en": "Debug Logs",
-                "nl": "Debug Logs"
-              },
-              "value": false
             }
           ]
         }
@@ -1406,15 +1316,6 @@
               "value": ""
             },
             {
-              "id": "localKey",
-              "type": "label",
-              "label": {
-                "en": "Local Key",
-                "nl": "Local Key"
-              },
-              "value": ""
-            },
-            {
               "id": "deviceModel",
               "type": "label",
               "label": {
@@ -1431,15 +1332,6 @@
                 "nl": "model name"
               },
               "value": "Unknown"
-            },
-            {
-              "id": "debug_log",
-              "type": "checkbox",
-              "label": {
-                "en": "Debug Logs",
-                "nl": "Debug Logs"
-              },
-              "value": false
             }
           ]
         }
