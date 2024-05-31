@@ -157,5 +157,8 @@
   },
   "2.0.8": {
     "en": "FIX: unkown workmode"
+  },
+  "2.0.9": {
+    "en": "FIX: remove scene cards (not supported yet)"
   }
 }
