@@ -151,5 +151,8 @@
   },
   "2.0.6": {
     "en": "FIX: start cleaning"
+  },
+  "2.0.7": {
+    "en": "FIX: start auto cleaning | FIX: clean speed crash | FIX: commands"
   }
 }
