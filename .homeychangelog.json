@@ -163,5 +163,8 @@
   },
   "2.0.10": {
     "en": "FIX: update paired devicelist when removing a device"
+  },
+  "2.0.11": {
+    "en": "FIX: add more logging"
   }
 }
