@@ -169,5 +169,8 @@
   },
   "2.0.12": {
     "en": "FIX: remove unclear device settings"
+  },
+  "2.0.13": {
+    "en": "FIX: X10 Protocol issue"
   }
 }
