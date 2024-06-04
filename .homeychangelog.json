@@ -178,5 +178,8 @@
   },
   "2.0.15": {
     "en": "FIX: disable scene clean until properly supported"
+  },
+  "2.0.16": {
+    "en": "NEW: Add Robovac S1 - T2080"
   }
 }
