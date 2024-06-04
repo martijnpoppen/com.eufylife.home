@@ -175,5 +175,8 @@
   },
   "2.0.14": {
     "en": "FIX: clean speed error"
+  },
+  "2.0.15": {
+    "en": "FIX: disable scene clean until properly supported"
   }
 }
