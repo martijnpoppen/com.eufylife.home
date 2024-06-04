@@ -172,5 +172,8 @@
   },
   "2.0.13": {
     "en": "FIX: X10 Protocol issue"
+  },
+  "2.0.14": {
+    "en": "FIX: clean speed error"
   }
 }
