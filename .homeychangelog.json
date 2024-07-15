@@ -187,5 +187,8 @@
   },
   "2.1.0": {
     "en": "FIX: crash when adding S1 | NEW: select cleaning parameters (mopping, sweeping, intensity etc)"
+  },
+  "2.1.1": {
+    "en": "FIX: cleanspeed error"
   }
 }
