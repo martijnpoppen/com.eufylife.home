@@ -190,5 +190,8 @@
   },
   "2.1.1": {
     "en": "FIX: cleanspeed error"
+  },
+  "2.2.0": {
+    "en": "NEW: add scene clean"
   }
 }
