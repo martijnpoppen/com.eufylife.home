@@ -196,5 +196,8 @@
   },
   "2.2.1": {
     "en": "FIX: clean speed error"
+  },
+  "2.2.2": {
+    "en": "FIX: wrong API selected on startup"
   }
 }
