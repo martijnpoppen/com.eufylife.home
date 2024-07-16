@@ -202,5 +202,8 @@
   },
   "2.2.3": {
     "en": "FIX: API for S1"
+  },
+  "2.2.4": {
+    "en": "NEW: add/remove flowcards based on data"
   }
 }
