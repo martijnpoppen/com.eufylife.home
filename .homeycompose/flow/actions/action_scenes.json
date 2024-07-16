@@ -1,0 +1,98 @@
+{
+  "id": "action_scenes",
+  "title": {
+    "en": "Start Scene",
+    "nl": "Start scene"
+  },
+  "titleFormatted": {
+    "en": "Start [[action_scenes_type]]",
+    "nl": "Start [[action_scenes_type]]"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_scenes"
+    },
+    {
+      "name": "action_scenes_type",
+      "type": "dropdown",
+      "title": {
+        "en": "Scene",
+        "nl": "Scene"
+      },
+      "values": [
+        {
+          "id": "START_SCENE_CLEAN_1",
+          "label": {
+            "en": "Scene 1",
+            "nl": "Scene 1"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_2",
+          "label": {
+            "en": "Scene 2",
+            "nl": "Scene 2"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_3",
+          "label": {
+            "en": "Scene 3",
+            "nl": "Scene 3"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_4",
+          "label": {
+            "en": "Scene 4",
+            "nl": "Scene 4"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_5",
+          "label": {
+            "en": "Scene 5",
+            "nl": "Scene 5"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_6",
+          "label": {
+            "en": "Scene 6",
+            "nl": "Scene 6"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_7",
+          "label": {
+            "en": "Scene 7",
+            "nl": "Scene 7"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_8",
+          "label": {
+            "en": "Scene 8",
+            "nl": "Scene 8"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_9",
+          "label": {
+            "en": "Scene 9",
+            "nl": "Scene 9"
+          }
+        },
+        {
+          "id": "START_SCENE_CLEAN_10",
+          "label": {
+            "en": "Scene 10",
+            "nl": "Scene 10"
+          }
+        }
+      ]
+    }
+  ]
+}

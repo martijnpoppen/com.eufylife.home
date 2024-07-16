@@ -10,6 +10,13 @@
   "icon": "assets/icons/speedometer.svg",
   "values": [
     {
+      "id": "off",
+      "title": {
+        "en": "Off",
+        "nl": "Uit"
+      }
+    },
+    {
       "id": "quiet",
       "title": {
         "en": "Quiet",

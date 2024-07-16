@@ -1,0 +1,110 @@
+{
+  "id": "action_clean_params",
+  "title": {
+    "en": "Set clean params",
+    "nl": "Stel reinigingsparameters in"
+  },
+  "titleFormatted": {
+    "en": "Set cleaning to [[action_clean_params_cleantype]] with intensity [[action_clean_params_cleanextent]] (and water level [[action_clean_params_mopmode]])",
+    "nl": "Stel reiniging in op [[action_clean_params_cleantype]] met intensiteit [[action_clean_params_cleanextent]] (en waterstand [[action_clean_params_mopmode]])"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&&capabilities=action_clean_params"
+    },
+    {
+      "name": "action_clean_params_cleantype",
+      "type": "dropdown",
+      "title": {
+        "en": "Cleaning type",
+        "nl": "Type reiniging"
+      },
+      "values": [
+        {
+          "id": "SWEEP_AND_MOP",
+          "label": {
+            "en": "Sweep and mop",
+            "nl": "Vegen en dweilen"
+          }
+        },
+        {
+          "id": "SWEEP_ONLY",
+          "label": {
+            "en": "Sweep only",
+            "nl": "Alleen vegen"
+          }
+        },
+        {
+          "id": "MOP_ONLY",
+          "label": {
+            "en": "Mop only",
+            "nl": "Alleen dweilen"
+          }
+        }
+      ]
+    },
+    {
+      "name": "action_clean_params_mopmode",
+      "type": "dropdown",
+      "title": {
+        "en": "Water level"
+      },
+      "values": [
+        {
+          "id": "HIGH",
+          "label": {
+            "en": "High",
+            "nl": "Hoog"
+          }
+        },
+        {
+          "id": "MEDIUM",
+          "label": {
+            "en": "Medium",
+            "nl": "Middel"
+          }
+        },
+        {
+          "id": "LOW",
+          "label": {
+            "en": "Low",
+            "nl": "Laag"
+          }
+        }
+      ]
+    },
+    {
+      "name": "action_clean_params_cleanextent",
+      "type": "dropdown",
+      "title": {
+        "en": "Cleaning intensity",
+        "nl": "Reinigingsintensiteit"
+      },
+      "values": [
+        {
+          "id": "NORMAL",
+          "label": {
+            "en": "Standard clean",
+            "nl": "Standaard reinigen"
+          }
+        },
+        {
+          "id": "NARROW",
+          "label": {
+            "en": "Deep clean",
+            "nl": "Grondig reinigen"
+          }
+        },
+        {
+          "id": "QUICK",
+          "label": {
+            "en": "Fast clean",
+            "nl": "Snel reinigen"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Clean param",
+    "nl": "Zuigkracht"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null
+}

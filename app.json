@@ -265,6 +265,10 @@
           {
             "name": "action_control_mode_type",
             "type": "dropdown",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus"
+            },
             "values": [
               {
                 "id": "AUTO_CLEAN",
@@ -300,75 +304,103 @@
                   "en": "Resume",
                   "nl": "Hervatten"
                 }
-              },
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "action_scenes",
+        "title": {
+          "en": "Start Scene",
+          "nl": "Start scene"
+        },
+        "titleFormatted": {
+          "en": "Start [[action_scenes_type]]",
+          "nl": "Start [[action_scenes_type]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_scenes"
+          },
+          {
+            "name": "action_scenes_type",
+            "type": "dropdown",
+            "title": {
+              "en": "Scene",
+              "nl": "Scene"
+            },
+            "values": [
               {
                 "id": "START_SCENE_CLEAN_1",
                 "label": {
-                  "en": "Start Scene 1",
-                  "nl": "Start Scene 1"
+                  "en": "Scene 1",
+                  "nl": "Scene 1"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_2",
                 "label": {
-                  "en": "Start Scene 2",
-                  "nl": "Start Scene 2"
+                  "en": "Scene 2",
+                  "nl": "Scene 2"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_3",
                 "label": {
-                  "en": "Start Scene 3",
-                  "nl": "Start Scene 3"
+                  "en": "Scene 3",
+                  "nl": "Scene 3"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_4",
                 "label": {
-                  "en": "Start Scene 4",
-                  "nl": "Start Scene 4"
+                  "en": "Scene 4",
+                  "nl": "Scene 4"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_5",
                 "label": {
-                  "en": "Start Scene 5",
-                  "nl": "Start Scene 5"
+                  "en": "Scene 5",
+                  "nl": "Scene 5"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_6",
                 "label": {
-                  "en": "Start Scene 6",
-                  "nl": "Start Scene 6"
+                  "en": "Scene 6",
+                  "nl": "Scene 6"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_7",
                 "label": {
-                  "en": "Start Scene 7",
-                  "nl": "Start Scene 7"
+                  "en": "Scene 7",
+                  "nl": "Scene 7"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_8",
                 "label": {
-                  "en": "Start Scene 8",
-                  "nl": "Start Scene 8"
+                  "en": "Scene 8",
+                  "nl": "Scene 8"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_9",
                 "label": {
-                  "en": "Start Scene 9",
-                  "nl": "Start Scene 9"
+                  "en": "Scene 9",
+                  "nl": "Scene 9"
                 }
               },
               {
                 "id": "START_SCENE_CLEAN_10",
                 "label": {
-                  "en": "Start Scene 10",
-                  "nl": "Start Scene 10"
+                  "en": "Scene 10",
+                  "nl": "Scene 10"
                 }
               }
             ]
@@ -1498,6 +1530,15 @@
           }
         }
       ]
+    },
+    "action_scenes": {
+      "type": "string",
+      "title": {
+        "en": "Scene"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null
     },
     "measure_clean_speed": {
       "type": "string",

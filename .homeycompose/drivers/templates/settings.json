@@ -17,15 +17,6 @@
           "value": ""
         },
         {
-          "id": "localKey",
-          "type": "label",
-          "label": {
-            "en": "Local Key",
-            "nl": "Local Key"
-          },
-          "value": ""
-        },
-        {
           "id": "deviceModel",
           "type": "label",
           "label": {
@@ -42,15 +33,6 @@
             "nl": "model name"
           },
           "value": "Unknown"
-        },
-        {
-          "id": "debug_log",
-          "type": "checkbox",
-          "label": {
-            "en": "Debug Logs",
-            "nl": "Debug Logs"
-          },
-          "value": false
         }
       ]
     }

@@ -6,13 +6,34 @@ const flowActions = require('./lib/flow/actions.js');
 const { decrypt, sleep } = require('./lib/helpers.js');
 
 class App extends Homey.App {
+    trace() {
+        console.trace.bind(this, '[log]').apply(this, arguments);
+    }
+
+    debug() {
+        console.debug.bind(this, '[debug]').apply(this, arguments);
+    }
+
+    info() {
+        console.log.bind(this, '[info]').apply(this, arguments);
+    }
+
     log() {
         console.log.bind(this, '[log]').apply(this, arguments);
+    }
+
+    warn() {
+        console.warn.bind(this, '[warn]').apply(this, arguments);
     }
 
     error() {
         console.error.bind(this, '[error]').apply(this, arguments);
     }
+
+    fatal() {
+        console.error.bind(this, '[fatal]').apply(this, arguments);
+    }
+
 
     // -------------------- INIT ----------------------
 
@@ -45,6 +66,21 @@ class App extends Homey.App {
         }
     }
 
+    async removeDevice(deviceId) {
+        try {
+            this.homey.app.log('removeDevice', deviceId);
+
+            const filteredList = this.deviceList.filter((dl) => {
+                const data = dl.getData();
+                return data.id !== deviceId;
+            });
+
+            this.deviceList = filteredList;
+        } catch (error) {
+            this.error(error);
+        }
+    }
+
     async initDevices() {
         this.deviceList.every(async (device, index) => {
             await device.onStartup(index);
@@ -53,7 +89,12 @@ class App extends Homey.App {
 
     async disableDevices() {
         this.deviceList.every(async (device, index) => {
-            await device.disableDevice();
+            try {
+                await device.disableDevice();    
+            } catch (error) {
+                console.log(error);
+            }
+            
         });
     }
 
