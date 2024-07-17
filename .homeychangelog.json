@@ -211,5 +211,8 @@
   },
   "2.2.6": {
     "en": "FIX: Device could not be found due to Region. Auto select region based on Eufy API"
+  },
+  "2.2.7": {
+    "en": "FIX: region switch"
   }
 }
