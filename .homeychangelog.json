@@ -205,5 +205,8 @@
   },
   "2.2.4": {
     "en": "NEW: add/remove flowcards based on data"
+  },
+  "2.2.5": {
+    "en": "FIX: Device could not be found due to Region. Auto select region based on Eufy API"
   }
 }
