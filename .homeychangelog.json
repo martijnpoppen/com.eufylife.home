@@ -214,5 +214,8 @@
   },
   "2.2.7": {
     "en": "FIX: region switch"
+  },
+  "2.2.8": {
+    "en": "FIX: scenes for X10"
   }
 }
