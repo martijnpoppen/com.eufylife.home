@@ -217,5 +217,8 @@
   },
   "2.2.8": {
     "en": "FIX: scenes for X10"
+  },
+  "2.3.0": {
+    "en": "NEW: add backwards compatibility to create a seamless app upgrade"
   }
 }
