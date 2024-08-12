@@ -118,13 +118,17 @@ class App extends Homey.App {
                 this.eufyClean = new EufyClean(decrypt(username), decrypt(password) );
                 await this.eufyClean.init();
                 await this.initDevices();
+            } else {
+                // No login data found, initialize without login - only for LocalConnect
+                this.eufyClean = new EufyClean();
+                    await this.initDevices();
             }
         }
 
         if (driverUsername && driverPassword) {
             // Initialize when called from driver
 
-            this.eufyClean = new EufyClean(driverUsername, driverPassword );
+            this.eufyClean = new EufyClean(driverUsername, driverPassword);
             await this.eufyClean.init();
         }
 

@@ -12,12 +12,17 @@ const { sleep } = require('../lib/helpers');
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
         const settings = this.getSettings();
+        const driverManifest = this.driver.manifest;
 
-        this.homey.app.log('[Device] - init =>', this.getName());
+        this.homey.app.log('[Device] - init =>', this.getName(), driverManifest.id);
         this.setUnavailable(`${this.getName()} is initializing.... This may take a while`);
 
         if ('localKey' in settings && settings.localKey !== 'deprecated') {
-            this.setUnavailable('Legacy API detected. Please repair the device to use the new API.');
+            // this.setUnavailable('Legacy API detected. Please repair the device to use the new API.');
+
+            await this.homey.notifications.createNotification({
+                excerpt: `[Eufy Clean][${this.getName()}] \n\n Old API detected! - Please repair the device to use the new API. The app was rewritten because of a lot of changes in the API. You can still use this app as you were used to, however support for local devices will be removed in the future \n\n\n - Please repair the device to use the new API.`,
+            });
         }
     }
 
@@ -76,10 +81,17 @@ module.exports = class mainDevice extends Homey.Device {
     async initApi(overrideSettings = null) {
         try {
             const settings = overrideSettings ? overrideSettings : this.getSettings();
-            let { deviceId } = settings;
+            let { deviceId, localKey, ip } = settings;
             this.homey.app.log(`[Device] ${this.getName()} - initApi settings`, { ...settings, username: 'LOG', password: '***' });
 
-            this.eufyRoboVac = await this.homey.app.eufyClean.initDevice({ deviceId, debug: false });
+            const deviceConfig = {
+                deviceId,
+                ...(localKey !== 'deprecated' && { localKey }),
+                ...(localKey !== 'deprecated' && { ip }),
+                debug : false
+            };
+
+            this.eufyRoboVac = await this.homey.app.eufyClean.initDevice(deviceConfig);
             this.config = this.eufyRoboVac.config;
 
             await this.eufyRoboVac.connect();
@@ -93,16 +105,20 @@ module.exports = class mainDevice extends Homey.Device {
     async checkCapabilities() {
         const driverManifest = this.driver.manifest;
         let driverCapabilities = driverManifest.capabilities;
+        let deviceCapabilities = this.getCapabilities();
 
         if (this.config.apiType === 'novel') {
             driverCapabilities = [...driverCapabilities, 'action_clean_params'];
 
             if(this.config.mqtt) {
                 driverCapabilities = [...driverCapabilities, 'action_scenes'];
+            } else {
+                deviceCapabilities = deviceCapabilities.filter((c) => c !== 'action_scenes');
             }
+        } else {
+            deviceCapabilities = deviceCapabilities.filter((c) => c !== 'action_clean_params');
+            deviceCapabilities = deviceCapabilities.filter((c) => c !== 'action_scenes');
         }
-
-        const deviceCapabilities = this.getCapabilities();
 
         this.homey.app.log(`[Device] ${this.getName()} - Found capabilities =>`, deviceCapabilities);
 
@@ -136,6 +152,8 @@ module.exports = class mainDevice extends Homey.Device {
 
     async setCapabilityValues() {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
+
+        this.unsetWarning()
 
         try {
             await this.eufyRoboVac.updateDevice();

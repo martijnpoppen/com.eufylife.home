@@ -10,6 +10,7 @@
     "@tuyapi/cloud": "^0.6.2",
     "axios": "^1.6.8",
     "mqtt": "^5.5.5",
-    "protobufjs": "^7.3.0"
+    "protobufjs": "^7.3.0",
+    "tuyapi": "https://github.com/codetheweb/tuyapi/tarball/master"
   }
 }

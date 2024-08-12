@@ -1,6 +1,6 @@
-Adds support for Eufy Robovac
+Adds support for Eufy Clean
 
-Retrieve information from you Eufy Robovac. 
+Retrieve information from your Eufy Robovac. 
 Get notification when a value has changed.
 
 Current features: 
@@ -8,15 +8,14 @@ Current features:
 - Display battery level, and notify on low battery.
 - Display battery charging state.
 - Find robot
+- Start Scenes (Robovac X10)
 
-Is your Robovac not listed?
-Feel free to ask in the community and I'll add it.
 
 How to use:
 - Install this app on your Homey.
 - Add a device.
-- In de device settings provide your deviceId/localKey
+- Login with your Eufy Account
 - Use the app
 
-How to find deviceId/LocalKey?
-- Check the community thread - (Link in app info below)
+Is my device supported?
+- Go to https://tinyurl.com/eufy-clean-homey and check if your device is listed. 
