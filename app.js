@@ -107,7 +107,13 @@ class App extends Homey.App {
 
     // -------------------------- EUFY CLEAN -------------------------
     async initEufyClean(driverUsername = null, driverPassword = null) {
-        if (!this.eufyClean && this.deviceList.length && !driverUsername && !driverPassword) {
+        if (driverUsername && driverPassword) {
+            // Initialize when called from driver
+
+            this.eufyClean = new EufyClean(driverUsername, driverPassword);
+            await this.eufyClean.init();
+
+        } else if (!this.eufyClean && this.deviceList.length) {
             // Initialize on startup when there are paired devices
 
             const device = this.deviceList[0];
@@ -121,15 +127,8 @@ class App extends Homey.App {
             } else {
                 // No login data found, initialize without login - only for LocalConnect
                 this.eufyClean = new EufyClean();
-                    await this.initDevices();
+                await this.initDevices();
             }
-        }
-
-        if (driverUsername && driverPassword) {
-            // Initialize when called from driver
-
-            this.eufyClean = new EufyClean(driverUsername, driverPassword);
-            await this.eufyClean.init();
         }
 
         this.appInitialized = true;
