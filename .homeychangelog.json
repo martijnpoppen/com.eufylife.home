@@ -226,5 +226,8 @@
   },
   "2.3.2": {
     "en": "FIX: small error in checking apiType in localConnection"
+  },
+  "2.3.3": {
+    "en": "FIX: autoClean for CloudConnect"
   }
 }
