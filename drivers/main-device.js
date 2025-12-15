@@ -1,12 +1,5 @@
 const Homey = require('homey');
-const {
-    EUFY_CLEAN_GET_STATE,
-    EUFY_CLEAN_VACUUMCLEANER_STATE,
-    EUFY_CLEAN_LEGACY_CLEAN_SPEED,
-    EUFY_CLEAN_WORK_STATUS,
-    EUFY_CLEAN_ERROR_CODES,
-    EUFY_CLEAN_GET_CLEAN_SPEED
-} = require('../lib/eufy-clean');
+const { EUFY_CLEAN_GET_STATE, EUFY_CLEAN_VACUUMCLEANER_STATE, EUFY_CLEAN_LEGACY_CLEAN_SPEED, EUFY_CLEAN_WORK_STATUS, EUFY_CLEAN_ERROR_CODES, EUFY_CLEAN_GET_CLEAN_SPEED } = require('eufy-clean');
 const { sleep } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
@@ -21,20 +14,23 @@ module.exports = class mainDevice extends Homey.Device {
             // this.setUnavailable('Legacy API detected. Please repair the device to use the new API.');
 
             await this.homey.notifications.createNotification({
-                excerpt: `[Eufy Clean][${this.getName()}] \n\n Old API detected! - Please repair the device to use the new API. The app was rewritten because of a lot of changes in the API. You can still use this app as you were used to, however support for local devices will be removed in the future \n\n\n - Please repair the device to use the new API.`,
+                excerpt: `[Eufy Clean][${this.getName()}] \n\n Old API detected! - Please repair the device to use the new API. The app was rewritten because of a lot of changes in the API. You can still use this app as you were used to, however support for local devices will be removed in the future \n\n\n - Please repair the device to use the new API.`
             });
         }
     }
 
     onAdded() {
         this.onStartup(1);
+
+        this.homey.app.stopDevicePolling();
+        this.homey.app.startDevicePolling();
     }
 
     async onStartup(index) {
         const sleepTime = (index + 1) * 1000;
         this.homey.app.log('[Device] - sleep =>', this.getName(), sleepTime);
         await sleep(sleepTime);
-        
+
         await this.enableDevice(true);
     }
 
@@ -45,16 +41,21 @@ module.exports = class mainDevice extends Homey.Device {
             await this.checkCapabilities();
         }
 
-        await this.setCapabilityValuesInterval();
+        await this.setCapabilityValues();
         await this.setAvailable();
     }
 
     async disableDevice() {
-        if (this.onPollInterval) {
-            clearInterval(this.onPollInterval);
+        if (this.eufyRoboVac) {
+            try {
+                if (typeof this.eufyRoboVac.disconnect === 'function') {
+                    await this.eufyRoboVac.disconnect();
+                }
+            } catch (error) {
+                this.homey.app.log(`[Device] ${this.getName()} - disableDevice disconnect error:`, error);
+            }
+            this.eufyRoboVac = null;
         }
-
-        this.eufyRoboVac = null;
 
         this.setUnavailable('Repair mode active');
     }
@@ -62,16 +63,26 @@ module.exports = class mainDevice extends Homey.Device {
     async onSettings({ oldSettings, newSettings, changedKeys }) {
         this.homey.app.log(`[Device] ${this.getName()} - newSettings`, newSettings);
 
-        if (this.onPollInterval) {
-            clearInterval(this.onPollInterval);
-        }
-
         this.enableDevice(false, newSettings);
     }
 
-    onDeleted() {
+    async onDeleted() {
+        this.homey.app.log(`[Device] ${this.getName()} - onDeleted`);
+
         if (this.onPollInterval) {
             clearInterval(this.onPollInterval);
+            this.onPollInterval = null;
+        }
+
+        if (this.eufyRoboVac) {
+            try {
+                if (typeof this.eufyRoboVac.disconnect === 'function') {
+                    await this.eufyRoboVac.disconnect();
+                }
+            } catch (error) {
+                this.homey.app.log(`[Device] ${this.getName()} - onDeleted disconnect error:`, error);
+            }
+            this.eufyRoboVac = null;
         }
 
         const deviceObject = this.getData();
@@ -88,11 +99,11 @@ module.exports = class mainDevice extends Homey.Device {
                 deviceId,
                 ...(localKey !== 'deprecated' && { localKey }),
                 ...(localKey !== 'deprecated' && { ip }),
-                debug : false
+                debug: false
             };
 
             this.eufyRoboVac = await this.homey.app.eufyClean.initDevice(deviceConfig);
-            this.config = this.eufyRoboVac.config;
+            this.config = this.eufyRoboVac.config || {};
 
             await this.eufyRoboVac.connect();
             await this.eufyRoboVac.formatStatus();
@@ -110,7 +121,7 @@ module.exports = class mainDevice extends Homey.Device {
         if (this.config.apiType === 'novel') {
             driverCapabilities = [...driverCapabilities, 'action_clean_params'];
 
-            if(this.config.mqtt) {
+            if (this.config.mqtt) {
                 driverCapabilities = [...driverCapabilities, 'action_scenes'];
             } else {
                 deviceCapabilities = deviceCapabilities.filter((c) => c !== 'action_scenes');
@@ -153,9 +164,13 @@ module.exports = class mainDevice extends Homey.Device {
     async setCapabilityValues() {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
 
-        this.unsetWarning()
+        this.unsetWarning();
 
         try {
+            if(!this.eufyRoboVac) {
+                return this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues => No device instance found, skipping capability update.`);
+            }
+
             await this.eufyRoboVac.updateDevice();
 
             const batteryLevel = (await this.eufyRoboVac.getBatteryLevel()) || 1;
@@ -208,20 +223,6 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             await this.setAvailable();
-        } catch (error) {
-            this.setUnavailable(error);
-            this.homey.app.log(error);
-        }
-    }
-
-    async setCapabilityValuesInterval() {
-        try {
-            const REFRESH_INTERVAL = 10000;
-
-            this.homey.app.log(`[Device] ${this.getName()} - onPollInterval =>`, REFRESH_INTERVAL);
-            this.onPollInterval = this.homey.setInterval(this.setCapabilityValues.bind(this), REFRESH_INTERVAL);
-
-            await this.setCapabilityValues();
         } catch (error) {
             this.setUnavailable(error);
             this.homey.app.log(error);
