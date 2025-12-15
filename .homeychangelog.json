@@ -229,5 +229,8 @@
   },
   "2.3.3": {
     "en": "FIX: autoClean for CloudConnect"
+  },
+  "2.4.0": {
+    "en": "Robovac E28 - (T2352)"
   }
 }

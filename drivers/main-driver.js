@@ -1,5 +1,5 @@
 const Homey = require('homey');
-const { EufyCleanLogin, EUFY_CLEAN_DEVICES } = require('../lib/eufy-clean');
+const { EufyCleanLogin, EUFY_CLEAN_DEVICES } = require('eufy-clean');
 const { encrypt } = require('../lib/helpers');
 
 module.exports = class mainDriver extends Homey.Driver {
@@ -29,12 +29,12 @@ module.exports = class mainDriver extends Homey.Driver {
             this.homey.app.log(`[Driver] ${this.id} - currentView:`, { view, type: this.type });
 
 
-            if(view === 'login_credentials' && !this.homey.app.appInitialized) {
+            if(view === 'login_credentials' && !this.homey.app.appInitialized && this.type === 'pair') {
                 await session.done();
             }
 
             if (view === 'login_credentials' && !!this.homey.app.eufyClean && this.type === 'pair') {
-                this.homey.app.log(`[Driver] ${this.id} - Found existing EufClean instance, skipping login`);
+                this.homey.app.log(`[Driver] ${this.id} - Found existing EufyClean instance, skipping login`);
 
                 const device = this.homey.app.deviceList[0];
                 const settings = device.getSettings();

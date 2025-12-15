@@ -6,7 +6,7 @@ const {
     EUFY_CLEAN_WORK_STATUS,
     EUFY_CLEAN_ERROR_CODES,
     EUFY_CLEAN_GET_CLEAN_SPEED
-} = require('../lib/eufy-clean');
+} = require('eufy-clean');
 const { sleep } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
@@ -52,9 +52,19 @@ module.exports = class mainDevice extends Homey.Device {
     async disableDevice() {
         if (this.onPollInterval) {
             clearInterval(this.onPollInterval);
+            this.onPollInterval = null;
         }
 
-        this.eufyRoboVac = null;
+        if (this.eufyRoboVac) {
+            try {
+                if (typeof this.eufyRoboVac.disconnect === 'function') {
+                    await this.eufyRoboVac.disconnect();
+                }
+            } catch (error) {
+                this.homey.app.log(`[Device] ${this.getName()} - disableDevice disconnect error:`, error);
+            }
+            this.eufyRoboVac = null;
+        }
 
         this.setUnavailable('Repair mode active');
     }
@@ -69,9 +79,23 @@ module.exports = class mainDevice extends Homey.Device {
         this.enableDevice(false, newSettings);
     }
 
-    onDeleted() {
+    async onDeleted() {
+        this.homey.app.log(`[Device] ${this.getName()} - onDeleted`);
+        
         if (this.onPollInterval) {
             clearInterval(this.onPollInterval);
+            this.onPollInterval = null;
+        }
+
+        if (this.eufyRoboVac) {
+            try {
+                if (typeof this.eufyRoboVac.disconnect === 'function') {
+                    await this.eufyRoboVac.disconnect();
+                }
+            } catch (error) {
+                this.homey.app.log(`[Device] ${this.getName()} - onDeleted disconnect error:`, error);
+            }
+            this.eufyRoboVac = null;
         }
 
         const deviceObject = this.getData();

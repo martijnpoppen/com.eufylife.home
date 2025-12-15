@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const { EufyClean } = require('./lib/eufy-clean');
+const { EufyClean } = require('eufy-clean');
 const flowActions = require('./lib/flow/actions.js');
 const { decrypt, sleep } = require('./lib/helpers.js');
 
@@ -70,12 +70,17 @@ class App extends Homey.App {
         try {
             this.homey.app.log('removeDevice', deviceId);
 
-            const filteredList = this.deviceList.filter((dl) => {
+            const initialLength = this.deviceList.length;
+            
+            this.deviceList = this.deviceList.filter((dl) => {
                 const data = dl.getData();
                 return data.id !== deviceId;
             });
 
-            this.deviceList = filteredList;
+            const removed = initialLength - this.deviceList.length;
+            if (removed > 0) {
+                this.homey.app.log(`removeDevice - Successfully removed ${removed} device(s), ${this.deviceList.length} remaining`);
+            }
         } catch (error) {
             this.error(error);
         }
