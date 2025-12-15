@@ -232,5 +232,8 @@
   },
   "2.4.0": {
     "en": "Robovac E28 - (T2352)"
+  },
+  "2.4.1": {
+    "en": "FIX: repair device didnt show login popup"
   }
 }
