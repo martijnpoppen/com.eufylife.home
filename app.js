@@ -2,7 +2,6 @@
 
 const Homey = require('homey');
 const { EufyClean } = require('eufy-clean');
-const flowActions = require('./lib/flow/actions.js');
 const { decrypt, sleep } = require('./lib/helpers.js');
 
 class App extends Homey.App {
@@ -34,31 +33,52 @@ class App extends Homey.App {
         console.error.bind(this, '[fatal]').apply(this, arguments);
     }
 
-
     // -------------------- INIT ----------------------
 
     async onInit() {
         this.log(`${this.homey.manifest.id} - ${this.homey.manifest.version} started...`);
-        this.deviceList = [];
         this.driversInitialized = false;
-        this.appInitialized = false;
+        this.eufyClean = null;
+    }
+
+    async onUninit() {
+        this.log(`${this.homey.manifest.id} - ${this.homey.manifest.version} stopped...`);
+        await this.disableDevices();
         this.eufyClean = null;
     }
 
     async initApp() {
         this.initEufyClean();
+    }
 
-        flowActions.init(this.homey);
+    startDevicePolling() {
+        const intervalMs = 30_000;
+        let stopped = false;
+
+        const tick = async () => {
+            if (stopped) return;
+
+            try {
+                await this.updateDevices(devId);
+            } catch (e) {
+                console.error('Error updating devices:', e);
+            }
+
+            this.devicePollTimer = setTimeout(tick, intervalMs);
+        };
+
+        tick();
+
+        this.stopDevicePolling = () => {
+            stopped = true;
+            clearTimeout(this.devicePollTimer);
+            this.devicePollTimer = null;
+        };
     }
 
     // ---------------------------- GETTERS/SETTERS ----------------------------------
-    async setDevice(device) {
-        this.deviceList = [...this.deviceList, device];
-    }
 
-    async setDevices(devices) {
-        this.deviceList = [...this.deviceList, ...devices];
-
+    async initDrivers() {
         if (!this.driversInitialized) {
             this.driversInitialized = true;
             await sleep(2000);
@@ -66,77 +86,86 @@ class App extends Homey.App {
         }
     }
 
-    async removeDevice(deviceId) {
-        try {
-            this.homey.app.log('removeDevice', deviceId);
+    async getAllDevices() {
+        const drivers = await this.homey.drivers.getDrivers();
+        let allDevices = [];
 
-            const initialLength = this.deviceList.length;
-            
-            this.deviceList = this.deviceList.filter((dl) => {
-                const data = dl.getData();
-                return data.id !== deviceId;
-            });
-
-            const removed = initialLength - this.deviceList.length;
-            if (removed > 0) {
-                this.homey.app.log(`removeDevice - Successfully removed ${removed} device(s), ${this.deviceList.length} remaining`);
-            }
-        } catch (error) {
-            this.error(error);
+        for (const driver of Object.values(drivers)) {
+            const devices = driver.getDevices();
+            allDevices = [...allDevices, ...devices];
         }
+
+        return allDevices.length ? [allDevices[0]] : allDevices;
     }
 
     async initDevices() {
-        this.deviceList.every(async (device, index) => {
+        const deviceList = await this.getAllDevices();
+        deviceList.every(async (device, index) => {
             await device.onStartup(index);
         });
+
+        this.startDevicePolling();
+    }
+
+    async updateAllDevices() {
+        try {
+            const deviceList = await this.getAllDevices();
+            for (const d of deviceList) {
+                await d.setCapabilityValues();
+            }
+        } catch (error) {
+            this.homey.app.error('[updateAllDevices]', error);
+        }
     }
 
     async disableDevices() {
-        this.deviceList.every(async (device, index) => {
+        const deviceList = await this.getAllDevices();
+        for (const device of deviceList) {
             try {
-                await device.disableDevice();    
+                await device.disableDevice();
             } catch (error) {
                 console.log(error);
             }
-            
-        });
+        }
     }
 
     async enableDevices(loginData) {
-        this.deviceList.every(async (device, index) => {
-            device.setSettings({...loginData});
-            await device.enableDevice();
-        });
+        for (const device of this.deviceList) {
+            try {
+                device.setSettings({ ...loginData });
+                await device.enableDevice();
+            } catch (error) {
+                this.error(error);
+            }
+        }
     }
 
     // -------------------------- EUFY CLEAN -------------------------
     async initEufyClean(driverUsername = null, driverPassword = null) {
+        const deviceList = await this.getAllDevices();
+
         if (driverUsername && driverPassword) {
             // Initialize when called from driver
 
             this.eufyClean = new EufyClean(driverUsername, driverPassword);
             await this.eufyClean.init();
-
-        } else if (!this.eufyClean && this.deviceList.length) {
+        } else if (!this.eufyClean && deviceList.length) {
             // Initialize on startup when there are paired devices
 
-            const device = this.deviceList[0];
+            const device = deviceList[0];
             const settings = device.getSettings();
             const { username, password } = settings;
 
-            if(username && password) {
-                this.eufyClean = new EufyClean(decrypt(username), decrypt(password) );
+            if (username && password) {
+                this.eufyClean = new EufyClean(decrypt(username), decrypt(password));
                 await this.eufyClean.init();
                 await this.initDevices();
             } else {
                 // No login data found, initialize without login - only for LocalConnect
-                this.eufyClean = new EufyClean();
+                this.eufyClean = new EufyClean(null, null);
                 await this.initDevices();
             }
         }
-
-        this.appInitialized = true;
     }
 }
 
