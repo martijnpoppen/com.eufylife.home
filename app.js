@@ -2,7 +2,6 @@
 
 const Homey = require('homey');
 const { EufyClean } = require('eufy-clean');
-const flowActions = require('./lib/flow/actions.js');
 const { decrypt, sleep } = require('./lib/helpers.js');
 
 class App extends Homey.App {
@@ -34,31 +33,36 @@ class App extends Homey.App {
         console.error.bind(this, '[fatal]').apply(this, arguments);
     }
 
-
     // -------------------- INIT ----------------------
 
     async onInit() {
         this.log(`${this.homey.manifest.id} - ${this.homey.manifest.version} started...`);
-        this.deviceList = [];
         this.driversInitialized = false;
-        this.appInitialized = false;
+        this.eufyClean = null;
+
+        this.handleEmitters();
+    }
+
+    async onUninit() {
+        this.log(`${this.homey.manifest.id} - ${this.homey.manifest.version} stopped...`);
+        await this.disableDevices();
         this.eufyClean = null;
     }
 
     async initApp() {
         this.initEufyClean();
+    }
 
-        flowActions.init(this.homey);
+    async handleEmitters() {
+        this.homey.on('eufy-clean:data', (data) => {
+            this.log('[handleEmitters] Received data:', data);
+            this.updateDevice(data);
+        });
     }
 
     // ---------------------------- GETTERS/SETTERS ----------------------------------
-    async setDevice(device) {
-        this.deviceList = [...this.deviceList, device];
-    }
 
-    async setDevices(devices) {
-        this.deviceList = [...this.deviceList, ...devices];
-
+    async initDrivers() {
         if (!this.driversInitialized) {
             this.driversInitialized = true;
             await sleep(2000);
@@ -66,77 +70,86 @@ class App extends Homey.App {
         }
     }
 
-    async removeDevice(deviceId) {
-        try {
-            this.homey.app.log('removeDevice', deviceId);
+    async getAllDevices() {
+        const drivers = await this.homey.drivers.getDrivers();
+        let allDevices = [];
 
-            const initialLength = this.deviceList.length;
-            
-            this.deviceList = this.deviceList.filter((dl) => {
-                const data = dl.getData();
-                return data.id !== deviceId;
-            });
-
-            const removed = initialLength - this.deviceList.length;
-            if (removed > 0) {
-                this.homey.app.log(`removeDevice - Successfully removed ${removed} device(s), ${this.deviceList.length} remaining`);
-            }
-        } catch (error) {
-            this.error(error);
+        for (const driver of Object.values(drivers)) {
+            const devices = driver.getDevices();
+            allDevices = [...allDevices, ...devices];
         }
+
+        return allDevices.length ? [allDevices[0]] : allDevices;
     }
 
     async initDevices() {
-        this.deviceList.every(async (device, index) => {
+        const deviceList = await this.getAllDevices();
+        deviceList.every(async (device, index) => {
             await device.onStartup(index);
         });
     }
 
+    async updateDevice(devId) {
+        try {
+            const deviceList = await this.getAllDevices();
+            const device = deviceList.find(async (d, index) => {
+                const settings = d.getSettings();
+                return settings.deviceId === devId;
+            });
+            await device.setCapabilityValues();
+        } catch (error) {
+            this.homey.app.error('[updateDevice]', error);
+        }
+    }
+
     async disableDevices() {
-        this.deviceList.every(async (device, index) => {
+        const deviceList = await this.getAllDevices();
+        for (const device of deviceList) {
             try {
-                await device.disableDevice();    
+                await device.disableDevice();
             } catch (error) {
                 console.log(error);
             }
-            
-        });
+        }
     }
 
     async enableDevices(loginData) {
-        this.deviceList.every(async (device, index) => {
-            device.setSettings({...loginData});
-            await device.enableDevice();
-        });
+        for (const device of this.deviceList) {
+            try {
+                device.setSettings({ ...loginData });
+                await device.enableDevice();
+            } catch (error) {
+                this.error(error);
+            }
+        }
     }
 
     // -------------------------- EUFY CLEAN -------------------------
     async initEufyClean(driverUsername = null, driverPassword = null) {
+        const deviceList = await this.getAllDevices();
+
         if (driverUsername && driverPassword) {
             // Initialize when called from driver
 
-            this.eufyClean = new EufyClean(driverUsername, driverPassword);
+            this.eufyClean = new EufyClean(driverUsername, driverPassword, this.homey.emit.bind(this.homey));
             await this.eufyClean.init();
-
-        } else if (!this.eufyClean && this.deviceList.length) {
+        } else if (!this.eufyClean && deviceList.length) {
             // Initialize on startup when there are paired devices
 
-            const device = this.deviceList[0];
+            const device = deviceList[0];
             const settings = device.getSettings();
             const { username, password } = settings;
 
-            if(username && password) {
-                this.eufyClean = new EufyClean(decrypt(username), decrypt(password) );
+            if (username && password) {
+                this.eufyClean = new EufyClean(decrypt(username), decrypt(password), this.homey.emit.bind(this.homey));
                 await this.eufyClean.init();
                 await this.initDevices();
             } else {
                 // No login data found, initialize without login - only for LocalConnect
-                this.eufyClean = new EufyClean();
+                this.eufyClean = new EufyClean(null, null, this.homey.emit.bind(this.homey));
                 await this.initDevices();
             }
         }
-
-        this.appInitialized = true;
     }
 }
 
