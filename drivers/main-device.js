@@ -1,12 +1,5 @@
 const Homey = require('homey');
-const {
-    EUFY_CLEAN_GET_STATE,
-    EUFY_CLEAN_VACUUMCLEANER_STATE,
-    EUFY_CLEAN_LEGACY_CLEAN_SPEED,
-    EUFY_CLEAN_WORK_STATUS,
-    EUFY_CLEAN_ERROR_CODES,
-    EUFY_CLEAN_GET_CLEAN_SPEED
-} = require('../lib/eufy-clean');
+const { EUFY_CLEAN_GET_STATE, EUFY_CLEAN_VACUUMCLEANER_STATE, EUFY_CLEAN_LEGACY_CLEAN_SPEED, EUFY_CLEAN_WORK_STATUS, EUFY_CLEAN_ERROR_CODES, EUFY_CLEAN_GET_CLEAN_SPEED } = require('eufy-clean');
 const { sleep } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
@@ -156,6 +149,10 @@ module.exports = class mainDevice extends Homey.Device {
         this.unsetWarning()
 
         try {
+            if(!this.eufyRoboVac) {
+                return this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues => No device instance found, skipping capability update.`);
+            }
+
             await this.eufyRoboVac.updateDevice();
 
             const batteryLevel = (await this.eufyRoboVac.getBatteryLevel()) || 1;

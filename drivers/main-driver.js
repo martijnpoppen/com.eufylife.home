@@ -1,5 +1,5 @@
 const Homey = require('homey');
-const { EufyCleanLogin, EUFY_CLEAN_DEVICES } = require('../lib/eufy-clean');
+const { EUFY_CLEAN_DEVICES } = require('eufy-clean');
 const { encrypt } = require('../lib/helpers');
 
 module.exports = class mainDriver extends Homey.Driver {
@@ -8,6 +8,7 @@ module.exports = class mainDriver extends Homey.Driver {
         this.homey.app.log(`[Driver] - version`, Homey.manifest.version);
 
         this.homey.app.setDevices(this.getDevices());
+        this.initFlowActions();
     }
 
     deviceType() {
@@ -28,21 +29,20 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('showView', async (view) => {
             this.homey.app.log(`[Driver] ${this.id} - currentView:`, { view, type: this.type });
 
-
-            if(view === 'login_credentials' && !this.homey.app.appInitialized) {
-                await session.done();
-            }
-
             if (view === 'login_credentials' && !!this.homey.app.eufyClean && this.type === 'pair') {
                 this.homey.app.log(`[Driver] ${this.id} - Found existing EufClean instance, skipping login`);
 
-                const device = this.homey.app.deviceList[0];
-                const settings = device.getSettings();
-                const { username, password } = settings;
-                
-                this.loginData = { username, password };
-                
-                session.showView('loading');
+                 const deviceList = this.homey.app.deviceList;
+
+                if (deviceList.length) {
+                    const device = deviceList[0];
+                    const settings = device.getSettings();
+                    const { username, password } = settings;
+
+                    this.loginData = { username, password };
+
+                    session.showView('loading');
+                }
             }
 
             if (view === 'loading') {
@@ -81,7 +81,9 @@ module.exports = class mainDriver extends Homey.Driver {
 
                             await device.setSettings(newSettings);
 
-                            this.homey.app.enableDevices(this.loginData)
+                            await this.homey.app.enableDevices(this.loginData);
+
+                            this.loginData = null;
 
                             session.showView('done');
                         } else {
@@ -128,9 +130,38 @@ module.exports = class mainDriver extends Homey.Driver {
                 }
             }));
 
+             this.devices = null;
+
             this.homey.app.log('Found devices - ', results);
 
             return results;
         });
+    }
+
+
+    async initFlowActions() {
+        try {
+            this.homey.flow.getActionCard('action_measure_clean_speed').registerRunListener(async (args, state) => {
+                return await args.device._onCleanSpeedChanged(args.action_measure_clean_speed_type);
+            });
+
+            this.homey.flow.getActionCard('action_control_mode').registerRunListener(async (args, state) => {
+                return await args.device._onControlModeChanged(args.action_control_mode_type);
+            });
+
+            this.homey.flow.getActionCard('action_scenes').registerRunListener(async (args, state) => {
+                return await args.device._onControlModeChanged(args.action_scenes_type);
+            });
+
+            this.homey.flow.getActionCard('action_clean_params').registerRunListener(async (args, state) => {
+                return await args.device._onCleanParamChanged({
+                    cleanType: args.action_clean_params_cleantype,
+                    cleanExtent: args.action_clean_params_cleanextent,
+                    mopMode: args.action_clean_params_mopmode
+                });
+            });
+        } catch (err) {
+            this.homey.app.error(err);
+        }
     }
 };

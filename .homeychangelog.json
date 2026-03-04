@@ -229,5 +229,29 @@
   },
   "2.3.3": {
     "en": "FIX: autoClean for CloudConnect"
+  },
+  "2.4.0": {
+    "en": "Robovac E28 - (T2352)"
+  },
+  "2.4.1": {
+    "en": "FIX: repair device didnt show login popup"
+  },
+  "2.4.2": {
+    "en": "FIX: login"
+  },
+  "2.4.3": {
+    "en": "FIX: decrease memory usage"
+  },
+  "2.4.4": {
+    "en": "FIX: login"
+  },
+  "2.4.5": {
+    "en": "FIX: login"
+  },
+  "2.4.6": {
+    "en": "FIX: flowcards"
+  },
+  "2.4.7": {
+    "en": "FIX: flowcards"
   }
 }

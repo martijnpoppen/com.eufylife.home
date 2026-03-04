@@ -1,8 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const { EufyClean } = require('./lib/eufy-clean');
-const flowActions = require('./lib/flow/actions.js');
+const { EufyClean } = require('eufy-clean');
 const { decrypt, sleep } = require('./lib/helpers.js');
 
 class App extends Homey.App {
@@ -45,12 +44,6 @@ class App extends Homey.App {
         this.eufyClean = null;
     }
 
-    async initApp() {
-        this.initEufyClean();
-
-        flowActions.init(this.homey);
-    }
-
     // ---------------------------- GETTERS/SETTERS ----------------------------------
     async setDevice(device) {
         this.deviceList = [...this.deviceList, device];
@@ -62,7 +55,7 @@ class App extends Homey.App {
         if (!this.driversInitialized) {
             this.driversInitialized = true;
             await sleep(2000);
-            this.initApp();
+            this.initEufyClean();
         }
     }
 
