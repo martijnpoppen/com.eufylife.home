@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Named scene",
+    "nl": "Benoemde scene"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null
+}

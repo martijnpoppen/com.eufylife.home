@@ -1,0 +1,45 @@
+{
+  "id": "action_room_clean",
+  "title": {
+    "en": "Clean room",
+    "nl": "Reinig kamer"
+  },
+  "titleFormatted": {
+    "en": "Clean room [[action_room_clean_room_id]] ([[action_room_clean_clean_times]]x)",
+    "nl": "Reinig kamer [[action_room_clean_room_id]] ([[action_room_clean_clean_times]]x)"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_room_clean"
+    },
+    {
+      "name": "action_room_clean_room_id",
+      "type": "number",
+      "title": {
+        "en": "Room ID",
+        "nl": "Kamer ID"
+      },
+      "placeholder": {
+        "en": "1",
+        "nl": "1"
+      },
+      "min": 1
+    },
+    {
+      "name": "action_room_clean_clean_times",
+      "type": "number",
+      "title": {
+        "en": "Repeat count",
+        "nl": "Herhalingen"
+      },
+      "placeholder": {
+        "en": "1",
+        "nl": "1"
+      },
+      "required": false,
+      "min": 1
+    }
+  ]
+}

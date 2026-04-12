@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Room clean",
+    "nl": "Kamer reinigen"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null
+}

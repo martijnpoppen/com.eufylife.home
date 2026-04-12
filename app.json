@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.eufylife.home",
-  "version": "2.4.7",
+  "version": "2.5.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#13dfd0",
@@ -310,6 +310,77 @@
         ]
       },
       {
+        "id": "action_room_clean",
+        "title": {
+          "en": "Clean room",
+          "nl": "Reinig kamer"
+        },
+        "titleFormatted": {
+          "en": "Clean room [[action_room_clean_room_id]] ([[action_room_clean_clean_times]]x)",
+          "nl": "Reinig kamer [[action_room_clean_room_id]] ([[action_room_clean_clean_times]]x)"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_room_clean"
+          },
+          {
+            "name": "action_room_clean_room_id",
+            "type": "number",
+            "title": {
+              "en": "Room ID",
+              "nl": "Kamer ID"
+            },
+            "placeholder": {
+              "en": "1",
+              "nl": "1"
+            },
+            "min": 1
+          },
+          {
+            "name": "action_room_clean_clean_times",
+            "type": "number",
+            "title": {
+              "en": "Repeat count",
+              "nl": "Herhalingen"
+            },
+            "placeholder": {
+              "en": "1",
+              "nl": "1"
+            },
+            "required": false,
+            "min": 1
+          }
+        ]
+      },
+      {
+        "id": "action_scene_named",
+        "title": {
+          "en": "Start saved scene",
+          "nl": "Start opgeslagen scene"
+        },
+        "titleFormatted": {
+          "en": "Start saved scene [[scene]]",
+          "nl": "Start opgeslagen scene [[scene]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=C_SERIES|G_SERIES|S_SERIES|L_SERIES|X_SERIES|Robovac&capabilities=action_scene_named"
+          },
+          {
+            "name": "scene",
+            "type": "autocomplete",
+            "title": {
+              "en": "Scene",
+              "nl": "Scene"
+            }
+          }
+        ]
+      },
+      {
         "id": "action_scenes",
         "title": {
           "en": "Start Scene",
@@ -578,6 +649,83 @@
               "value": "Unknown"
             }
           ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Local Tuya settings",
+            "nl": "Lokale Tuya instellingen"
+          },
+          "children": [
+            {
+              "id": "map_id",
+              "type": "number",
+              "label": {
+                "en": "Map ID",
+                "nl": "Kaart ID"
+              },
+              "value": 1,
+              "hint": {
+                "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+                "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+              }
+            },
+            {
+              "id": "protocol_version",
+              "type": "dropdown",
+              "label": {
+                "en": "Protocol version",
+                "nl": "Protocolversie"
+              },
+              "value": "3.3",
+              "values": [
+                {
+                  "id": "3.3",
+                  "label": {
+                    "en": "3.3",
+                    "nl": "3.3"
+                  }
+                },
+                {
+                  "id": "3.1",
+                  "label": {
+                    "en": "3.1",
+                    "nl": "3.1"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Modern mapped vacuums usually use 3.3.",
+                "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+              }
+            },
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "Last known IP",
+                "nl": "Laatst bekende IP"
+              },
+              "value": "",
+              "hint": {
+                "en": "Stored automatically after a successful local connection. Optional.",
+                "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+              }
+            },
+            {
+              "id": "find_timeout_seconds",
+              "type": "number",
+              "label": {
+                "en": "Find timeout (seconds)",
+                "nl": "Zoek-timeout (seconden)"
+              },
+              "value": 10,
+              "hint": {
+                "en": "How long LAN discovery may search when no IP is known.",
+                "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+              }
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -753,6 +901,83 @@
                 "nl": "model name"
               },
               "value": "Unknown"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Local Tuya settings",
+            "nl": "Lokale Tuya instellingen"
+          },
+          "children": [
+            {
+              "id": "map_id",
+              "type": "number",
+              "label": {
+                "en": "Map ID",
+                "nl": "Kaart ID"
+              },
+              "value": 1,
+              "hint": {
+                "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+                "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+              }
+            },
+            {
+              "id": "protocol_version",
+              "type": "dropdown",
+              "label": {
+                "en": "Protocol version",
+                "nl": "Protocolversie"
+              },
+              "value": "3.3",
+              "values": [
+                {
+                  "id": "3.3",
+                  "label": {
+                    "en": "3.3",
+                    "nl": "3.3"
+                  }
+                },
+                {
+                  "id": "3.1",
+                  "label": {
+                    "en": "3.1",
+                    "nl": "3.1"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Modern mapped vacuums usually use 3.3.",
+                "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+              }
+            },
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "Last known IP",
+                "nl": "Laatst bekende IP"
+              },
+              "value": "",
+              "hint": {
+                "en": "Stored automatically after a successful local connection. Optional.",
+                "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+              }
+            },
+            {
+              "id": "find_timeout_seconds",
+              "type": "number",
+              "label": {
+                "en": "Find timeout (seconds)",
+                "nl": "Zoek-timeout (seconden)"
+              },
+              "value": 10,
+              "hint": {
+                "en": "How long LAN discovery may search when no IP is known.",
+                "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+              }
             }
           ]
         }
@@ -932,6 +1157,83 @@
               "value": "Unknown"
             }
           ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Local Tuya settings",
+            "nl": "Lokale Tuya instellingen"
+          },
+          "children": [
+            {
+              "id": "map_id",
+              "type": "number",
+              "label": {
+                "en": "Map ID",
+                "nl": "Kaart ID"
+              },
+              "value": 1,
+              "hint": {
+                "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+                "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+              }
+            },
+            {
+              "id": "protocol_version",
+              "type": "dropdown",
+              "label": {
+                "en": "Protocol version",
+                "nl": "Protocolversie"
+              },
+              "value": "3.3",
+              "values": [
+                {
+                  "id": "3.3",
+                  "label": {
+                    "en": "3.3",
+                    "nl": "3.3"
+                  }
+                },
+                {
+                  "id": "3.1",
+                  "label": {
+                    "en": "3.1",
+                    "nl": "3.1"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Modern mapped vacuums usually use 3.3.",
+                "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+              }
+            },
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "Last known IP",
+                "nl": "Laatst bekende IP"
+              },
+              "value": "",
+              "hint": {
+                "en": "Stored automatically after a successful local connection. Optional.",
+                "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+              }
+            },
+            {
+              "id": "find_timeout_seconds",
+              "type": "number",
+              "label": {
+                "en": "Find timeout (seconds)",
+                "nl": "Zoek-timeout (seconden)"
+              },
+              "value": 10,
+              "hint": {
+                "en": "How long LAN discovery may search when no IP is known.",
+                "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+              }
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -1109,6 +1411,83 @@
               "value": "Unknown"
             }
           ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Local Tuya settings",
+            "nl": "Lokale Tuya instellingen"
+          },
+          "children": [
+            {
+              "id": "map_id",
+              "type": "number",
+              "label": {
+                "en": "Map ID",
+                "nl": "Kaart ID"
+              },
+              "value": 1,
+              "hint": {
+                "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+                "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+              }
+            },
+            {
+              "id": "protocol_version",
+              "type": "dropdown",
+              "label": {
+                "en": "Protocol version",
+                "nl": "Protocolversie"
+              },
+              "value": "3.3",
+              "values": [
+                {
+                  "id": "3.3",
+                  "label": {
+                    "en": "3.3",
+                    "nl": "3.3"
+                  }
+                },
+                {
+                  "id": "3.1",
+                  "label": {
+                    "en": "3.1",
+                    "nl": "3.1"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Modern mapped vacuums usually use 3.3.",
+                "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+              }
+            },
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "Last known IP",
+                "nl": "Laatst bekende IP"
+              },
+              "value": "",
+              "hint": {
+                "en": "Stored automatically after a successful local connection. Optional.",
+                "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+              }
+            },
+            {
+              "id": "find_timeout_seconds",
+              "type": "number",
+              "label": {
+                "en": "Find timeout (seconds)",
+                "nl": "Zoek-timeout (seconden)"
+              },
+              "value": 10,
+              "hint": {
+                "en": "How long LAN discovery may search when no IP is known.",
+                "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+              }
+            }
+          ]
         }
       ],
       "name": {
@@ -1283,6 +1662,83 @@
                 "nl": "model name"
               },
               "value": "Unknown"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Local Tuya settings",
+            "nl": "Lokale Tuya instellingen"
+          },
+          "children": [
+            {
+              "id": "map_id",
+              "type": "number",
+              "label": {
+                "en": "Map ID",
+                "nl": "Kaart ID"
+              },
+              "value": 1,
+              "hint": {
+                "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+                "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+              }
+            },
+            {
+              "id": "protocol_version",
+              "type": "dropdown",
+              "label": {
+                "en": "Protocol version",
+                "nl": "Protocolversie"
+              },
+              "value": "3.3",
+              "values": [
+                {
+                  "id": "3.3",
+                  "label": {
+                    "en": "3.3",
+                    "nl": "3.3"
+                  }
+                },
+                {
+                  "id": "3.1",
+                  "label": {
+                    "en": "3.1",
+                    "nl": "3.1"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Modern mapped vacuums usually use 3.3.",
+                "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+              }
+            },
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "Last known IP",
+                "nl": "Laatst bekende IP"
+              },
+              "value": "",
+              "hint": {
+                "en": "Stored automatically after a successful local connection. Optional.",
+                "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+              }
+            },
+            {
+              "id": "find_timeout_seconds",
+              "type": "number",
+              "label": {
+                "en": "Find timeout (seconds)",
+                "nl": "Zoek-timeout (seconden)"
+              },
+              "value": 10,
+              "hint": {
+                "en": "How long LAN discovery may search when no IP is known.",
+                "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+              }
             }
           ]
         }
@@ -1462,6 +1918,83 @@
               "value": "Unknown"
             }
           ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Local Tuya settings",
+            "nl": "Lokale Tuya instellingen"
+          },
+          "children": [
+            {
+              "id": "map_id",
+              "type": "number",
+              "label": {
+                "en": "Map ID",
+                "nl": "Kaart ID"
+              },
+              "value": 1,
+              "hint": {
+                "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+                "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+              }
+            },
+            {
+              "id": "protocol_version",
+              "type": "dropdown",
+              "label": {
+                "en": "Protocol version",
+                "nl": "Protocolversie"
+              },
+              "value": "3.3",
+              "values": [
+                {
+                  "id": "3.3",
+                  "label": {
+                    "en": "3.3",
+                    "nl": "3.3"
+                  }
+                },
+                {
+                  "id": "3.1",
+                  "label": {
+                    "en": "3.1",
+                    "nl": "3.1"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "Modern mapped vacuums usually use 3.3.",
+                "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+              }
+            },
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "Last known IP",
+                "nl": "Laatst bekende IP"
+              },
+              "value": "",
+              "hint": {
+                "en": "Stored automatically after a successful local connection. Optional.",
+                "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+              }
+            },
+            {
+              "id": "find_timeout_seconds",
+              "type": "number",
+              "label": {
+                "en": "Find timeout (seconds)",
+                "nl": "Zoek-timeout (seconden)"
+              },
+              "value": 10,
+              "hint": {
+                "en": "How long LAN discovery may search when no IP is known.",
+                "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+              }
+            }
+          ]
         }
       ],
       "deprecated": true,
@@ -1530,6 +2063,26 @@
           }
         }
       ]
+    },
+    "action_room_clean": {
+      "type": "string",
+      "title": {
+        "en": "Room clean",
+        "nl": "Kamer reinigen"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null
+    },
+    "action_scene_named": {
+      "type": "string",
+      "title": {
+        "en": "Named scene",
+        "nl": "Benoemde scene"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null
     },
     "action_scenes": {
       "type": "string",

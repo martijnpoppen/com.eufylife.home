@@ -35,6 +35,83 @@
           "value": "Unknown"
         }
       ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Local Tuya settings",
+        "nl": "Lokale Tuya instellingen"
+      },
+      "children": [
+        {
+          "id": "map_id",
+          "type": "number",
+          "label": {
+            "en": "Map ID",
+            "nl": "Kaart ID"
+          },
+          "value": 1,
+          "hint": {
+            "en": "Used for local room-clean commands on mapped vacuums. Usually 1.",
+            "nl": "Gebruikt voor lokale kamerreiniging op vacuums met kaart. Meestal 1."
+          }
+        },
+        {
+          "id": "protocol_version",
+          "type": "dropdown",
+          "label": {
+            "en": "Protocol version",
+            "nl": "Protocolversie"
+          },
+          "value": "3.3",
+          "values": [
+            {
+              "id": "3.3",
+              "label": {
+                "en": "3.3",
+                "nl": "3.3"
+              }
+            },
+            {
+              "id": "3.1",
+              "label": {
+                "en": "3.1",
+                "nl": "3.1"
+              }
+            }
+          ],
+          "hint": {
+            "en": "Modern mapped vacuums usually use 3.3.",
+            "nl": "Moderne vacuums met kaart gebruiken meestal 3.3."
+          }
+        },
+        {
+          "id": "last_known_ip",
+          "type": "text",
+          "label": {
+            "en": "Last known IP",
+            "nl": "Laatst bekende IP"
+          },
+          "value": "",
+          "hint": {
+            "en": "Stored automatically after a successful local connection. Optional.",
+            "nl": "Wordt automatisch opgeslagen na een succesvolle lokale verbinding. Optioneel."
+          }
+        },
+        {
+          "id": "find_timeout_seconds",
+          "type": "number",
+          "label": {
+            "en": "Find timeout (seconds)",
+            "nl": "Zoek-timeout (seconden)"
+          },
+          "value": 10,
+          "hint": {
+            "en": "How long LAN discovery may search when no IP is known.",
+            "nl": "Hoe lang LAN-detectie mag zoeken als er geen IP bekend is."
+          }
+        }
+      ]
     }
   ]
 }
