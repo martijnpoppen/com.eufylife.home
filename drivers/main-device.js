@@ -34,6 +34,15 @@ module.exports = class mainDevice extends Homey.Device {
     async enableDevice(checkCapabilities = false, overrideSettings = null) {
         await this.initApi(overrideSettings);
 
+        // initApi() swallows its own errors (bad credentials, DNS failure, Tuya
+        // sign error) via setUnavailable and leaves this.config/eufyRoboVac unset.
+        // Without this guard checkCapabilities() throws "Cannot read properties of
+        // undefined (reading 'apiType')" and onStartup rejects unhandled.
+        if (!this.eufyRoboVac || !this.config) {
+            this.homey.app.log(`[Device] ${this.getName()} - enableDevice aborted: API not initialised`);
+            return;
+        }
+
         if (checkCapabilities) {
             await this.checkCapabilities();
         }
@@ -96,6 +105,11 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async checkCapabilities() {
+        if (!this.config) {
+            this.homey.app.log(`[Device] ${this.getName()} - checkCapabilities skipped: API not initialised`);
+            return;
+        }
+
         const driverManifest = this.driver.manifest;
         let driverCapabilities = driverManifest.capabilities;
         let deviceCapabilities = this.getCapabilities();
