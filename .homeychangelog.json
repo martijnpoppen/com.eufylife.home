@@ -253,5 +253,11 @@
   },
   "2.4.7": {
     "en": "FIX: flowcards"
+  },
+  "2.4.8": {
+    "en": "FIX: revert memory fixes as didn't decrease with these fixes"
+  },
+  "2.5.0": {
+    "en": "Fixed an issue where some Eufy accounts showed no devices in the app, causing connected vacuums to not appear."
   }
 }

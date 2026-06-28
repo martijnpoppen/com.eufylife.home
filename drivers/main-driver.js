@@ -8,7 +8,6 @@ module.exports = class mainDriver extends Homey.Driver {
         this.homey.app.log(`[Driver] - version`, Homey.manifest.version);
 
         this.homey.app.setDevices(this.getDevices());
-        this.initFlowActions();
     }
 
     deviceType() {
@@ -136,32 +135,5 @@ module.exports = class mainDriver extends Homey.Driver {
 
             return results;
         });
-    }
-
-
-    async initFlowActions() {
-        try {
-            this.homey.flow.getActionCard('action_measure_clean_speed').registerRunListener(async (args, state) => {
-                return await args.device._onCleanSpeedChanged(args.action_measure_clean_speed_type);
-            });
-
-            this.homey.flow.getActionCard('action_control_mode').registerRunListener(async (args, state) => {
-                return await args.device._onControlModeChanged(args.action_control_mode_type);
-            });
-
-            this.homey.flow.getActionCard('action_scenes').registerRunListener(async (args, state) => {
-                return await args.device._onControlModeChanged(args.action_scenes_type);
-            });
-
-            this.homey.flow.getActionCard('action_clean_params').registerRunListener(async (args, state) => {
-                return await args.device._onCleanParamChanged({
-                    cleanType: args.action_clean_params_cleantype,
-                    cleanExtent: args.action_clean_params_cleanextent,
-                    mopMode: args.action_clean_params_mopmode
-                });
-            });
-        } catch (err) {
-            this.homey.app.error(err);
-        }
     }
 };

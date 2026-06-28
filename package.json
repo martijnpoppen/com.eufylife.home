@@ -7,6 +7,6 @@
     "url": "https://github.com/martijnpoppen/com.eufylife.home"
   },
   "dependencies": {
-    "eufy-clean": "https://github.com/martijnpoppen/eufy-clean/tarball/homey-integration"
+    "eufy-clean": "github:martijnpoppen/eufy-clean"
   }
 }
