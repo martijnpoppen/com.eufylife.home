@@ -259,5 +259,8 @@
   },
   "2.5.0": {
     "en": "Fixed an issue where some Eufy accounts showed no devices in the app, causing connected vacuums to not appear."
+  },
+  "2.6.0": {
+    "en": "This app is deprecated. Its replacement, Anker Eufy, is in the Homey App Store and supports your robot vacuums alongside the rest of the eufy range — cameras, doorbells, HomeBases, locks, sensors, mowers and lights. Install it, add your devices there, rebuild your Flows, and remove this app when you are happy; both can run side by side while you move. This app keeps working but will not get new devices or features. https://homey.app/a/com.eufy/"
   }
 }
