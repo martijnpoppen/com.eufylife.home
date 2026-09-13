@@ -3,6 +3,13 @@
   "version": "2.5.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
+  "api": {
+    "getInstalled": {
+      "method": "GET",
+      "path": "/installed",
+      "public": true
+    }
+  },
   "brandColor": "#13dfd0",
   "name": {
     "en": "Eufy Clean",
