@@ -3,6 +3,7 @@
 const Homey = require('homey');
 const { EufyClean } = require('eufy-clean');
 const { decrypt, sleep } = require('./lib/helpers.js');
+const deprecation = require('./lib/deprecation.js');
 
 class App extends Homey.App {
     trace() {
@@ -43,6 +44,10 @@ class App extends Homey.App {
         this.appInitialized = false;
         this.eufyClean = null;
         this.initFlowActions();
+
+        // Deprecated in favour of Anker Eufy — see lib/deprecation.js. Fire-and-forget: a Homey app
+        // must finish onInit promptly, and nothing downstream depends on the notice being delivered.
+        deprecation.notifyOnce(this).catch((error) => this.error(error));
     }
 
     // ---------------------------- GETTERS/SETTERS ----------------------------------

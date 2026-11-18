@@ -1,6 +1,7 @@
 const Homey = require('homey');
 const { EUFY_CLEAN_GET_STATE, EUFY_CLEAN_VACUUMCLEANER_STATE, EUFY_CLEAN_LEGACY_CLEAN_SPEED, EUFY_CLEAN_WORK_STATUS, EUFY_CLEAN_ERROR_CODES, EUFY_CLEAN_GET_CLEAN_SPEED } = require('eufy-clean');
 const { sleep } = require('../lib/helpers');
+const deprecation = require('../lib/deprecation.js');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
@@ -157,10 +158,31 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
+    /**
+     * Put the deprecation banner on this device, once.
+     *
+     * It replaces an `unsetWarning()` that ran on every poll and cleared a warning nothing in this
+     * app ever set. The poll is every ten seconds, so the guard matters: the banner is written when
+     * it is not already there and never again, rather than rewritten six times a minute for the life
+     * of the device.
+     */
+    async showDeprecationWarning() {
+        if (this.deprecationWarned) {
+            return;
+        }
+
+        try {
+            await this.setWarning(deprecation.WARNING_TEXT);
+            this.deprecationWarned = true;
+        } catch (error) {
+            this.homey.app.error(`[Device] ${this.getName()} - showDeprecationWarning - error`, error);
+        }
+    }
+
     async setCapabilityValues() {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
 
-        this.unsetWarning()
+        await this.showDeprecationWarning();
 
         try {
             if(!this.eufyRoboVac) {
